@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -42,9 +43,7 @@ export function Nav() {
     <header className="sticky top-0 z-50 border-b border-line/70 bg-bg/80 backdrop-blur">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5">
         <Link href={routes.home} className="flex items-center gap-2.5" onClick={() => setOpen(false)}>
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-accent text-sm font-black text-bg">
-            N
-          </span>
+          <Image src="/logo.png" alt="" width={32} height={32} className="h-8 w-8" priority />
           <span className="text-[15px] font-bold tracking-tight">{site.name}</span>
         </Link>
 

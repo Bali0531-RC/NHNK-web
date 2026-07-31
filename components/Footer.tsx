@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/components/LanguageProvider";
 import { routes } from "@/lib/i18n";
@@ -14,9 +15,7 @@ export function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <div className="flex items-center gap-2.5">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-accent text-sm font-black text-bg">
-                N
-              </span>
+              <Image src="/logo.png" alt="" width={32} height={32} className="h-8 w-8" />
               <span className="text-[15px] font-bold">{site.name}</span>
             </div>
             <p className="mt-3 text-sm leading-relaxed text-muted">{t.footer.tagline}</p>
