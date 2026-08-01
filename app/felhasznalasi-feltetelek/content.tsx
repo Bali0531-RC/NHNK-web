@@ -29,10 +29,10 @@ export default function TermsPage() {
 
           <h2>2. Nem hivatalos státusz és védjegyek</h2>
           <p>
-            Az NHNK <strong>független, nem hivatalos</strong> alkalmazás. Nem áll kapcsolatban az
-            SDA Informatika Zrt.-vel, a Neptun rendszer fejlesztőjével és üzemeltetőjével, sem
-            bármely felsőoktatási intézménnyel, és azok az alkalmazást nem támogatják, nem
-            ellenőrizték és nem hagyták jóvá.
+            Az NHNK <strong>független, nem hivatalos</strong> alkalmazás. Nem áll kapcsolatban a
+            Campus Codeworks Zrt.-vel (korábban SDA Informatika Zrt.), a Neptun rendszer
+            fejlesztőjével és üzemeltetőjével, sem bármely felsőoktatási intézménnyel, és azok az
+            alkalmazást nem támogatják, nem ellenőrizték és nem hagyták jóvá.
           </p>
           <p>
             A „Neptun” név és védjegy a jogosultja tulajdona. Az alkalmazásban és ezen az oldalon

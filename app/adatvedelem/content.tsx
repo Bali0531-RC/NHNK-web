@@ -26,9 +26,9 @@ export default function PrivacyPage() {
             <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>.
           </p>
           <p>
-            Az NHNK <strong>független, nem hivatalos</strong> alkalmazás. Nem áll kapcsolatban az
-            SDA Informatika Zrt.-vel, a Neptun rendszer fejlesztőjével, sem bármely felsőoktatási
-            intézménnyel.
+            Az NHNK <strong>független, nem hivatalos</strong> alkalmazás. Nem áll kapcsolatban a
+            Campus Codeworks Zrt.-vel (korábban SDA Informatika Zrt.), a Neptun rendszer
+            fejlesztőjével, sem bármely felsőoktatási intézménnyel.
           </p>
 
           <h2>2. Milyen adatokat kezel az alkalmazás?</h2>

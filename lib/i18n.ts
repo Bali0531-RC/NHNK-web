@@ -82,7 +82,7 @@ export const dict: Record<Lang, Dict> = {
     disclaimer: {
       title: "Mielőtt letöltöd — fontos tudnod",
       points: [
-        "Az NHNK **független, nem hivatalos** alkalmazás. Nem áll kapcsolatban az SDA Informatika Zrt.-vel, a Neptun rendszer fejlesztőjével, sem bármely felsőoktatási intézménnyel, és azok nem támogatják vagy hagyták jóvá.",
+        "Az NHNK **független, nem hivatalos** alkalmazás. Nem áll kapcsolatban a Campus Codeworks Zrt.-vel (korábban SDA Informatika Zrt.), a Neptun rendszer fejlesztőjével, sem bármely felsőoktatási intézménnyel, és azok nem támogatják vagy hagyták jóvá.",
         "A „Neptun\" név és védjegy a **jogosultja tulajdona**. Ezen az oldalon kizárólag leíró jelleggel szerepel, annak jelzésére, hogy az alkalmazás mely rendszerrel működik együtt.",
         "A belépési adataid **közvetlenül** az intézményed Neptun-kiszolgálójára mennek, titkosított kapcsolaton. Az NHNK nem üzemeltet saját szervert, és nem gyűjt felhasználói adatokat.",
         "Hivatalos, kötelező érvényű adatnak minden esetben a **webes Neptun felületén** megjelenő információ számít.",
@@ -148,7 +148,7 @@ export const dict: Record<Lang, Dict> = {
       rights: "Minden jog fenntartva.",
       builtBy: "Készítette",
       trademark:
-        "Független, nem hivatalos alkalmazás. Nem áll kapcsolatban az SDA Informatika Zrt.-vel vagy bármely felsőoktatási intézménnyel. A „Neptun” név és védjegy a jogosultja tulajdona.",
+        "Független, nem hivatalos alkalmazás. Nem áll kapcsolatban a Campus Codeworks Zrt.-vel (korábban SDA Informatika Zrt.) vagy bármely felsőoktatási intézménnyel. A „Neptun” név és védjegy a jogosultja tulajdona.",
     },
     donate: {
       title: "Támogatás",
@@ -193,7 +193,7 @@ export const dict: Record<Lang, Dict> = {
     disclaimer: {
       title: "Before you download — please read",
       points: [
-        "NHNK is an **independent, unofficial** application. It is not affiliated with, endorsed by or approved by SDA Informatika Zrt., the developer of the Neptun system, or by any higher education institution.",
+        "NHNK is an **independent, unofficial** application. It is not affiliated with, endorsed by or approved by Campus Codeworks Zrt. (formerly SDA Informatika Zrt.), the developer of the Neptun system, or by any higher education institution.",
         "The \"Neptun\" name and trademark are the **property of their respective owner**. They appear on this site purely descriptively, to indicate which system the app interoperates with.",
         "Your login details are sent **directly** to your institution's Neptun server over an encrypted connection. NHNK runs no server of its own and collects no user data.",
         "The information shown in the **official Neptun web interface** is always the authoritative source.",
@@ -259,7 +259,7 @@ export const dict: Record<Lang, Dict> = {
       rights: "All rights reserved.",
       builtBy: "Built by",
       trademark:
-        "An independent, unofficial application. Not affiliated with SDA Informatika Zrt. or any higher education institution. The “Neptun” name and trademark are the property of their respective owner.",
+        "An independent, unofficial application. Not affiliated with Campus Codeworks Zrt. (formerly SDA Informatika Zrt.) or any higher education institution. The “Neptun” name and trademark are the property of their respective owner.",
     },
     donate: {
       title: "Support the project",
