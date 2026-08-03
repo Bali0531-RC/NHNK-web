@@ -9,15 +9,21 @@ import { site } from "@/lib/site";
 export default function HomePage() {
   const { t, lang } = useLanguage();
 
-  // Resolved after mount: comparing against the clock during render would desync the SSR markup.
-  const [underReview, setUnderReview] = useState(false);
+  // Resolved after mount: the page is statically prerendered, so reading the clock during
+  // render would freeze the build-time value into the HTML and desync hydration.
+  const [now, setNow] = useState<number | null>(null);
   useEffect(() => {
-    const endMs = new Date(site.closedTest.endsAt).getTime();
-    const tick = () => setUnderReview(Date.now() >= endMs);
+    const tick = () => setNow(Date.now());
     tick();
     const id = setInterval(tick, 60_000);
     return () => clearInterval(id);
   }, []);
+
+  const startMs = new Date(site.closedTest.startsAt).getTime();
+  const endMs = new Date(site.closedTest.endsAt).getTime();
+  const underReview = now !== null && now >= endMs;
+  const elapsed = now === null ? 0 : Math.min(1, Math.max(0, (now - startMs) / (endMs - startMs)));
+  const dayNumber = Math.max(1, Math.ceil(elapsed * site.closedTest.days));
 
   // Timezone pinned so server and client render the same string, otherwise hydration mismatches.
   const closedTestEnd = new Intl.DateTimeFormat(lang === "hu" ? "hu-HU" : "en-GB", {
@@ -179,26 +185,21 @@ export default function HomePage() {
                     <div className="flex items-baseline justify-between text-xs text-muted">
                       <span>{t.hero.ctaPlaySoon}</span>
                       <span className="font-bold text-ink">
-                        {t.download.playProgress
-                          .replace("{current}", String(site.closedTest.current))
-                          .replace("{required}", String(site.closedTest.required))}
+                        {t.download.playDayProgress
+                          .replace("{day}", String(dayNumber))
+                          .replace("{days}", String(site.closedTest.days))}
                       </span>
                     </div>
                     <div
                       className="mt-2 h-1.5 overflow-hidden rounded-full bg-line"
                       role="progressbar"
-                      aria-valuenow={site.closedTest.current}
+                      aria-valuenow={dayNumber}
                       aria-valuemin={0}
-                      aria-valuemax={site.closedTest.required}
+                      aria-valuemax={site.closedTest.days}
                     >
                       <div
-                        className="h-full rounded-full bg-accent"
-                        style={{
-                          width: `${Math.min(
-                            100,
-                            (site.closedTest.current / site.closedTest.required) * 100,
-                          )}%`,
-                        }}
+                        className="h-full rounded-full bg-accent transition-[width] duration-700"
+                        style={{ width: `${elapsed * 100}%` }}
                       />
                     </div>
                     <p className="mt-2 text-xs text-muted">

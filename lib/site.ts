@@ -22,6 +22,8 @@ export const site = {
     current: 12,
     required: 12,
     days: 14,
+    /** The 12th tester opted in here, which is when Play started counting. Europe/Budapest. */
+    startsAt: "2026-08-03T19:15:00+02:00",
     /** Closed test ends and production opt-in unlocks; Google review follows. Europe/Budapest. */
     endsAt: "2026-08-17T19:15:00+02:00",
   },

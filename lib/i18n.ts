@@ -32,6 +32,7 @@ type Dict = {
     abiHint: string;
     obtainiumHint: string;
     playProgress: string;
+    playDayProgress: string;
     playCountdown: string;
     playReview: string;
     playReviewNote: string;
@@ -154,6 +155,7 @@ export const dict: Record<Lang, Dict> = {
       abiHint: "A legtöbb mai telefonhoz az arm64-v8a csomag kell.",
       obtainiumHint: "Automatikus frissítéshez add hozzá a repót az Obtainiumhoz.",
       playProgress: "{current} / {required} tesztelő",
+      playDayProgress: "{day}. / {days}. nap",
       playCountdown: "A {days} napos szakasz vége: {date}",
       playReview: "Felülvizsgálat alatt",
       playReviewNote:
@@ -297,6 +299,7 @@ export const dict: Record<Lang, Dict> = {
       abiHint: "Most current phones need the arm64-v8a package.",
       obtainiumHint: "For automatic updates, add the repository to Obtainium.",
       playProgress: "{current} / {required} testers",
+      playDayProgress: "day {day} of {days}",
       playCountdown: "The {days}-day run ends {date}",
       playReview: "Under review",
       playReviewNote:
