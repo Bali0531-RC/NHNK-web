@@ -32,6 +32,9 @@ type Dict = {
     abiHint: string;
     obtainiumHint: string;
     playProgress: string;
+    playCountdown: string;
+    playReview: string;
+    playReviewNote: string;
     playCta: string;
   };
   privacyTeaser: { title: string; body: string; cta: string };
@@ -151,6 +154,10 @@ export const dict: Record<Lang, Dict> = {
       abiHint: "A legtöbb mai telefonhoz az arm64-v8a csomag kell.",
       obtainiumHint: "Automatikus frissítéshez add hozzá a repót az Obtainiumhoz.",
       playProgress: "{current} / {required} tesztelő",
+      playCountdown: "A {days} napos szakasz vége: {date}",
+      playReview: "Felülvizsgálat alatt",
+      playReviewNote:
+        "A zárt teszt lezárult. A Google most ellenőrzi az appot — ez néhány órától akár egy hétig is eltarthat.",
       playCta: "Jelentkezem tesztelőnek",
     },
     privacyTeaser: {
@@ -290,6 +297,10 @@ export const dict: Record<Lang, Dict> = {
       abiHint: "Most current phones need the arm64-v8a package.",
       obtainiumHint: "For automatic updates, add the repository to Obtainium.",
       playProgress: "{current} / {required} testers",
+      playCountdown: "The {days}-day run ends {date}",
+      playReview: "Under review",
+      playReviewNote:
+        "The closed test is complete. Google is reviewing the app — this can take anywhere from a few hours to a week.",
       playCta: "Sign up as a tester",
     },
     privacyTeaser: {

@@ -1,12 +1,33 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { RichText, useLanguage } from "@/components/LanguageProvider";
 import { routes } from "@/lib/i18n";
 import { site } from "@/lib/site";
 
 export default function HomePage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+
+  // Resolved after mount: comparing against the clock during render would desync the SSR markup.
+  const [underReview, setUnderReview] = useState(false);
+  useEffect(() => {
+    const endMs = new Date(site.closedTest.endsAt).getTime();
+    const tick = () => setUnderReview(Date.now() >= endMs);
+    tick();
+    const id = setInterval(tick, 60_000);
+    return () => clearInterval(id);
+  }, []);
+
+  // Timezone pinned so server and client render the same string, otherwise hydration mismatches.
+  const closedTestEnd = new Intl.DateTimeFormat(lang === "hu" ? "hu-HU" : "en-GB", {
+    timeZone: "Europe/Budapest",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(site.closedTest.endsAt));
 
   return (
     <>
@@ -143,31 +164,50 @@ export default function HomePage() {
             </p>
             {!site.playStoreUrl && (
               <div className="mt-5">
-                <div className="flex items-baseline justify-between text-xs text-muted">
-                  <span>{t.hero.ctaPlaySoon}</span>
-                  <span className="font-bold text-ink">
-                    {t.download.playProgress
-                      .replace("{current}", String(site.closedTest.current))
-                      .replace("{required}", String(site.closedTest.required))}
-                  </span>
-                </div>
-                <div
-                  className="mt-2 h-1.5 overflow-hidden rounded-full bg-line"
-                  role="progressbar"
-                  aria-valuenow={site.closedTest.current}
-                  aria-valuemin={0}
-                  aria-valuemax={site.closedTest.required}
-                >
-                  <div
-                    className="h-full rounded-full bg-accent"
-                    style={{
-                      width: `${Math.min(
-                        100,
-                        (site.closedTest.current / site.closedTest.required) * 100,
-                      )}%`,
-                    }}
-                  />
-                </div>
+                {underReview ? (
+                  <>
+                    <div className="flex items-center gap-2">
+                      <span className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-accent" />
+                      <span className="text-xs font-bold text-ink">{t.download.playReview}</span>
+                    </div>
+                    <p className="mt-2 text-xs leading-relaxed text-muted">
+                      {t.download.playReviewNote}
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <div className="flex items-baseline justify-between text-xs text-muted">
+                      <span>{t.hero.ctaPlaySoon}</span>
+                      <span className="font-bold text-ink">
+                        {t.download.playProgress
+                          .replace("{current}", String(site.closedTest.current))
+                          .replace("{required}", String(site.closedTest.required))}
+                      </span>
+                    </div>
+                    <div
+                      className="mt-2 h-1.5 overflow-hidden rounded-full bg-line"
+                      role="progressbar"
+                      aria-valuenow={site.closedTest.current}
+                      aria-valuemin={0}
+                      aria-valuemax={site.closedTest.required}
+                    >
+                      <div
+                        className="h-full rounded-full bg-accent"
+                        style={{
+                          width: `${Math.min(
+                            100,
+                            (site.closedTest.current / site.closedTest.required) * 100,
+                          )}%`,
+                        }}
+                      />
+                    </div>
+                    <p className="mt-2 text-xs text-muted">
+                      {t.download.playCountdown
+                        .replace("{days}", String(site.closedTest.days))
+                        .replace("{date}", closedTestEnd)}
+                    </p>
+                  </>
+                )}
               </div>
             )}
             {site.playStoreUrl ? (

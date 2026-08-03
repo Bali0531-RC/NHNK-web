@@ -19,9 +19,11 @@ export const site = {
    * Update `current` by hand as sign-ups convert to opted-in testers.
    */
   closedTest: {
-    current: 8,
+    current: 12,
     required: 12,
     days: 14,
+    /** Closed test ends and production opt-in unlocks; Google review follows. Europe/Budapest. */
+    endsAt: "2026-08-17T19:15:00+02:00",
   },
   upstream: {
     neptun2: "https://github.com/domedav/Neptun-2",
