@@ -19,7 +19,7 @@ export const site = {
    * Update `current` by hand as sign-ups convert to opted-in testers.
    */
   closedTest: {
-    current: 6,
+    current: 8,
     required: 12,
     days: 14,
   },
