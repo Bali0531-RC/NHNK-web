@@ -83,7 +83,37 @@ export default function PrivacyPage() {
             Play által gyűjtött adatokhoz.
           </p>
 
-          <h2>6. Jogosultságok és céljuk</h2>
+          <h2>6. Jelentkezés a zárt tesztre</h2>
+          <p>
+            Ez a pont <strong>kizárólag a weboldalra</strong> vonatkozik, az alkalmazásra nem. Ha a
+            zárt teszthez a weboldalon megadod az e-mail-címedet, azt a saját kiszolgálónkon tároljuk.
+          </p>
+          <ul>
+            <li>
+              <strong>Mit tárolunk:</strong> az e-mail-címet, a jelentkezés időpontját és azt, hogy
+              magyar vagy angol nyelven jelentkeztél. IP-címet nem tárolunk.
+            </li>
+            <li>
+              <strong>Miért:</strong> hogy fel tudjunk venni a Google Play tesztelői listájára. Másra
+              nem használjuk, hírlevelet nem küldünk.
+            </li>
+            <li>
+              <strong>Jogalap:</strong> a te hozzájárulásod, amelyet a cím megadásával adsz meg.
+            </li>
+            <li>
+              <strong>Meddig:</strong> a zárt teszt végéig, utána töröljük. Kérésre bármikor
+              hamarabb is töröljük.
+            </li>
+            <li>
+              <strong>Kinek adjuk tovább:</strong> a címet a Google Play Console-ba töltjük fel, hogy
+              a tesztelői meghívó kimehessen. Rajta kívül senkinek.
+            </li>
+          </ul>
+          <p>
+            Törlést vagy tájékoztatást a lenti kapcsolati e-mail-címen kérhetsz.
+          </p>
+
+          <h2>7. Jogosultságok és céljuk</h2>
           <ul>
             <li><strong>Internet</strong> — a Neptun-kiszolgáló elérése</li>
             <li><strong>Értesítések</strong> — órákra, vizsgákra, befizetési határidőkre figyelmeztetés</li>
@@ -97,19 +127,19 @@ export default function PrivacyPage() {
             </li>
           </ul>
 
-          <h2>7. Adatmegőrzés</h2>
+          <h2>8. Adatmegőrzés</h2>
           <p>
             Mivel semmit nem tárolunk a saját oldalunkon, megőrzési idő sincs. A készüléken tárolt
             adatok addig maradnak meg, amíg ki nem jelentkezel vagy nem törlöd az alkalmazást.
           </p>
 
-          <h2>8. Gyermekek</h2>
+          <h2>9. Gyermekek</h2>
           <p>
             Az alkalmazás felsőoktatásban tanulóknak készült, és nem 13 év alatti gyermekeknek szól.
             Tudatosan nem gyűjtünk adatot gyermekektől — ahogy senki mástól sem.
           </p>
 
-          <h2>9. A te jogaid (GDPR)</h2>
+          <h2>10. A te jogaid (GDPR)</h2>
           <p>
             Mivel az NHNK nem tárol személyes adatot szervereken, a hozzáférési, helyesbítési és
             törlési jogod gyakorlatilag a saját készülékeden érvényesül: az adatok törléséhez elég
@@ -117,13 +147,13 @@ export default function PrivacyPage() {
             kapcsolatos jogaidat az intézményednél tudod érvényesíteni.
           </p>
 
-          <h2>10. A tájékoztató módosítása</h2>
+          <h2>11. A tájékoztató módosítása</h2>
           <p>
             Ha a tájékoztató változik, a módosított változat ezen az oldalon jelenik meg, frissített
             dátummal. Lényeges változás esetén a kiadási jegyzetekben is jelezzük.
           </p>
 
-          <h2>11. Kapcsolat</h2>
+          <h2>12. Kapcsolat</h2>
           <p>
             Kérdés vagy adatvédelmi észrevétel esetén:{" "}
             <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
@@ -192,7 +222,35 @@ export default function PrivacyPage() {
             the data Play collects.
           </p>
 
-          <h2>6. Permissions and why they exist</h2>
+          <h2>6. Signing up for the closed test</h2>
+          <p>
+            This section concerns <strong>the website only</strong>, not the app. If you give us your
+            email address to join the closed test, it is stored on our own server.
+          </p>
+          <ul>
+            <li>
+              <strong>What is stored:</strong> the email address, when you signed up, and whether you
+              signed up in Hungarian or English. No IP address is stored.
+            </li>
+            <li>
+              <strong>Why:</strong> so you can be added to the Google Play tester list. It is used for
+              nothing else, and there is no newsletter.
+            </li>
+            <li>
+              <strong>Legal basis:</strong> your consent, given by submitting the address.
+            </li>
+            <li>
+              <strong>How long:</strong> until the closed test ends, then it is deleted. It can be
+              removed sooner on request.
+            </li>
+            <li>
+              <strong>Who else sees it:</strong> the address is uploaded to the Google Play Console so
+              the tester invitation can be sent. Nobody else.
+            </li>
+          </ul>
+          <p>Write to the contact address below to request deletion or information.</p>
+
+          <h2>7. Permissions and why they exist</h2>
           <ul>
             <li><strong>Internet</strong> — to reach the Neptun server</li>
             <li><strong>Notifications</strong> — reminders for classes, exams and payment deadlines</li>
@@ -205,19 +263,19 @@ export default function PrivacyPage() {
             </li>
           </ul>
 
-          <h2>7. Retention</h2>
+          <h2>8. Retention</h2>
           <p>
             Since we store nothing on our side, there is no retention period. Data on the device
             remains until you log out or uninstall the app.
           </p>
 
-          <h2>8. Children</h2>
+          <h2>9. Children</h2>
           <p>
             The app is intended for students in higher education and is not directed at children
             under 13. We knowingly collect no data from children — nor from anyone else.
           </p>
 
-          <h2>9. Your rights (GDPR)</h2>
+          <h2>10. Your rights (GDPR)</h2>
           <p>
             Because NHNK holds no personal data on any server, your rights of access, rectification
             and erasure are exercised on your own device: logging out or uninstalling removes the
@@ -225,13 +283,13 @@ export default function PrivacyPage() {
             institution.
           </p>
 
-          <h2>10. Changes to this policy</h2>
+          <h2>11. Changes to this policy</h2>
           <p>
             If this policy changes, the updated version appears on this page with a new date.
             Significant changes will also be noted in the release notes.
           </p>
 
-          <h2>11. Contact</h2>
+          <h2>12. Contact</h2>
           <p>
             For questions or privacy concerns:{" "}
             <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>

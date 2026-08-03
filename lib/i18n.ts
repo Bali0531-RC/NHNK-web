@@ -5,10 +5,11 @@ export const routes = {
   privacy: "/adatvedelem",
   terms: "/felhasznalasi-feltetelek",
   donate: "/tamogatas",
+  beta: "/zart-teszt",
 } as const;
 
 type Dict = {
-  nav: { features: string; download: string; donate: string; privacy: string; terms: string };
+  nav: { features: string; download: string; donate: string; privacy: string; terms: string; beta: string };
   hero: {
     badge: string;
     title: string;
@@ -57,6 +58,23 @@ type Dict = {
     taxNote: string;
   };
   legal: { lastUpdated: string; backHome: string };
+  beta: {
+    title: string;
+    intro: string;
+    googleNote: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    submit: string;
+    submitting: string;
+    successAdded: string;
+    successAlready: string;
+    errorInvalid: string;
+    errorRate: string;
+    errorGeneric: string;
+    privacyNote: string;
+    stepsTitle: string;
+    steps: string[];
+  };
 };
 
 export const dict: Record<Lang, Dict> = {
@@ -67,6 +85,7 @@ export const dict: Record<Lang, Dict> = {
       donate: "Támogatás",
       privacy: "Adatvédelem",
       terms: "Feltételek",
+      beta: "Zárt teszt",
     },
     hero: {
       badge: "Nem hivatalos • nyílt forráskódú • ingyenes",
@@ -170,6 +189,31 @@ export const dict: Record<Lang, Dict> = {
         "A támogatás magánszemélynek adott ajándéknak minősül, nem adomány, és nem jár érte semmilyen ellenszolgáltatás, termék vagy szolgáltatás. Számlát nem áll módunkban kiállítani.",
     },
     legal: { lastUpdated: "Utoljára frissítve", backHome: "Vissza a főoldalra" },
+    beta: {
+      title: "Jelentkezés a zárt tesztre",
+      intro:
+        "Az NHNK jelenleg zárt tesztelés alatt áll a Play Áruházban. Add meg az e-mail-címedet, és felveszlek a tesztelők közé.",
+      googleNote:
+        "Fontos: Google-fiókhoz tartozó e-mail-címet adj meg (jellemzően Gmail). A Play Áruház csak ilyen címeket tud tesztelőként kezelni.",
+      emailLabel: "E-mail-cím",
+      emailPlaceholder: "pelda@gmail.com",
+      submit: "Jelentkezem",
+      submitting: "Küldés...",
+      successAdded:
+        "Köszönjük! Felvettünk a listára. A tesztelői meghívó kiküldése után a Play Áruházban éred el az appot.",
+      successAlready: "Ez a cím már szerepel a listán, nincs teendőd.",
+      errorInvalid: "Ez nem tűnik érvényes e-mail-címnek.",
+      errorRate: "Túl sok próbálkozás. Próbáld újra később.",
+      errorGeneric: "Valami hiba történt. Próbáld újra később.",
+      privacyNote:
+        "Csak az e-mail-címedet és a jelentkezés időpontját tároljuk, kizárólag a tesztelői meghíváshoz. Törlést a lenti e-mail-címen kérhetsz.",
+      stepsTitle: "Mi történik ezután?",
+      steps: [
+        "A címed felkerül a tesztelői listára.",
+        "A következő meghívókörnél felveszlek a Play Console-ban.",
+        "Ezután ugyanazzal a Google-fiókkal megnyitva látni fogod az appot a Play Áruházban.",
+      ],
+    },
   },
   en: {
     nav: {
@@ -178,6 +222,7 @@ export const dict: Record<Lang, Dict> = {
       donate: "Donate",
       privacy: "Privacy",
       terms: "Terms",
+      beta: "Closed test",
     },
     hero: {
       badge: "Unofficial • open source • free",
@@ -281,5 +326,30 @@ export const dict: Record<Lang, Dict> = {
         "A contribution counts as a gift to a private individual. It is not a charitable donation, and nothing — no product, service or benefit — is provided in return. We cannot issue an invoice for it.",
     },
     legal: { lastUpdated: "Last updated", backHome: "Back to the home page" },
+    beta: {
+      title: "Join the closed test",
+      intro:
+        "NHNK is currently in closed testing on Google Play. Leave your email address and you will be added to the tester list.",
+      googleNote:
+        "Important: use an email address tied to a Google account (usually Gmail). Google Play can only accept those as testers.",
+      emailLabel: "Email address",
+      emailPlaceholder: "you@gmail.com",
+      submit: "Sign me up",
+      submitting: "Sending...",
+      successAdded:
+        "Thanks! You are on the list. Once invitations go out you will find the app on Google Play.",
+      successAlready: "That address is already on the list, nothing else to do.",
+      errorInvalid: "That does not look like a valid email address.",
+      errorRate: "Too many attempts. Please try again later.",
+      errorGeneric: "Something went wrong. Please try again later.",
+      privacyNote:
+        "Only your email address and the time you signed up are stored, solely to send the tester invitation. Write to the address below to have it removed.",
+      stepsTitle: "What happens next?",
+      steps: [
+        "Your address goes on the tester list.",
+        "You are added in the Play Console at the next round of invitations.",
+        "Opening Google Play with that same Google account will then show the app.",
+      ],
+    },
   },
 };

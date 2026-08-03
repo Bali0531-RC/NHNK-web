@@ -35,6 +35,7 @@ export function Nav() {
   const links = [
     { href: `${routes.home}#funkciok`, label: t.nav.features },
     { href: `${routes.home}#letoltes`, label: t.nav.download },
+    { href: routes.beta, label: t.nav.beta },
     { href: routes.donate, label: t.nav.donate },
     { href: routes.privacy, label: t.nav.privacy },
   ];

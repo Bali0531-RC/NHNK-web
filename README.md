@@ -90,14 +90,44 @@ Ha az ikon változik, mind a négyet újra kell generálni a forrásképből.
 
 ## Közzététel
 
+Az oldal **Node-kiszolgálót igényel**, mert a zárt tesztre jelentkezés API-útvonalakat
+használ. (Korábban statikus export volt; az `output: "export"` beállítás ezért került ki.)
+
 ```bash
-npm run build
+pnpm install
+pnpm build
+pnpm start          # alapértelmezés szerint a 3000-es porton
 ```
 
-A kimenet az `out/` mappába kerül, és változatlanul feltölthető bármilyen statikus
-tárhelyre. A `trailingSlash: true` beállítás miatt az útvonalak mappákra képződnek le
-(`/adatvedelem/index.html`), így a legtöbb webszerver külön szabály nélkül is eltalálja
-őket.
+### Környezeti változók
+
+| Változó | Kötelező | Leírás |
+|---|---|---|
+| `NHNK_ADMIN_TOKEN` | igen, az exporthoz | Ezzel érhető el a tesztelői lista. Enélkül az export 503-mal elutasít. |
+| `NHNK_DB_PATH` | nem | Az SQLite-fájl helye, alapértelmezés `./data/testers.db`. |
+
+A token legyen hosszú és véletlenszerű, például `openssl rand -hex 32`.
+
+### Tesztelői lista letöltése
+
+```bash
+# CSV, táblázatkezelőhöz
+curl -H "Authorization: Bearer $NHNK_ADMIN_TOKEN" \
+  https://nhnk.bali0531.hu/api/tester/export/ -o testers.csv
+
+# Csak a címek, soronként egy — ezt várja a Play Console
+curl -H "Authorization: Bearer $NHNK_ADMIN_TOKEN" \
+  "https://nhnk.bali0531.hu/api/tester/export/?format=plain"
+```
+
+A záró perjel nem elhagyható: a `trailingSlash: true` miatt enélkül 308-as átirányítás jön.
+
+### Adatkezelés
+
+Az adatbázis **személyes adatot tartalmaz** (e-mail-címek), ezért nincs verziókövetésben,
+és mentéskor is ennek megfelelően kell kezelni. Csak a cím, a nyelv és a jelentkezés
+időpontja tárolódik; IP-cím nem. A zárt teszt végén az egész fájl törlendő — ezt ígéri az
+adatvédelmi tájékoztató 6. pontja.
 
 ## Licenc
 
