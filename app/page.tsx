@@ -43,9 +43,12 @@ export default function HomePage() {
                   {t.hero.ctaPlay}
                 </a>
               ) : (
-                <span className="w-full cursor-default rounded-xl border border-dashed border-line px-6 py-3 text-sm font-semibold text-muted sm:w-auto">
+                <Link
+                  href={routes.beta}
+                  className="w-full rounded-xl border border-dashed border-line px-6 py-3 text-center text-sm font-semibold text-muted transition hover:border-accent hover:text-ink sm:w-auto"
+                >
                   {t.hero.ctaPlaySoon}
-                </span>
+                </Link>
               )}
               <a
                 href={site.repo}
@@ -133,7 +136,40 @@ export default function HomePage() {
 
           <div className="flex flex-col rounded-2xl border border-line bg-surface p-7">
             <h3 className="text-lg font-bold">{t.download.playTitle}</h3>
-            <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{t.download.playBody}</p>
+            <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
+              {t.download.playBody
+                .replace(/{required}/g, String(site.closedTest.required))
+                .replace(/{days}/g, String(site.closedTest.days))}
+            </p>
+            {!site.playStoreUrl && (
+              <div className="mt-5">
+                <div className="flex items-baseline justify-between text-xs text-muted">
+                  <span>{t.hero.ctaPlaySoon}</span>
+                  <span className="font-bold text-ink">
+                    {t.download.playProgress
+                      .replace("{current}", String(site.closedTest.current))
+                      .replace("{required}", String(site.closedTest.required))}
+                  </span>
+                </div>
+                <div
+                  className="mt-2 h-1.5 overflow-hidden rounded-full bg-line"
+                  role="progressbar"
+                  aria-valuenow={site.closedTest.current}
+                  aria-valuemin={0}
+                  aria-valuemax={site.closedTest.required}
+                >
+                  <div
+                    className="h-full rounded-full bg-accent"
+                    style={{
+                      width: `${Math.min(
+                        100,
+                        (site.closedTest.current / site.closedTest.required) * 100,
+                      )}%`,
+                    }}
+                  />
+                </div>
+              </div>
+            )}
             {site.playStoreUrl ? (
               <a
                 href={site.playStoreUrl}
@@ -144,9 +180,12 @@ export default function HomePage() {
                 {t.hero.ctaPlay}
               </a>
             ) : (
-              <span className="mt-6 rounded-xl border border-dashed border-line px-5 py-2.5 text-center text-sm font-semibold text-muted">
-                {t.hero.ctaPlaySoon}
-              </span>
+              <Link
+                href={routes.beta}
+                className="mt-5 rounded-xl border border-line px-5 py-2.5 text-center text-sm font-bold text-ink transition hover:border-accent"
+              >
+                {t.download.playCta}
+              </Link>
             )}
           </div>
         </div>

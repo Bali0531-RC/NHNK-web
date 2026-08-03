@@ -12,6 +12,17 @@ export const site = {
   authorHandle: "Bali0531",
   /** Set once the Play listing is live, then the store button turns into a real link. */
   playStoreUrl: "",
+  /**
+   * Google Play requires a personal developer account to hold `required` opted-in
+   * testers for `days` consecutive days before production access opens. The countdown
+   * only starts once the threshold is met, so `current` is the number to move.
+   * Update `current` by hand as sign-ups convert to opted-in testers.
+   */
+  closedTest: {
+    current: 6,
+    required: 12,
+    days: 14,
+  },
   upstream: {
     neptun2: "https://github.com/domedav/Neptun-2",
     neptunMobile: "https://github.com/zoligamer/Neptun-Mobile-fork",

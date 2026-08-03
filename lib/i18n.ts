@@ -31,6 +31,8 @@ type Dict = {
     playBody: string;
     abiHint: string;
     obtainiumHint: string;
+    playProgress: string;
+    playCta: string;
   };
   privacyTeaser: { title: string; body: string; cta: string };
   footer: {
@@ -94,7 +96,7 @@ export const dict: Record<Lang, Dict> = {
         "Órarend, jegyek, üzenetek és befizetések egy gyors, letisztult alkalmazásban. Reklám nélkül, követés nélkül, saját szerver nélkül.",
       ctaDownload: "Letöltés APK-ként",
       ctaPlay: "Elérhető a Google Play-en",
-      ctaPlaySoon: "Hamarosan a Google Play-en",
+      ctaPlaySoon: "Zárt tesztelés alatt",
       ctaSource: "Forráskód",
       unofficial: "Független alkalmazás — nem a Neptun üzemeltetőjének terméke",
     },
@@ -145,9 +147,11 @@ export const dict: Record<Lang, Dict> = {
         "A teljes verzió, beépített frissítéskezelővel. Az alkalmazás maga szól, ha új kiadás jelent meg.",
       playTitle: "Google Play",
       playBody:
-        "A Play-en terjesztett változat a Play szabályai szerint készül: frissítéseket a Play kezeli.",
+        "Jelenleg zárt tesztelés alatt. A Play akkor engedélyezi a nyilvános megjelenést, ha {required} tesztelő {days} napon keresztül folyamatosan használja az appot — a számláló csak a {required}. tesztelőtől indul.",
       abiHint: "A legtöbb mai telefonhoz az arm64-v8a csomag kell.",
       obtainiumHint: "Automatikus frissítéshez add hozzá a repót az Obtainiumhoz.",
+      playProgress: "{current} / {required} tesztelő",
+      playCta: "Jelentkezem tesztelőnek",
     },
     privacyTeaser: {
       title: "Az adataid a tieid maradnak",
@@ -231,7 +235,7 @@ export const dict: Record<Lang, Dict> = {
         "Timetable, grades, messages and payments in one fast, uncluttered app. No ads, no tracking, no server of our own.",
       ctaDownload: "Download the APK",
       ctaPlay: "Get it on Google Play",
-      ctaPlaySoon: "Coming soon to Google Play",
+      ctaPlaySoon: "In closed testing",
       ctaSource: "Source code",
       unofficial: "An independent app — not a product of the Neptun operator",
     },
@@ -282,9 +286,11 @@ export const dict: Record<Lang, Dict> = {
         "The full build, with the in-app updater. The app tells you when a new release is out.",
       playTitle: "Google Play",
       playBody:
-        "The Play build follows Play's rules: updates are handled by Play itself.",
+        "Currently in closed testing. Play only opens up public release once {required} testers have used the app for {days} consecutive days — and the countdown only starts at the {required}th tester.",
       abiHint: "Most current phones need the arm64-v8a package.",
       obtainiumHint: "For automatic updates, add the repository to Obtainium.",
+      playProgress: "{current} / {required} testers",
+      playCta: "Sign up as a tester",
     },
     privacyTeaser: {
       title: "Your data stays yours",
