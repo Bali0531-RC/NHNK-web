@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Jelentkezés a zárt tesztre",
   description:
     "Az NHNK zárt tesztelés alatt áll a Play Áruházban. Add meg a Google-fiókodhoz tartozó e-mail-címet, és felveszünk a tesztelők közé.",
+  alternates: { canonical: "/zart-teszt/" },
 };
 
 export default function Page() {

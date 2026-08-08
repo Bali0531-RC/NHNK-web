@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Adatvédelmi tájékoztató",
   description:
     "Az NHNK nem gyűjt rólad adatot: nincs saját szerver, nincs analitika, nincs hirdetés. A belépési adatok közvetlenül az intézményed Neptun-kiszolgálójára mennek.",
+  alternates: { canonical: "/adatvedelem/" },
 };
 
 export default function Page() {
