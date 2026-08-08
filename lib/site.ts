@@ -12,6 +12,8 @@ export const site = {
   authorHandle: "Bali0531",
   /** Set once the Play listing is live, then the store button turns into a real link. */
   playStoreUrl: "",
+  /** Search Console HTML-tag token. Empty until verified, which omits the meta tag. */
+  googleSiteVerification: "",
   /**
    * Google Play requires a personal developer account to hold `required` opted-in
    * testers for `days` consecutive days before production access opens. The countdown

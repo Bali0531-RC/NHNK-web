@@ -55,6 +55,9 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
   category: "education",
+  ...(site.googleSiteVerification
+    ? { verification: { google: site.googleSiteVerification } }
+    : {}),
 };
 
 /** Rich-result data for the app itself. No ratings are declared: inventing them is a manual-action risk. */
