@@ -46,7 +46,7 @@ export function TryPhone() {
             <iframe
               src="/demo/index.html"
               title="NHNK demo"
-              className="origin-top-left border-0"
+              className="absolute left-0 top-0 origin-top-left border-0"
               style={{
                 width: SCREEN_WIDTH,
                 height: SCREEN_HEIGHT,
