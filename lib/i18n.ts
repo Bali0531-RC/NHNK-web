@@ -21,6 +21,7 @@ type Dict = {
     unofficial: string;
   };
   disclaimer: { title: string; points: string[] };
+  tryIt: { title: string; body: string; points: string[] };
   features: { title: string; subtitle: string; items: { title: string; body: string }[] };
   download: {
     title: string;
@@ -103,6 +104,16 @@ export const dict: Record<Lang, Dict> = {
       ctaPlaySoon: "Zárt tesztelés alatt",
       ctaSource: "Forráskód",
       unofficial: "Független alkalmazás — nem a Neptun üzemeltetőjének terméke",
+    },
+    tryIt: {
+      title: "Próbáld ki, még telepítés előtt",
+      body:
+        "Ez itt maga az alkalmazás, a böngésződben futva. Ugyanaz a kód, mint a telefonos verzióé, csak demó módban: minden adat kitalált.",
+      points: [
+        "Nem kell belépni, és nem is lehet: a demó semmit nem küld a Neptun felé.",
+        "Kattints a telefonra, és nézd meg az órarendet, a jegyeket és a beállításokat.",
+        "A telefonos alkalmazás gyorsabb és teljes — ez csak ízelítő.",
+      ],
     },
     disclaimer: {
       title: "Mielőtt letöltöd — fontos tudnod",
@@ -247,6 +258,16 @@ export const dict: Record<Lang, Dict> = {
       ctaPlaySoon: "In closed testing",
       ctaSource: "Source code",
       unofficial: "An independent app — not a product of the Neptun operator",
+    },
+    tryIt: {
+      title: "Try it before installing anything",
+      body:
+        "This is the app itself, running in your browser. The same code as the phone version, in demo mode, so every figure is made up.",
+      points: [
+        "No sign-in, and none is possible: the demo sends nothing to Neptun.",
+        "Tap the phone and have a look at the timetable, the grades and the settings.",
+        "The phone app is faster and complete — this is only a taster.",
+      ],
     },
     disclaimer: {
       title: "Before you download — please read",

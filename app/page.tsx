@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { RichText, useLanguage } from "@/components/LanguageProvider";
+import { TryPhone } from "@/components/TryPhone";
 import { routes } from "@/lib/i18n";
 import { site } from "@/lib/site";
 
@@ -88,6 +89,27 @@ export default function HomePage() {
             </div>
 
             <p className="mt-6 text-xs text-muted/80">{t.hero.unofficial}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Try it */}
+      <section id="kiprobalas" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-14">
+        <div className="grid items-center gap-12 lg:grid-cols-2">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{t.tryIt.title}</h2>
+            <p className="mt-3 text-[15px] leading-relaxed text-muted">{t.tryIt.body}</p>
+            <ul className="mt-6 space-y-3">
+              {t.tryIt.points.map((point) => (
+                <li key={point} className="flex gap-3">
+                  <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                  <p className="text-sm leading-relaxed text-muted">{point}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="flex justify-center">
+            <TryPhone />
           </div>
         </div>
       </section>
