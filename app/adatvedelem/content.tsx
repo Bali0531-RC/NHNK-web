@@ -82,6 +82,19 @@ export default function PrivacyPage() {
             Google saját adatkezelése vonatkozik. Erre nincs ráhatásunk, és nem kapunk hozzáférést a
             Play által gyűjtött adatokhoz.
           </p>
+          <h3>5.4 A weboldalon futó demó</h3>
+          <p>
+            A kezdőlapon lévő demó a valódi alkalmazás böngészőben futó változata, kitalált
+            mintaadatokkal. Egyetlen Neptun-kiszolgálóhoz sem kapcsolódik, és amit a demóba beírsz,
+            az nem hagyja el a böngésződet.
+          </p>
+          <p>
+            A demó csak akkor indul el, ha rákattintasz — az oldal megnyitása önmagában semmit nem
+            tölt le. Indításkor a Flutter grafikus motorját a Google www.gstatic.com címéről, egy
+            betűtípust a fonts.gstatic.com címről, a nyelvek és témák listáját pedig a GitHubról
+            tölti be. Ezek a kiszolgálók — mint minden webkiszolgáló — láthatják a kérés IP-címét,
+            amire a Google, illetve a GitHub saját adatvédelmi tájékoztatója vonatkozik.
+          </p>
 
           <h2>6. Jelentkezés a zárt tesztre</h2>
           <p>
@@ -220,6 +233,19 @@ export default function PrivacyPage() {
             If you installed the app from Google Play, installation and updates are subject to
             Google&rsquo;s own data handling. We have no control over that and receive no access to
             the data Play collects.
+          </p>
+          <h3>5.4 The demo on this website</h3>
+          <p>
+            The demo on the home page is the real app running inside your browser against fictional
+            sample data. It never connects to a Neptun server, and nothing you type into it leaves
+            your browser.
+          </p>
+          <p>
+            It only starts once you click it — merely opening the page downloads nothing. On start it
+            loads the Flutter graphics engine from Google&rsquo;s www.gstatic.com, a font from
+            fonts.gstatic.com, and the language and theme lists from GitHub. Those servers — like any
+            web server — can see the requesting IP address, which is covered by Google&rsquo;s and
+            GitHub&rsquo;s own privacy policies.
           </p>
 
           <h2>6. Signing up for the closed test</h2>
