@@ -103,7 +103,7 @@ export const dict: Record<Lang, Dict> = {
       ctaPlay: "Elérhető a Google Play-en",
       ctaPlaySoon: "Zárt tesztelés alatt",
       ctaSource: "Forráskód",
-      unofficial: "Független alkalmazás — nem a Neptun üzemeltetőjének terméke",
+      unofficial: "Független alkalmazás, nem a Neptun üzemeltetőjének terméke",
     },
     tryIt: {
       title: "Próbáld ki, még telepítés előtt",
@@ -112,11 +112,11 @@ export const dict: Record<Lang, Dict> = {
       points: [
         "Nem kell belépni, és nem is lehet: a demó semmit nem küld a Neptun felé.",
         "Kattints a telefonra, és nézd meg az órarendet, a jegyeket és a beállításokat.",
-        "A telefonos alkalmazás gyorsabb és teljes — ez csak ízelítő.",
+        "A telefonos alkalmazás gyorsabb és teljesebb. Ez csak ízelítő.",
       ],
     },
     disclaimer: {
-      title: "Mielőtt letöltöd — fontos tudnod",
+      title: "Mielőtt letöltöd, fontos tudnod",
       points: [
         "Az NHNK **független, nem hivatalos** alkalmazás. Nem áll kapcsolatban a Campus Codeworks Zrt.-vel (korábban SDA Informatika Zrt.), a Neptun rendszer fejlesztőjével, sem bármely felsőoktatási intézménnyel, és azok nem támogatják vagy hagyták jóvá.",
         "A „Neptun\" név és védjegy a **jogosultja tulajdona**. Ezen az oldalon kizárólag leíró jelleggel szerepel, annak jelzésére, hogy az alkalmazás mely rendszerrel működik együtt.",
@@ -162,7 +162,7 @@ export const dict: Record<Lang, Dict> = {
         "A teljes verzió, beépített frissítéskezelővel. Az alkalmazás maga szól, ha új kiadás jelent meg.",
       playTitle: "Google Play",
       playBody:
-        "Jelenleg zárt tesztelés alatt. A Play akkor engedélyezi a nyilvános megjelenést, ha {required} tesztelő {days} napon keresztül folyamatosan használja az appot — a számláló csak a {required}. tesztelőtől indul.",
+        "Jelenleg zárt tesztelés alatt. A Play akkor engedélyezi a nyilvános megjelenést, ha {required} tesztelő {days} napon keresztül folyamatosan használja az appot. A számláló csak a {required}. tesztelőtől indul.",
       abiHint: "A legtöbb mai telefonhoz az arm64-v8a csomag kell.",
       obtainiumHint: "Automatikus frissítéshez add hozzá a repót az Obtainiumhoz.",
       playProgress: "{current} / {required} tesztelő",
@@ -170,7 +170,7 @@ export const dict: Record<Lang, Dict> = {
       playCountdown: "A {days} napos szakasz vége: {date}",
       playReview: "Felülvizsgálat alatt",
       playReviewNote:
-        "A zárt teszt lezárult. A Google most ellenőrzi az appot — ez néhány órától akár egy hétig is eltarthat.",
+        "A zárt teszt lezárult. A Google most ellenőrzi az appot, ez néhány órától akár egy hétig is eltarthat.",
       playCta: "Jelentkezem tesztelőnek",
     },
     privacyTeaser: {
@@ -198,13 +198,13 @@ export const dict: Record<Lang, Dict> = {
       intro:
         "Az NHNK ingyenes és nyílt forráskódú, és az is marad. Ha hasznosnak találod és van rá kereted, egy támogatással hozzájárulhatsz a fejlesztéshez.",
       noObligation:
-        "A támogatás teljesen önkéntes. Az alkalmazás minden funkciója fizetés nélkül is elérhető — nincs prémium verzió és nincs fizetőfal.",
+        "A támogatás teljesen önkéntes. Az alkalmazás minden funkciója fizetés nélkül is elérhető. Nincs prémium verzió és nincs fizetőfal.",
       methodsTitle: "Támogatási lehetőségek",
       openLink: "Megnyitás",
       freeTitle: "Ingyenes módok a segítségre",
       freeBody: "Ha pénzzel nem tudsz vagy nem szeretnél támogatni, ezek is sokat érnek:",
       freeItems: [
-        "Jelentsd a hibákat, amikbe belefutsz — a részletes hibajelentés aranyat ér.",
+        "Jelentsd a hibákat, amikbe belefutsz. A részletes hibajelentés aranyat ér.",
         "Csillagozd meg a projektet GitHubon, hogy mások is megtalálják.",
         "Ajánld az évfolyamtársaidnak.",
         "Küldj fordítást vagy javítást, ha van hozzá kedved.",
@@ -257,7 +257,7 @@ export const dict: Record<Lang, Dict> = {
       ctaPlay: "Get it on Google Play",
       ctaPlaySoon: "In closed testing",
       ctaSource: "Source code",
-      unofficial: "An independent app — not a product of the Neptun operator",
+      unofficial: "An independent app, not a product of the Neptun operator",
     },
     tryIt: {
       title: "Try it before installing anything",
@@ -266,11 +266,11 @@ export const dict: Record<Lang, Dict> = {
       points: [
         "No sign-in, and none is possible: the demo sends nothing to Neptun.",
         "Tap the phone and have a look at the timetable, the grades and the settings.",
-        "The phone app is faster and complete — this is only a taster.",
+        "The phone app is faster and more complete. This is just a taster.",
       ],
     },
     disclaimer: {
-      title: "Before you download — please read",
+      title: "Before you download, please read",
       points: [
         "NHNK is an **independent, unofficial** application. It is not affiliated with, endorsed by or approved by Campus Codeworks Zrt. (formerly SDA Informatika Zrt.), the developer of the Neptun system, or by any higher education institution.",
         "The \"Neptun\" name and trademark are the **property of their respective owner**. They appear on this site purely descriptively, to indicate which system the app interoperates with.",
@@ -316,7 +316,7 @@ export const dict: Record<Lang, Dict> = {
         "The full build, with the in-app updater. The app tells you when a new release is out.",
       playTitle: "Google Play",
       playBody:
-        "Currently in closed testing. Play only opens up public release once {required} testers have used the app for {days} consecutive days — and the countdown only starts at the {required}th tester.",
+        "Currently in closed testing. Play only opens up public release once {required} testers have used the app for {days} consecutive days. The countdown only starts at the {required}th tester.",
       abiHint: "Most current phones need the arm64-v8a package.",
       obtainiumHint: "For automatic updates, add the repository to Obtainium.",
       playProgress: "{current} / {required} testers",
@@ -324,7 +324,7 @@ export const dict: Record<Lang, Dict> = {
       playCountdown: "The {days}-day run ends {date}",
       playReview: "Under review",
       playReviewNote:
-        "The closed test is complete. Google is reviewing the app — this can take anywhere from a few hours to a week.",
+        "The closed test is complete. Google is reviewing the app, which can take anywhere from a few hours to a week.",
       playCta: "Sign up as a tester",
     },
     privacyTeaser: {
@@ -352,19 +352,19 @@ export const dict: Record<Lang, Dict> = {
       intro:
         "NHNK is free and open source, and it will stay that way. If you find it useful and can spare something, a contribution helps keep development going.",
       noObligation:
-        "Donating is entirely optional. Every feature is available without paying — there is no premium tier and no paywall.",
+        "Donating is entirely optional. Every feature is available without paying. There is no premium tier and no paywall.",
       methodsTitle: "Ways to contribute",
       openLink: "Open",
       freeTitle: "Free ways to help",
       freeBody: "If you can't or would rather not give money, these are worth just as much:",
       freeItems: [
-        "Report the bugs you run into — a detailed report is worth a lot.",
+        "Report the bugs you run into. A detailed report is worth a lot.",
         "Star the project on GitHub so other people can find it.",
         "Recommend it to people on your course.",
         "Send a translation or a fix if you fancy it.",
       ],
       taxNote:
-        "A contribution counts as a gift to a private individual. It is not a charitable donation, and nothing — no product, service or benefit — is provided in return. We cannot issue an invoice for it.",
+        "A contribution counts as a gift to a private individual. It is not a charitable donation, and nothing is provided in return, no product, service or benefit. We cannot issue an invoice for it.",
     },
     legal: { lastUpdated: "Last updated", backHome: "Back to the home page" },
     beta: {

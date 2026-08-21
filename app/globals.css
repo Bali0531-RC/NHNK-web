@@ -7,11 +7,11 @@
   --color-line: #223034;
   --color-ink: #e9f1f2;
   --color-muted: #8ba1a6;
-  --color-accent: #2dd4bf;
+  --color-accent: #e9a13b;
   --color-danger: #f87171;
 
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-sans: var(--font-app-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-app-mono), ui-monospace, monospace;
 }
 
 html {
@@ -28,8 +28,8 @@ body {
 /* Decorative wash behind the hero. */
 .hero-glow {
   background:
-    radial-gradient(60rem 30rem at 50% -10%, rgba(45, 212, 191, 0.12), transparent 70%),
-    radial-gradient(40rem 20rem at 85% 10%, rgba(45, 212, 191, 0.06), transparent 70%);
+    radial-gradient(60rem 30rem at 50% -10%, rgba(233, 161, 59, 0.05), transparent 70%),
+    radial-gradient(40rem 20rem at 85% 10%, rgba(233, 161, 59, 0.025), transparent 70%);
 }
 
 .prose-legal h2 {

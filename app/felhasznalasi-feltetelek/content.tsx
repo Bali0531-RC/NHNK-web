@@ -13,8 +13,8 @@ export default function TermsPage() {
       title={hu ? "Felhasználási feltételek" : "Terms of Service"}
       intro={
         hu
-          ? "Az NHNK letöltésével és használatával elfogadod az alábbi feltételeket. Kérjük, olvasd el őket — különösen a felelősségkorlátozásról szóló részt."
-          : "By downloading and using NHNK you accept the terms below. Please read them — particularly the section on limitation of liability."
+          ? "Az NHNK letöltésével és használatával elfogadod az alábbi feltételeket. Kérjük, olvasd el őket, különösen a felelősségkorlátozásról szóló részt."
+          : "By downloading and using NHNK you accept the terms below. Please read them, particularly the section on limitation of liability."
       }
     >
       {hu ? (
@@ -127,7 +127,7 @@ export default function TermsPage() {
         <>
           <h2>1. What this service is</h2>
           <p>
-            NHNK (Nem Hivatalos Neptun Kliens — Unofficial Neptun Client) is a free, open-source
+            NHNK (Nem Hivatalos Neptun Kliens / Unofficial Neptun Client) is a free, open-source
             Android application for viewing data from the Neptun student information system. It
             communicates with your institution&rsquo;s server on your behalf, using your own Neptun
             credentials.

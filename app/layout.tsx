@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { site } from "@/lib/site";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin", "latin-ext"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin", "latin-ext"] });
+const appSans = Plus_Jakarta_Sans({ variable: "--font-app-sans", subsets: ["latin", "latin-ext"] });
+const appMono = JetBrains_Mono({ variable: "--font-app-mono", subsets: ["latin", "latin-ext"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — Nem hivatalos Neptun mobilalkalmazás`,
-    template: `%s — ${site.name}`,
+    default: `${site.name} · Nem hivatalos Neptun mobilalkalmazás`,
+    template: `%s · ${site.name}`,
   },
   description:
     "Ingyenes, nyílt forráskódú Neptun mobil app Androidra. Órarend, jegyek, üzenetek és befizetések egy helyen, reklám és követés nélkül.",
@@ -38,14 +38,14 @@ export const metadata: Metadata = {
     locale: "hu_HU",
     url: site.url,
     siteName: site.name,
-    title: `${site.name} — Nem hivatalos Neptun mobilalkalmazás`,
+    title: `${site.name} · Nem hivatalos Neptun mobilalkalmazás`,
     description:
       "Ingyenes, nyílt forráskódú Neptun mobil app Androidra. Órarend, jegyek, üzenetek és befizetések, reklám és követés nélkül.",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: `${site.name} — ${site.fullName}` }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: `${site.name} · ${site.fullName}` }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — Nem hivatalos Neptun mobilalkalmazás`,
+    title: `${site.name} · Nem hivatalos Neptun mobilalkalmazás`,
     description: "Ingyenes, nyílt forráskódú Neptun mobil app Androidra.",
     images: ["/og.png"],
   },
@@ -82,7 +82,7 @@ const appJsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="hu" className={`${geistSans.variable} ${geistMono.variable} h-full`}>
+    <html lang="hu" className={`${appSans.variable} ${appMono.variable} h-full`}>
       <body className="flex min-h-full flex-col font-sans">
         <script
           type="application/ld+json"

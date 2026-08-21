@@ -73,7 +73,7 @@ export default function PrivacyPage() {
           <p>
             Az alkalmazás a GitHubról tölti le a támogatott intézmények listáját, a letölthető nyelvi
             csomagokat és témákat, valamint innen ellenőrzi, hogy van-e újabb kiadás. Ezek a kérések
-            nem tartalmaznak azonosításra alkalmas adatot, de a GitHub — mint minden webkiszolgáló —
+            nem tartalmaznak azonosításra alkalmas adatot, de a GitHub (mint minden webkiszolgáló)
             láthatja a kérés IP-címét. Erre a GitHub adatvédelmi tájékoztatója vonatkozik.
           </p>
           <h3>5.3 Google Play</h3>
@@ -89,10 +89,10 @@ export default function PrivacyPage() {
             az nem hagyja el a böngésződet.
           </p>
           <p>
-            A demó csak akkor indul el, ha rákattintasz — az oldal megnyitása önmagában semmit nem
+            A demó csak akkor indul el, ha rákattintasz. Az oldal megnyitása önmagában semmit nem
             tölt le. Indításkor a Flutter grafikus motorját a Google www.gstatic.com címéről, egy
             betűtípust a fonts.gstatic.com címről, a nyelvek és témák listáját pedig a GitHubról
-            tölti be. Ezek a kiszolgálók — mint minden webkiszolgáló — láthatják a kérés IP-címét,
+            tölti be. Ezek a kiszolgálók (mint minden webkiszolgáló) láthatják a kérés IP-címét,
             amire a Google, illetve a GitHub saját adatvédelmi tájékoztatója vonatkozik.
           </p>
 
@@ -128,13 +128,13 @@ export default function PrivacyPage() {
 
           <h2>7. Jogosultságok és céljuk</h2>
           <ul>
-            <li><strong>Internet</strong> — a Neptun-kiszolgáló elérése</li>
-            <li><strong>Értesítések</strong> — órákra, vizsgákra, befizetési határidőkre figyelmeztetés</li>
-            <li><strong>Pontos ébresztők</strong> — az értesítések időzítése a megfelelő időpontra</li>
-            <li><strong>Rezgés</strong> — visszajelzés a felületen</li>
-            <li><strong>Tárhely</strong> — naptár- és adatexport mentése, ha te kéred</li>
+            <li><strong>Internet</strong>: a Neptun-kiszolgáló elérése</li>
+            <li><strong>Értesítések</strong>: órákra, vizsgákra, befizetési határidőkre figyelmeztetés</li>
+            <li><strong>Pontos ébresztők</strong>: az értesítések időzítése a megfelelő időpontra</li>
+            <li><strong>Rezgés</strong>: visszajelzés a felületen</li>
+            <li><strong>Tárhely</strong>: naptár- és adatexport mentése, ha te kéred</li>
             <li>
-              <strong>Csomagok telepítése</strong> — kizárólag a GitHubról letöltött változatban, a
+              <strong>Csomagok telepítése</strong>: kizárólag a GitHubról letöltött változatban, a
               beépített frissítő működéséhez. A Google Play áruházból telepített változat ezt a
               jogosultságot nem tartalmazza.
             </li>
@@ -149,7 +149,7 @@ export default function PrivacyPage() {
           <h2>9. Gyermekek</h2>
           <p>
             Az alkalmazás felsőoktatásban tanulóknak készült, és nem 13 év alatti gyermekeknek szól.
-            Tudatosan nem gyűjtünk adatot gyermekektől — ahogy senki mástól sem.
+            Tudatosan nem gyűjtünk adatot gyermekektől, ahogy senki mástól sem.
           </p>
 
           <h2>10. A te jogaid (GDPR)</h2>
@@ -225,7 +225,7 @@ export default function PrivacyPage() {
           <p>
             The app downloads the list of supported institutions, the optional language packs and
             themes, and the update check from GitHub. These requests carry no identifying
-            information, but GitHub — like any web server — can see the requesting IP address. That
+            information, but GitHub, like any web server, can see the requesting IP address. That
             is covered by GitHub&rsquo;s own privacy policy.
           </p>
           <h3>5.3 Google Play</h3>
@@ -241,10 +241,10 @@ export default function PrivacyPage() {
             your browser.
           </p>
           <p>
-            It only starts once you click it — merely opening the page downloads nothing. On start it
+            It only starts once you click it. Merely opening the page downloads nothing. On start it
             loads the Flutter graphics engine from Google&rsquo;s www.gstatic.com, a font from
-            fonts.gstatic.com, and the language and theme lists from GitHub. Those servers — like any
-            web server — can see the requesting IP address, which is covered by Google&rsquo;s and
+            fonts.gstatic.com, and the language and theme lists from GitHub. Those servers, like any
+            web server, can see the requesting IP address, which is covered by Google&rsquo;s and
             GitHub&rsquo;s own privacy policies.
           </p>
 
@@ -278,13 +278,13 @@ export default function PrivacyPage() {
 
           <h2>7. Permissions and why they exist</h2>
           <ul>
-            <li><strong>Internet</strong> — to reach the Neptun server</li>
-            <li><strong>Notifications</strong> — reminders for classes, exams and payment deadlines</li>
-            <li><strong>Exact alarms</strong> — to fire those reminders at the right moment</li>
-            <li><strong>Vibration</strong> — interface feedback</li>
-            <li><strong>Storage</strong> — saving a calendar or data export, when you ask for one</li>
+            <li><strong>Internet</strong>: to reach the Neptun server</li>
+            <li><strong>Notifications</strong>: reminders for classes, exams and payment deadlines</li>
+            <li><strong>Exact alarms</strong>: to fire those reminders at the right moment</li>
+            <li><strong>Vibration</strong>: interface feedback</li>
+            <li><strong>Storage</strong>: saving a calendar or data export, when you ask for one</li>
             <li>
-              <strong>Install packages</strong> — only in the build distributed via GitHub, for the
+              <strong>Install packages</strong>: only in the build distributed via GitHub, for the
               in-app updater. The Google Play build does not request this permission.
             </li>
           </ul>
@@ -298,7 +298,7 @@ export default function PrivacyPage() {
           <h2>9. Children</h2>
           <p>
             The app is intended for students in higher education and is not directed at children
-            under 13. We knowingly collect no data from children — nor from anyone else.
+            under 13. We knowingly collect no data from children, nor from anyone else.
           </p>
 
           <h2>10. Your rights (GDPR)</h2>
