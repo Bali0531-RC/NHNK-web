@@ -34,10 +34,10 @@ export function TryPhone() {
 
   return (
     <div className="flex w-full flex-col items-center">
-      <div className="relative w-full max-w-[400px] rounded-[2.6rem] border border-line bg-[#0b0b0d] p-3 shadow-2xl">
+      <div className="relative w-full rounded-[2rem] border border-line-2/60 bg-[#161c1e] p-2.5 shadow-[0_24px_50px_-24px_rgba(28,36,38,0.45)]">
         <div
           ref={screenRef}
-          className="relative overflow-hidden rounded-[2rem] bg-black"
+          className="relative overflow-hidden rounded-[1.5rem] bg-[#0c1112]"
           // Height comes from CSS, not from the measured scale: driving it from state
           // resizes the very element being observed, and the loop never settles.
           style={{ aspectRatio: "9 / 19.5" }}
@@ -45,7 +45,7 @@ export function TryPhone() {
           {on ? (
             <iframe
               src="/demo/index.html"
-              title="NHNK demo"
+              title={t("NHNK demó", "NHNK demo")}
               className="absolute left-0 top-0 origin-top-left border-0"
               style={{
                 width: SCREEN_WIDTH,
@@ -58,38 +58,47 @@ export function TryPhone() {
             <button
               type="button"
               onClick={() => setOn(true)}
-              className="group absolute inset-0 flex flex-col items-center justify-center gap-4 text-center"
-              aria-label={t("Demó indítása", "Start the demo")}
+              className="group absolute inset-0 flex flex-col items-center justify-center gap-3.5 px-5 text-center"
             >
-              <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/25 transition group-hover:border-accent group-hover:bg-accent/10">
-                <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M12 3v9" strokeLinecap="round" />
-                  <path d="M6.5 6.5a8 8 0 1 0 11 0" strokeLinecap="round" />
+              <span className="flex h-14 w-14 items-center justify-center rounded-full border border-white/20 transition-[transform,border-color,background-color] duration-200 group-hover:border-white/60 group-hover:bg-white/5 group-active:scale-95">
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden
+                  className="h-6 w-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                >
+                  <path d="M12 3.5v8.5" strokeLinecap="round" />
+                  <path d="M6.8 6.8a7.4 7.4 0 1 0 10.4 0" strokeLinecap="round" />
                 </svg>
               </span>
-              <span className="px-6 text-base font-bold text-white">
-                {t("Próbáld ki", "Try me out")}
+              <span className="text-[0.9375rem] font-semibold text-white">
+                {t("Demó indítása", "Start the demo")}
               </span>
-              <span className="px-8 text-xs leading-relaxed text-white/45">
+              <span className="text-xs leading-relaxed text-white/50">
                 {t(
-                  "Valódi app, kitalált mintaadatokkal. Nem kell belépni.",
-                  "The real app with fictional sample data. No sign-in needed.",
+                  "A valódi app, kitalált mintaadatokkal. Nem kell belépni.",
+                  "The real app with made-up sample data. No sign-in needed.",
                 )}
               </span>
             </button>
           )}
         </div>
-        <div className="mx-auto mt-3 h-1 w-24 rounded-full bg-white/15" />
+        <div aria-hidden className="mx-auto mt-2.5 h-1 w-20 rounded-full bg-white/15" />
       </div>
 
-      {on && (
-        <p className="mt-4 max-w-xs text-center text-xs leading-relaxed text-muted">
-          {t(
-            "Demó mód: minden adat kitalált, és semmi nem megy a Neptun felé.",
-            "Demo mode: every figure is made up and nothing is sent to Neptun.",
-          )}
-        </p>
-      )}
+      <p className="mt-4 max-w-[34ch] text-center text-xs leading-relaxed text-muted">
+        {on
+          ? t(
+              "Demó mód: minden adat kitalált, és semmi nem megy a Neptun felé.",
+              "Demo mode: every figure is made up and nothing is sent to Neptun.",
+            )
+          : t(
+              "Az alkalmazás böngészőben futó változata.",
+              "The browser build of the application.",
+            )}
+      </p>
     </div>
   );
 }

@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Prebuilt Flutter web bundle. Vendored output, not ours to lint.
+    "public/demo/**",
   ]),
 ]);
 

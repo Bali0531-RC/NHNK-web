@@ -56,21 +56,24 @@ export default function BetaContent() {
   }
 
   const done = state === "added" || state === "already";
+  const failed = state === "error";
 
   return (
-    <div className="mx-auto max-w-3xl px-5 py-16">
-      <h1 className="text-3xl font-black tracking-tight sm:text-4xl">{t.beta.title}</h1>
-      <p className="mt-5 text-[15px] leading-relaxed text-muted">{t.beta.intro}</p>
+    <div className="mx-auto max-w-[46rem] px-5 py-14 sm:px-8 sm:py-20">
+      <h1 className="text-[1.75rem] font-semibold leading-[1.15] tracking-[-0.022em] sm:text-[2.125rem]">
+        {t.beta.title}
+      </h1>
+      <p className="mt-6 max-w-[62ch] text-[0.9375rem] leading-[1.75] text-muted">{t.beta.intro}</p>
 
-      <div className="mt-6 rounded-xl border border-line bg-surface p-5">
-        <p className="text-sm leading-relaxed text-muted">{t.beta.googleNote}</p>
-      </div>
+      <p className="mt-6 max-w-[62ch] border-l-2 border-line-2 py-1 pl-5 text-[0.875rem] leading-[1.7] text-muted">
+        {t.beta.googleNote}
+      </p>
 
-      <form onSubmit={submit} className="mt-8">
-        <label htmlFor="email" className="block text-sm font-semibold">
+      <form onSubmit={submit} noValidate className="mt-10">
+        <label htmlFor="email" className="block text-sm font-medium text-ink">
           {t.beta.emailLabel}
         </label>
-        <div className="mt-2 flex flex-col gap-3 sm:flex-row">
+        <div className="mt-2 flex flex-col gap-2.5 sm:flex-row">
           <input
             id="email"
             type="email"
@@ -81,12 +84,16 @@ export default function BetaContent() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder={t.beta.emailPlaceholder}
-            className="flex-1 rounded-lg border border-line bg-surface px-4 py-3 text-[15px] outline-none focus:border-accent"
+            aria-invalid={failed || undefined}
+            aria-describedby={message ? "email-status" : undefined}
+            className={`flex-1 rounded-md border bg-surface px-3.5 py-2.5 text-[0.9375rem] text-ink outline-none transition-colors duration-200 placeholder:text-muted/70 ${
+              failed ? "border-danger" : "border-line-2 focus:border-accent"
+            }`}
           />
           <button
             type="submit"
             disabled={state === "sending"}
-            className="rounded-lg bg-accent px-6 py-3 text-[15px] font-bold text-black disabled:opacity-60"
+            className="rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-bg transition-[transform,opacity] duration-200 hover:opacity-90 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-55"
           >
             {state === "sending" ? t.beta.submitting : t.beta.submit}
           </button>
@@ -108,33 +115,47 @@ export default function BetaContent() {
 
       {message && (
         <p
+          id="email-status"
           role="status"
-          className={`mt-4 text-sm ${done ? "text-accent" : "text-red-400"}`}
+          className={`mt-3.5 max-w-[62ch] border-l-2 py-1 pl-4 text-sm leading-relaxed ${
+            done ? "border-accent text-ink" : "border-danger text-danger"
+          }`}
         >
           {message}
         </p>
       )}
 
-      <p className="mt-6 text-xs leading-relaxed text-muted">
+      <p className="mt-6 max-w-[62ch] text-xs leading-relaxed text-muted">
         {t.beta.privacyNote}{" "}
-        <a href={`mailto:${site.contactEmail}`} className="text-accent hover:underline">
+        <a
+          href={`mailto:${site.contactEmail}`}
+          className="text-accent underline underline-offset-2"
+        >
           {site.contactEmail}
         </a>
       </p>
 
-      <h2 className="mt-14 text-xl font-bold tracking-tight">{t.beta.stepsTitle}</h2>
-      <ol className="mt-5 grid gap-3">
+      <h2 className="mt-16 text-lg font-semibold tracking-[-0.015em]">{t.beta.stepsTitle}</h2>
+      <ol className="mt-6">
         {t.beta.steps.map((step, i) => (
-          <li key={i} className="rounded-xl border border-line bg-surface p-4 text-sm text-muted">
-            <span className="mr-2 font-bold text-accent">{i + 1}.</span>
-            {step}
+          <li
+            key={i}
+            className="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-2 border-t border-line py-4 last:border-b"
+          >
+            <span aria-hidden className="tnum font-mono text-xs text-muted">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span className="max-w-[58ch] text-[0.9375rem] leading-[1.7] text-muted">{step}</span>
           </li>
         ))}
       </ol>
 
-      <div className="mt-14 border-t border-line pt-6">
-        <Link href={routes.home} className="text-sm text-accent hover:underline">
-          &larr; {t.legal.backHome}
+      <div className="mt-16 border-t border-line pt-6">
+        <Link
+          href={routes.home}
+          className="text-sm font-medium text-accent underline decoration-line-2 underline-offset-4 transition-colors duration-200 hover:decoration-accent"
+        >
+          {t.legal.backHome}
         </Link>
       </div>
     </div>

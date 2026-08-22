@@ -9,84 +9,92 @@ import { site } from "@/lib/site";
 export function Footer() {
   const { t } = useLanguage();
 
+  const project = [
+    { label: t.footer.sourceCode, href: site.repo, external: true },
+    { label: t.footer.reportBug, href: site.issues, external: true },
+    { label: t.footer.license, href: site.license, external: true },
+    { label: t.nav.donate, href: routes.donate, external: false },
+  ];
+
+  const legal = [
+    { label: t.nav.privacy, href: routes.privacy },
+    { label: t.nav.terms, href: routes.terms },
+  ];
+
   return (
-    <footer className="mt-24 border-t border-line bg-surface/40">
-      <div className="mx-auto max-w-6xl px-5 py-14">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+    <footer className="mt-auto border-t border-line">
+      <div className="mx-auto max-w-[76rem] px-5 py-12 sm:px-8">
+        <div className="grid gap-10 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-16">
           <div>
             <div className="flex items-center gap-2.5">
-              <Image src="/logo.png" alt="" width={32} height={32} className="h-8 w-8" />
-              <span className="text-[15px] font-bold">{site.name}</span>
+              <Image src="/logo.png" alt="" width={28} height={28} className="h-7 w-7" />
+              <span className="text-sm font-semibold tracking-[-0.01em]">{site.name}</span>
             </div>
-            <p className="mt-3 text-sm leading-relaxed text-muted">{t.footer.tagline}</p>
+            <p className="mt-3 max-w-[38ch] text-sm leading-relaxed text-muted">
+              {t.footer.tagline}
+            </p>
+            <a
+              href={`mailto:${site.contactEmail}`}
+              className="mt-4 inline-block font-mono text-xs text-accent underline decoration-line-2 underline-offset-4 transition-colors duration-200 hover:decoration-accent"
+            >
+              {site.contactEmail}
+            </a>
           </div>
 
-          <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-ink">
-              {t.footer.project}
-            </h3>
-            <ul className="mt-3 space-y-2 text-sm">
-              <li>
-                <a href={site.repo} className="text-muted hover:text-accent" target="_blank" rel="noopener noreferrer">
-                  {t.footer.sourceCode}
-                </a>
-              </li>
-              <li>
-                <a href={site.issues} className="text-muted hover:text-accent" target="_blank" rel="noopener noreferrer">
-                  {t.footer.reportBug}
-                </a>
-              </li>
-              <li>
-                <Link href={routes.donate} className="text-muted hover:text-accent">
-                  {t.nav.donate}
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {/* Two short groups instead of a four-column link farm. */}
+          <div className="grid grid-cols-2 gap-x-14 gap-y-8 sm:gap-x-20">
+            <div>
+              <h2 className="eyebrow">{t.footer.project}</h2>
+              <ul className="mt-3 space-y-2">
+                {project.map((l) => (
+                  <li key={l.label}>
+                    {l.external ? (
+                      <a
+                        href={l.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-muted transition-colors duration-200 hover:text-accent"
+                      >
+                        {l.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={l.href}
+                        className="text-sm text-muted transition-colors duration-200 hover:text-accent"
+                      >
+                        {l.label}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-ink">
-              {t.footer.legal}
-            </h3>
-            <ul className="mt-3 space-y-2 text-sm">
-              <li>
-                <Link href={routes.privacy} className="text-muted hover:text-accent">
-                  {t.nav.privacy}
-                </Link>
-              </li>
-              <li>
-                <Link href={routes.terms} className="text-muted hover:text-accent">
-                  {t.nav.terms}
-                </Link>
-              </li>
-              <li>
-                <a href={site.license} className="text-muted hover:text-accent" target="_blank" rel="noopener noreferrer">
-                  {t.footer.license}
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-ink">
-              {t.footer.contact}
-            </h3>
-            <ul className="mt-3 space-y-2 text-sm">
-              <li>
-                <a href={`mailto:${site.contactEmail}`} className="text-muted hover:text-accent">
-                  {site.contactEmail}
-                </a>
-              </li>
-            </ul>
+            <div>
+              <h2 className="eyebrow">{t.footer.legal}</h2>
+              <ul className="mt-3 space-y-2">
+                {legal.map((l) => (
+                  <li key={l.label}>
+                    <Link
+                      href={l.href}
+                      className="text-sm text-muted transition-colors duration-200 hover:text-accent"
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
         <div className="mt-12 border-t border-line pt-6">
-          <p className="text-xs leading-relaxed text-muted">
-            {site.name} ({site.fullName}) &mdash;{" "}
-            {t.footer.builtBy} {site.author} ({site.authorHandle}). MIT.
+          <p className="font-mono text-xs text-muted">
+            {site.fullName}. {t.footer.builtBy} {site.author} ({site.authorHandle}). MIT.
           </p>
-          <p className="mt-2 text-xs leading-relaxed text-muted/80">{t.footer.trademark}</p>
+          <p className="mt-2.5 max-w-[80ch] text-xs leading-relaxed text-muted">
+            {t.footer.trademark}
+          </p>
         </div>
       </div>
     </footer>

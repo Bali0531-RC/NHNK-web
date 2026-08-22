@@ -1,13 +1,31 @@
-import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { site } from "@/lib/site";
 
-const appSans = Plus_Jakarta_Sans({ variable: "--font-app-sans", subsets: ["latin", "latin-ext"] });
-const appMono = JetBrains_Mono({ variable: "--font-app-mono", subsets: ["latin", "latin-ext"] });
+const appSans = IBM_Plex_Sans({
+  variable: "--font-app-sans",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const appMono = IBM_Plex_Mono({
+  variable: "--font-app-mono",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+});
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f6f7f7" },
+    { media: "(prefers-color-scheme: dark)", color: "#12191a" },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -89,8 +107,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{ __html: JSON.stringify(appJsonLd) }}
         />
         <LanguageProvider>
+          <a href="#tartalom" className="skip-link">
+            Ugrás a tartalomra
+          </a>
           <Nav />
-          <main className="flex-1">{children}</main>
+          <main id="tartalom" className="flex-1">
+            {children}
+          </main>
           <Footer />
         </LanguageProvider>
       </body>

@@ -38,235 +38,289 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="hero-glow border-b border-line/60">
-        <div className="mx-auto max-w-6xl px-5 py-20 sm:py-28">
-          <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center rounded-full border border-line bg-surface px-3 py-1 text-xs font-medium text-muted">
-              {t.hero.badge}
-            </span>
-            <h1 className="mt-6 text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
+      {/*
+        Hero. Deliberately asymmetric and left-aligned, with the running demo carrying
+        the right-hand column: the product is the strongest thing on the page, so it
+        goes above the fold rather than into a section of its own further down.
+      */}
+      <section className="border-b border-line">
+        <div className="mx-auto grid max-w-[76rem] gap-14 px-5 py-16 sm:px-8 lg:grid-cols-[1.08fr_minmax(0,0.92fr)] lg:items-center lg:gap-16 lg:py-24">
+          <div>
+            <h1 className="max-w-[16ch] text-[2rem] font-semibold leading-[1.08] tracking-[-0.025em] sm:text-[2.5rem] lg:text-[3rem]">
               {t.hero.title}
             </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
-              {t.hero.subtitle}
+
+            <p className="mt-6 max-w-[48ch] text-[1.0625rem] leading-[1.65] text-muted">
+              {t.hero.lede}
             </p>
 
-            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <div className="mt-9 flex flex-wrap items-center gap-x-3 gap-y-3">
               <a
                 href={site.releases}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full rounded-xl bg-accent px-6 py-3 text-sm font-bold text-bg transition hover:opacity-90 sm:w-auto"
+                className="rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-bg transition-[transform,opacity] duration-200 hover:opacity-90 active:translate-y-px"
               >
                 {t.hero.ctaDownload}
               </a>
+
               {site.playStoreUrl ? (
                 <a
                   href={site.playStoreUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full rounded-xl border border-line bg-surface px-6 py-3 text-sm font-bold text-ink transition hover:border-accent sm:w-auto"
+                  className="rounded-md border border-line-2 px-5 py-2.5 text-sm font-semibold text-ink transition-[transform,border-color] duration-200 hover:border-accent active:translate-y-px"
                 >
                   {t.hero.ctaPlay}
                 </a>
               ) : (
                 <Link
                   href={routes.beta}
-                  className="w-full rounded-xl border border-dashed border-line px-6 py-3 text-center text-sm font-semibold text-muted transition hover:border-accent hover:text-ink sm:w-auto"
+                  className="rounded-md border border-line-2 px-5 py-2.5 text-sm font-semibold text-ink transition-[transform,border-color] duration-200 hover:border-accent active:translate-y-px"
                 >
                   {t.hero.ctaPlaySoon}
                 </Link>
               )}
+
               <a
                 href={site.repo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full rounded-xl px-6 py-3 text-sm font-semibold text-muted transition hover:text-ink sm:w-auto"
+                className="px-1 text-sm font-medium text-muted underline decoration-line-2 underline-offset-4 transition-colors duration-200 hover:text-accent hover:decoration-accent"
               >
                 {t.hero.ctaSource}
               </a>
             </div>
 
-            <p className="mt-6 text-xs text-muted/80">{t.hero.unofficial}</p>
+            {/* Plain facts, set in mono. Replaces the pill badge that used to sit above the title. */}
+            <dl className="mt-10 flex flex-wrap gap-x-8 gap-y-4 border-t border-line pt-6">
+              {t.hero.specs.map((spec) => (
+                <div key={spec.k}>
+                  <dt className="eyebrow">{spec.k}</dt>
+                  <dd className="tnum mt-1 font-mono text-sm text-ink">{spec.v}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <p className="mt-6 text-xs leading-relaxed text-muted">{t.hero.unofficial}</p>
+          </div>
+
+          <div id="kiprobalas" className="flex scroll-mt-24 justify-center lg:justify-end">
+            <div className="w-full max-w-[288px]">
+              <TryPhone />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Try it */}
-      <section id="kiprobalas" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-14">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{t.tryIt.title}</h2>
-            <p className="mt-3 text-[15px] leading-relaxed text-muted">{t.tryIt.body}</p>
-            <ul className="mt-6 space-y-3">
-              {t.tryIt.points.map((point) => (
-                <li key={point} className="flex gap-3">
-                  <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                  <p className="text-sm leading-relaxed text-muted">{point}</p>
+      {/* What the demo is. Sits directly under the phone it refers to. */}
+      <section className="border-b border-line">
+        <div className="mx-auto max-w-[76rem] px-5 py-16 sm:px-8 lg:py-20">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,16rem)_minmax(0,1fr)] lg:gap-16">
+            <h2 className="text-lg font-semibold tracking-[-0.015em] lg:pt-1">{t.tryIt.title}</h2>
+            <div className="max-w-[62ch]">
+              <p className="text-[0.9375rem] leading-[1.75] text-muted">{t.tryIt.body}</p>
+              <ul className="mt-5 space-y-2.5">
+                {t.tryIt.points.map((point) => (
+                  <li
+                    key={point}
+                    className="relative pl-5 text-[0.9375rem] leading-[1.75] text-muted before:absolute before:left-0 before:top-[0.85em] before:h-px before:w-2.5 before:bg-line-2"
+                  >
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why the project exists. Prose, in the author's own voice, on a narrow measure. */}
+      <section className="border-b border-line">
+        <div className="mx-auto max-w-[76rem] px-5 py-16 sm:px-8 lg:py-20">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,16rem)_minmax(0,1fr)] lg:gap-16">
+            <h2 className="text-lg font-semibold tracking-[-0.015em] lg:pt-1">{t.why.title}</h2>
+            <div className="max-w-[62ch] space-y-5">
+              {t.why.body.map((paragraph, i) => (
+                <p key={i} className="text-[0.9375rem] leading-[1.75] text-muted">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/*
+        Features as a definition list rather than a grid of equal cards. Rows can breathe
+        to whatever length the text actually needs, which is what stops them reading as
+        six interchangeable blurbs.
+      */}
+      <section id="funkciok" className="scroll-mt-24 border-b border-line">
+        <div className="mx-auto max-w-[76rem] px-5 py-16 sm:px-8 lg:py-20">
+          <h2 className="text-lg font-semibold tracking-[-0.015em]">{t.features.title}</h2>
+          <p className="mt-2 text-[0.9375rem] text-muted">{t.features.subtitle}</p>
+
+          <dl className="mt-10">
+            {t.features.items.map((item) => (
+              <div
+                key={item.title}
+                className="grid gap-x-16 gap-y-2 border-t border-line py-6 last:border-b lg:grid-cols-[minmax(0,16rem)_minmax(0,1fr)]"
+              >
+                <dt className="text-[0.9375rem] font-semibold text-ink">{item.title}</dt>
+                <dd className="max-w-[62ch] text-[0.9375rem] leading-[1.75] text-muted">
+                  {item.body}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      {/* Legal disclaimer. A ruled note, not a tinted card. */}
+      <section className="border-b border-line">
+        <div className="mx-auto max-w-[76rem] px-5 py-16 sm:px-8 lg:py-20">
+          <div className="max-w-[68ch] border-l-2 border-danger bg-danger-soft py-5 pl-5 pr-5 sm:pl-6">
+            <h2 className="text-[0.9375rem] font-semibold text-danger">{t.disclaimer.title}</h2>
+            <ul className="mt-4 space-y-3">
+              {t.disclaimer.points.map((point, i) => (
+                <li
+                  key={i}
+                  className="relative pl-5 text-[0.875rem] leading-[1.75] text-muted before:absolute before:left-0 before:top-[0.85em] before:h-px before:w-2.5 before:bg-danger/50"
+                >
+                  <RichText text={point} />
                 </li>
               ))}
             </ul>
           </div>
-          <div className="flex justify-center">
-            <TryPhone />
-          </div>
         </div>
       </section>
 
-      {/* Disclaimer */}
-      <section className="mx-auto max-w-4xl px-5 py-14">
-        <div className="rounded-2xl border border-danger/30 bg-danger/5 p-6 sm:p-8">
-          <h2 className="flex items-center gap-2 text-base font-bold text-danger">
-            <span aria-hidden>&#9888;</span>
-            {t.disclaimer.title}
-          </h2>
-          <ul className="mt-5 space-y-3.5">
-            {t.disclaimer.points.map((point, i) => (
-              <li key={i} className="flex gap-3">
-                <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-danger/70" />
-                <p className="text-sm leading-relaxed text-muted">
-                  <RichText text={point} />
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      {/* Download. Weighted two-up: GitHub is the route that actually works today. */}
+      <section id="letoltes" className="scroll-mt-24 border-b border-line">
+        <div className="mx-auto max-w-[76rem] px-5 py-16 sm:px-8 lg:py-20">
+          <h2 className="text-lg font-semibold tracking-[-0.015em]">{t.download.title}</h2>
+          <p className="mt-2 text-[0.9375rem] text-muted">{t.download.subtitle}</p>
 
-      {/* Features */}
-      <section id="funkciok" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-14">
-        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{t.features.title}</h2>
-        <p className="mt-2 text-muted">{t.features.subtitle}</p>
-
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {t.features.items.map((item) => (
-            <div
-              key={item.title}
-              className="rounded-2xl border border-line bg-surface p-6 transition hover:border-accent/40"
-            >
-              <h3 className="text-[15px] font-semibold text-ink">{item.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{item.body}</p>
+          <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_1fr] lg:gap-8">
+            <div className="flex flex-col rounded-lg border border-line-2 bg-surface p-6 sm:p-7">
+              <h3 className="text-base font-semibold">{t.download.githubTitle}</h3>
+              <p className="mt-2.5 max-w-[52ch] flex-1 text-[0.9375rem] leading-[1.7] text-muted">
+                {t.download.githubBody}
+              </p>
+              <a
+                href={site.releases}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 rounded-md bg-accent px-5 py-2.5 text-center text-sm font-semibold text-bg transition-[transform,opacity] duration-200 hover:opacity-90 active:translate-y-px"
+              >
+                {t.hero.ctaDownload}
+              </a>
+              <p className="mt-5 text-xs leading-relaxed text-muted">{t.download.abiHint}</p>
+              <p className="mt-1.5 text-xs leading-relaxed text-muted">
+                {t.download.obtainiumHint}{" "}
+                <a
+                  href={site.obtainium}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent underline underline-offset-2"
+                >
+                  Obtainium
+                </a>
+              </p>
             </div>
-          ))}
-        </div>
-      </section>
 
-      {/* Download */}
-      <section id="letoltes" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-14">
-        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{t.download.title}</h2>
-        <p className="mt-2 text-muted">{t.download.subtitle}</p>
+            <div className="flex flex-col rounded-lg border border-line p-6 sm:p-7">
+              <h3 className="text-base font-semibold">{t.download.playTitle}</h3>
+              <p className="mt-2.5 max-w-[52ch] flex-1 text-[0.9375rem] leading-[1.7] text-muted">
+                {t.download.playBody
+                  .replace(/{required}/g, String(site.closedTest.required))
+                  .replace(/{days}/g, String(site.closedTest.days))}
+              </p>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-2">
-          <div className="flex flex-col rounded-2xl border border-accent/40 bg-surface p-7">
-            <h3 className="text-lg font-bold">{t.download.githubTitle}</h3>
-            <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{t.download.githubBody}</p>
-            <a
-              href={site.releases}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 rounded-xl bg-accent px-5 py-2.5 text-center text-sm font-bold text-bg transition hover:opacity-90"
-            >
-              {t.hero.ctaDownload}
-            </a>
-            <p className="mt-4 text-xs text-muted">{t.download.abiHint}</p>
-            <p className="mt-1.5 text-xs text-muted">
-              {t.download.obtainiumHint}{" "}
-              <a
-                href={site.obtainium}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-accent underline underline-offset-2"
-              >
-                Obtainium
-              </a>
-            </p>
-          </div>
-
-          <div className="flex flex-col rounded-2xl border border-line bg-surface p-7">
-            <h3 className="text-lg font-bold">{t.download.playTitle}</h3>
-            <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
-              {t.download.playBody
-                .replace(/{required}/g, String(site.closedTest.required))
-                .replace(/{days}/g, String(site.closedTest.days))}
-            </p>
-            {!site.playStoreUrl && (
-              <div className="mt-5">
-                {underReview ? (
-                  <>
-                    <div className="flex items-center gap-2">
-                      <span className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-accent" />
-                      <span className="text-xs font-bold text-ink">{t.download.playReview}</span>
-                    </div>
-                    <p className="mt-2 text-xs leading-relaxed text-muted">
-                      {t.download.playReviewNote}
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <div className="flex items-baseline justify-between text-xs text-muted">
-                      <span>{t.hero.ctaPlaySoon}</span>
-                      <span className="font-bold text-ink">
-                        {t.download.playDayProgress
-                          .replace("{day}", String(dayNumber))
-                          .replace("{days}", String(site.closedTest.days))}
-                      </span>
-                    </div>
-                    <div
-                      className="mt-2 h-1.5 overflow-hidden rounded-full bg-line"
-                      role="progressbar"
-                      aria-valuenow={dayNumber}
-                      aria-valuemin={0}
-                      aria-valuemax={site.closedTest.days}
-                    >
+              {!site.playStoreUrl && (
+                <div className="mt-6">
+                  {underReview ? (
+                    <>
+                      <div className="flex items-center gap-2">
+                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                        <span className="eyebrow text-ink">{t.download.playReview}</span>
+                      </div>
+                      <p className="mt-2.5 text-xs leading-relaxed text-muted">
+                        {t.download.playReviewNote}
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex items-baseline justify-between gap-4">
+                        <span className="eyebrow">{t.hero.ctaPlaySoon}</span>
+                        <span className="tnum font-mono text-xs text-ink">
+                          {t.download.playDayProgress
+                            .replace("{day}", String(dayNumber))
+                            .replace("{days}", String(site.closedTest.days))}
+                        </span>
+                      </div>
                       <div
-                        className="h-full rounded-full bg-accent transition-[width] duration-700"
-                        style={{ width: `${elapsed * 100}%` }}
-                      />
-                    </div>
-                    <p className="mt-2 text-xs text-muted">
-                      {t.download.playCountdown
-                        .replace("{days}", String(site.closedTest.days))
-                        .replace("{date}", closedTestEnd)}
-                    </p>
-                  </>
-                )}
-              </div>
-            )}
-            {site.playStoreUrl ? (
-              <a
-                href={site.playStoreUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-6 rounded-xl border border-line px-5 py-2.5 text-center text-sm font-bold text-ink transition hover:border-accent"
-              >
-                {t.hero.ctaPlay}
-              </a>
-            ) : (
-              <Link
-                href={routes.beta}
-                className="mt-5 rounded-xl border border-line px-5 py-2.5 text-center text-sm font-bold text-ink transition hover:border-accent"
-              >
-                {t.download.playCta}
-              </Link>
-            )}
+                        className="mt-2.5 h-1 overflow-hidden rounded-sm bg-surface-2"
+                        role="progressbar"
+                        aria-valuenow={dayNumber}
+                        aria-valuemin={0}
+                        aria-valuemax={site.closedTest.days}
+                      >
+                        <div
+                          className="h-full origin-left rounded-sm bg-accent transition-[width] duration-700"
+                          style={{ width: `${elapsed * 100}%` }}
+                        />
+                      </div>
+                      <p className="mt-2.5 text-xs leading-relaxed text-muted">
+                        {t.download.playCountdown
+                          .replace("{days}", String(site.closedTest.days))
+                          .replace("{date}", closedTestEnd)}
+                      </p>
+                    </>
+                  )}
+                </div>
+              )}
+
+              {site.playStoreUrl ? (
+                <a
+                  href={site.playStoreUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 rounded-md border border-line-2 px-5 py-2.5 text-center text-sm font-semibold text-ink transition-[transform,border-color] duration-200 hover:border-accent active:translate-y-px"
+                >
+                  {t.hero.ctaPlay}
+                </a>
+              ) : (
+                <Link
+                  href={routes.beta}
+                  className="mt-6 rounded-md border border-line-2 px-5 py-2.5 text-center text-sm font-semibold text-ink transition-[transform,border-color] duration-200 hover:border-accent active:translate-y-px"
+                >
+                  {t.download.playCta}
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Privacy teaser */}
-      <section className="mx-auto max-w-6xl px-5 py-14">
-        <div className="rounded-2xl border border-line bg-surface-2 p-8 sm:p-10">
-          <h2 className="text-2xl font-bold tracking-tight">{t.privacyTeaser.title}</h2>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
-            {t.privacyTeaser.body}
-          </p>
-          <Link
-            href={routes.privacy}
-            className="mt-6 inline-block rounded-xl border border-line px-5 py-2.5 text-sm font-semibold transition hover:border-accent hover:text-accent"
-          >
-            {t.privacyTeaser.cta}
-          </Link>
+      {/* Privacy, inline rather than boxed. */}
+      <section>
+        <div className="mx-auto max-w-[76rem] px-5 py-16 sm:px-8 lg:py-20">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,16rem)_minmax(0,1fr)] lg:gap-16">
+            <h2 className="text-lg font-semibold tracking-[-0.015em] lg:pt-1">
+              {t.privacyTeaser.title}
+            </h2>
+            <div className="max-w-[62ch]">
+              <p className="text-[0.9375rem] leading-[1.75] text-muted">{t.privacyTeaser.body}</p>
+              <Link
+                href={routes.privacy}
+                className="mt-5 inline-block text-sm font-medium text-accent underline decoration-line-2 underline-offset-4 transition-colors duration-200 hover:decoration-accent"
+              >
+                {t.privacyTeaser.cta}
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </>
