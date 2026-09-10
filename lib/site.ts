@@ -10,9 +10,11 @@ export const site = {
   contactEmail: "nhnk@bali0531.hu",
   author: "Turi Balázs",
   authorHandle: "Bali0531",
-  /** Set once the Play listing is live, then the store button turns into a real link. */
-  playStoreUrl: "",
-  /** Search Console HTML-tag token. Empty until verified, which omits the meta tag. */
+  /** Live since the app left closed testing. Setting this swaps every "soon" state
+   * on the site for a real store link and hides the closed-test signup. */
+  playStoreUrl: "https://play.google.com/store/apps/details?id=hu.bali0531.nhnk.app",
+  /** Not needed: bali0531.hu is verified in Search Console as a DNS domain property,
+   * which covers this subdomain. Left empty on purpose, so no meta tag is emitted. */
   googleSiteVerification: "",
   /**
    * Google Play requires a personal developer account to hold `required` opted-in
