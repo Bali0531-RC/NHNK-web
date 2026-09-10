@@ -196,7 +196,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Download. Weighted two-up: GitHub is the route that actually works today. */}
+      {/* Download. GitHub releases and Google Play, with copy matching store availability. */}
       <section id="letoltes" className="scroll-mt-24 border-b border-line">
         <div className="mx-auto max-w-[76rem] px-5 py-16 sm:px-8 lg:py-20">
           <h2 className="text-lg font-semibold tracking-[-0.015em]">{t.download.title}</h2>
@@ -233,9 +233,11 @@ export default function HomePage() {
             <div className="flex flex-col rounded-lg border border-line p-6 sm:p-7">
               <h3 className="text-base font-semibold">{t.download.playTitle}</h3>
               <p className="mt-2.5 max-w-[52ch] flex-1 text-[0.9375rem] leading-[1.7] text-muted">
-                {t.download.playBody
-                  .replace(/{required}/g, String(site.closedTest.required))
-                  .replace(/{days}/g, String(site.closedTest.days))}
+                {site.playStoreUrl
+                  ? t.download.playBodyLive
+                  : t.download.playBody
+                      .replace(/{required}/g, String(site.closedTest.required))
+                      .replace(/{days}/g, String(site.closedTest.days))}
               </p>
 
               {!site.playStoreUrl && (

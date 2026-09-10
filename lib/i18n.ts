@@ -31,6 +31,7 @@ type Dict = {
     githubBody: string;
     playTitle: string;
     playBody: string;
+    playBodyLive: string;
     abiHint: string;
     obtainiumHint: string;
     playDayProgress: string;
@@ -179,6 +180,8 @@ export const dict: Record<Lang, Dict> = {
       playTitle: "Google Play",
       playBody:
         "Jelenleg zárt tesztelés alatt. A Play akkor engedi a nyilvános megjelenést, ha {required} tesztelő {days} napon át folyamatosan használja az appot. A számláló csak a {required}. tesztelőtől indul.",
+      playBodyLive:
+        "Az NHNK már ingyenesen letölthető a Google Play Áruházból, tesztelői jelentkezés nélkül. A frissítéseket a Play Áruház kezeli.",
       abiHint: "A legtöbb mai telefonhoz az arm64-v8a csomag kell.",
       obtainiumHint: "Automatikus frissítéshez add hozzá a repót az Obtainiumhoz.",
       playDayProgress: "{day}. / {days}. nap",
@@ -354,6 +357,8 @@ export const dict: Record<Lang, Dict> = {
       playTitle: "Google Play",
       playBody:
         "Currently in closed testing. Play only opens up public release once {required} testers have used the app for {days} consecutive days. The countdown starts at the {required}th tester.",
+      playBodyLive:
+        "NHNK is now available for free on Google Play, with no tester sign-up required. Updates are handled by Google Play.",
       abiHint: "Most current phones need the arm64-v8a package.",
       obtainiumHint: "For automatic updates, add the repository to Obtainium.",
       playDayProgress: "day {day} of {days}",
