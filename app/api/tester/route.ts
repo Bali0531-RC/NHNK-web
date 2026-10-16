@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { site } from "@/lib/site";
 import { addTester, isPlausibleEmail, normaliseEmail } from "@/lib/testers";
 
 export const runtime = "nodejs";
@@ -31,6 +32,10 @@ function clientIp(req: Request): string {
 }
 
 export async function POST(req: Request) {
+  if (site.playStoreUrl) {
+    return NextResponse.json({ error: "closed-test-ended" }, { status: 410 });
+  }
+
   // Same-origin only: this endpoint is called from our own form.
   const origin = req.headers.get("origin");
   const host = req.headers.get("host");

@@ -58,6 +58,37 @@ export default function BetaContent() {
   const done = state === "added" || state === "already";
   const failed = state === "error";
 
+  if (site.playStoreUrl) {
+    return (
+      <div className="mx-auto max-w-[46rem] px-5 py-14 sm:px-8 sm:py-20">
+        <h1 className="text-[1.75rem] font-semibold leading-[1.15] tracking-[-0.022em] sm:text-[2.125rem]">
+          {t.beta.title}
+        </h1>
+        <p className="mt-6 max-w-[62ch] text-[0.9375rem] leading-[1.75] text-muted">
+          {t.download.playBodyLive}
+        </p>
+        <div className="mt-8">
+          <a
+            href={site.playStoreUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-bg transition-[transform,opacity] duration-200 hover:opacity-90 active:translate-y-px"
+          >
+            {t.hero.ctaPlay}
+          </a>
+        </div>
+        <div className="mt-16 border-t border-line pt-6">
+          <Link
+            href={routes.home}
+            className="text-sm font-medium text-accent underline decoration-line-2 underline-offset-4 transition-colors duration-200 hover:decoration-accent"
+          >
+            {t.legal.backHome}
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="mx-auto max-w-[46rem] px-5 py-14 sm:px-8 sm:py-20">
       <h1 className="text-[1.75rem] font-semibold leading-[1.15] tracking-[-0.022em] sm:text-[2.125rem]">

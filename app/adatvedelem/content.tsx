@@ -98,32 +98,14 @@ export default function PrivacyPage() {
 
           <h2>6. Jelentkezés a zárt tesztre</h2>
           <p>
-            Ez a pont <strong>kizárólag a weboldalra</strong> vonatkozik, az alkalmazásra nem. Ha a
-            zárt teszthez a weboldalon megadod az e-mail-címedet, azt a saját kiszolgálónkon tároljuk.
+            Ez a pont <strong>kizárólag a weboldalra</strong> vonatkozik, az alkalmazásra nem. A
+            Google Play zárt tesztidőszaka lezárult, az alkalmazás nyilvánosan elérhető az
+            áruházban, így a jelentkezési űrlap már nem fogad és nem tárol új e-mail-címeket.
           </p>
-          <ul>
-            <li>
-              <strong>Mit tárolunk:</strong> az e-mail-címet, a jelentkezés időpontját és azt, hogy
-              magyar vagy angol nyelven jelentkeztél. IP-címet nem tárolunk.
-            </li>
-            <li>
-              <strong>Miért:</strong> hogy fel tudjunk venni a Google Play tesztelői listájára. Másra
-              nem használjuk, hírlevelet nem küldünk.
-            </li>
-            <li>
-              <strong>Jogalap:</strong> a te hozzájárulásod, amelyet a cím megadásával adsz meg.
-            </li>
-            <li>
-              <strong>Meddig:</strong> a zárt teszt végéig, utána töröljük. Kérésre bármikor
-              hamarabb is töröljük.
-            </li>
-            <li>
-              <strong>Kinek adjuk tovább:</strong> a címet a Google Play Console-ba töltjük fel, hogy
-              a tesztelői meghívó kimehessen. Rajta kívül senkinek.
-            </li>
-          </ul>
           <p>
-            Törlést vagy tájékoztatást a lenti kapcsolati e-mail-címen kérhetsz.
+            A zárt teszt ideje alatt megadott e-mail-címeket kizárólag a Google Play tesztelői
+            meghívó kiküldéséhez használtuk (IP-cím és hírlevél nélkül), és a teszt lezárultával
+            törlésre kerültek. További kérdés esetén a lenti kapcsolati e-mail-címen írhatsz.
           </p>
 
           <h2>7. Jogosultságok és céljuk</h2>
@@ -182,8 +164,8 @@ export default function PrivacyPage() {
           </p>
           <p>
             NHNK is an <strong>independent, unofficial</strong> application. It is not affiliated
-            with SDA Informatika Zrt., the developer of the Neptun system, or with any higher
-            education institution.
+            with Campus Codeworks Zrt. (formerly SDA Informatika Zrt.), the developer of the Neptun
+            system, or with any higher education institution.
           </p>
 
           <h2>2. What data the app handles</h2>
@@ -250,31 +232,15 @@ export default function PrivacyPage() {
 
           <h2>6. Signing up for the closed test</h2>
           <p>
-            This section concerns <strong>the website only</strong>, not the app. If you give us your
-            email address to join the closed test, it is stored on our own server.
+            This section concerns <strong>the website only</strong>, not the app. The Google Play
+            closed testing phase has ended and the app is publicly available on the store, so the
+            sign-up form no longer accepts or stores email addresses.
           </p>
-          <ul>
-            <li>
-              <strong>What is stored:</strong> the email address, when you signed up, and whether you
-              signed up in Hungarian or English. No IP address is stored.
-            </li>
-            <li>
-              <strong>Why:</strong> so you can be added to the Google Play tester list. It is used for
-              nothing else, and there is no newsletter.
-            </li>
-            <li>
-              <strong>Legal basis:</strong> your consent, given by submitting the address.
-            </li>
-            <li>
-              <strong>How long:</strong> until the closed test ends, then it is deleted. It can be
-              removed sooner on request.
-            </li>
-            <li>
-              <strong>Who else sees it:</strong> the address is uploaded to the Google Play Console so
-              the tester invitation can be sent. Nobody else.
-            </li>
-          </ul>
-          <p>Write to the contact address below to request deletion or information.</p>
+          <p>
+            Email addresses submitted during the closed test were used solely to send Google Play
+            tester invitations (with no IP logging and no newsletter) and were removed upon
+            completion of the test. Write to the contact address below if you have any questions.
+          </p>
 
           <h2>7. Permissions and why they exist</h2>
           <ul>

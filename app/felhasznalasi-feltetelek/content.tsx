@@ -136,8 +136,9 @@ export default function TermsPage() {
           <h2>2. Unofficial status and trademarks</h2>
           <p>
             NHNK is an <strong>independent, unofficial</strong> application. It is not affiliated
-            with SDA Informatika Zrt., the developer and operator of the Neptun system, or with any
-            higher education institution, and none of them endorse, review or approve it.
+            with Campus Codeworks Zrt. (formerly SDA Informatika Zrt.), the developer and operator
+            of the Neptun system, or with any higher education institution, and none of them
+            endorse, review or approve it.
           </p>
           <p>
             The &ldquo;Neptun&rdquo; name and trademark are the property of their respective owner.
