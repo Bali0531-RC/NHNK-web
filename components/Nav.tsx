@@ -37,6 +37,7 @@ export function Nav() {
   const links = [
     { href: `${routes.home}#funkciok`, label: t.nav.features, match: null },
     { href: `${routes.home}#letoltes`, label: t.nav.download, match: null },
+    { href: routes.stats, label: t.nav.stats, match: routes.stats },
     // The closed test is over, so the signup page stays reachable but stops being
     // advertised. Linking it next to a live store button only confuses people.
     ...(site.playStoreUrl ? [] : [{ href: routes.beta, label: t.nav.beta, match: routes.beta }]),

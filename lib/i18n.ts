@@ -2,6 +2,7 @@ export type Lang = "hu" | "en";
 
 export const routes = {
   home: "/",
+  stats: "/statisztika",
   privacy: "/adatvedelem",
   terms: "/felhasznalasi-feltetelek",
   donate: "/tamogatas",
@@ -9,7 +10,7 @@ export const routes = {
 } as const;
 
 type Dict = {
-  nav: { features: string; download: string; donate: string; privacy: string; terms: string; beta: string };
+  nav: { features: string; download: string; stats: string; donate: string; privacy: string; terms: string; beta: string };
   hero: {
     title: string;
     lede: string;
@@ -89,6 +90,7 @@ export const dict: Record<Lang, Dict> = {
     nav: {
       features: "Funkciók",
       download: "Letöltés",
+      stats: "Statisztika",
       donate: "Támogatás",
       privacy: "Adatvédelem",
       terms: "Feltételek",
@@ -266,6 +268,7 @@ export const dict: Record<Lang, Dict> = {
     nav: {
       features: "Features",
       download: "Download",
+      stats: "Statistics",
       donate: "Donate",
       privacy: "Privacy",
       terms: "Terms",

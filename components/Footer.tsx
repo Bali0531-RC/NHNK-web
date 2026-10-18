@@ -13,6 +13,7 @@ export function Footer() {
     { label: t.footer.sourceCode, href: site.repo, external: true },
     { label: t.footer.reportBug, href: site.issues, external: true },
     { label: t.footer.license, href: site.license, external: true },
+    { label: t.nav.stats, href: routes.stats, external: false },
     { label: t.nav.donate, href: routes.donate, external: false },
   ];
 
