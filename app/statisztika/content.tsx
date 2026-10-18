@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLanguage } from "@/components/LanguageProvider";
 import type { PublicStatsPayload } from "@/lib/statsService";
 
@@ -34,48 +34,6 @@ export default function StatsContent({ initialStats }: { initialStats: PublicSta
   const [refreshing, setRefreshing] = useState(false);
 
   const daily = stats.play.daily;
-  const totalDays = daily.length;
-
-  const [chartMode, setChartMode] = useState<ChartMode>("active");
-  const [rangeStart, setRangeStart] = useState<number>(0);
-  const [rangeEnd, setRangeEnd] = useState<number>(Math.max(0, totalDays - 1));
-  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
-  const [dragStartIdx, setDragStartIdx] = useState<number | null>(null);
-  const [dragCurrentIdx, setDragCurrentIdx] = useState<number | null>(null);
-  const [releaseQuery, setReleaseQuery] = useState("");
-
-  const svgRef = useRef<SVGSVGElement | null>(null);
-
-  async function handleRefresh() {
-    setRefreshing(true);
-    try {
-      const res = await fetch("/api/stats", { cache: "no-store" });
-      if (res.ok) {
-        const fresh = (await res.json()) as PublicStatsPayload;
-        setStats(fresh);
-        setRangeStart(0);
-        setRangeEnd(Math.max(0, fresh.play.daily.length - 1));
-      }
-    } finally {
-      setRefreshing(false);
-    }
-  }
-
-  function applyPreset(days: number | "all") {
-    if (days === "all" || days >= totalDays) {
-      setRangeStart(0);
-      setRangeEnd(Math.max(0, totalDays - 1));
-    } else {
-      setRangeEnd(Math.max(0, totalDays - 1));
-      setRangeStart(Math.max(0, totalDays - days));
-    }
-  }
-
-  const visibleDaily = useMemo(() => {
-    const s = Math.max(0, Math.min(rangeStart, rangeEnd));
-    const e = Math.min(totalDays - 1, Math.max(rangeStart, rangeEnd));
-    return daily.slice(s, e + 1);
-  }, [daily, rangeStart, rangeEnd, totalDays]);
 
   // Cumulative GitHub releases ordered oldest -> newest
   const githubChronological = useMemo(() => {
@@ -98,6 +56,85 @@ export default function StatsContent({ initialStats }: { initialStats: PublicSta
     }, []);
   }, [stats.github.releases]);
 
+  const [chartMode, setChartMode] = useState<ChartMode>("active");
+  const totalPoints = chartMode === "github" ? githubChronological.length : daily.length;
+
+  const [rangeStart, setRangeStart] = useState<number>(0);
+  const [rangeEnd, setRangeEnd] = useState<number>(Math.max(0, daily.length - 1));
+  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const [dragStartIdx, setDragStartIdx] = useState<number | null>(null);
+  const [dragCurrentIdx, setDragCurrentIdx] = useState<number | null>(null);
+  const [releaseQuery, setReleaseQuery] = useState("");
+
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const minimapRef = useRef<HTMLDivElement | null>(null);
+  const minimapDragRef = useRef<{
+    mode: "left" | "right" | "pan";
+    startX: number;
+    initialStart: number;
+    initialEnd: number;
+  } | null>(null);
+
+  const clampedStart = Math.max(0, Math.min(rangeStart, rangeEnd, Math.max(0, totalPoints - 1)));
+  const clampedEnd = Math.min(
+    Math.max(0, totalPoints - 1),
+    Math.max(rangeStart, rangeEnd, clampedStart),
+  );
+  const isZoomed = clampedStart > 0 || clampedEnd < totalPoints - 1;
+
+  function switchChartMode(nextMode: ChartMode) {
+    const nextTotal = nextMode === "github" ? githubChronological.length : daily.length;
+    setChartMode(nextMode);
+    setRangeStart(0);
+    setRangeEnd(Math.max(0, nextTotal - 1));
+    setHoverIndex(null);
+    setDragStartIdx(null);
+    setDragCurrentIdx(null);
+  }
+
+  async function handleRefresh() {
+    setRefreshing(true);
+    try {
+      const res = await fetch("/api/stats", { cache: "no-store" });
+      if (res.ok) {
+        const fresh = (await res.json()) as PublicStatsPayload;
+        setStats(fresh);
+        const nextTotal =
+          chartMode === "github" ? fresh.github.releases.length : fresh.play.daily.length;
+        setRangeStart(0);
+        setRangeEnd(Math.max(0, nextTotal - 1));
+      }
+    } finally {
+      setRefreshing(false);
+    }
+  }
+
+  const applyPreset = useCallback(
+    (count: number | "all") => {
+      if (count === "all" || count >= totalPoints) {
+        setRangeStart(0);
+        setRangeEnd(Math.max(0, totalPoints - 1));
+      } else {
+        setRangeEnd(Math.max(0, totalPoints - 1));
+        setRangeStart(Math.max(0, totalPoints - count));
+      }
+      setHoverIndex(null);
+    },
+    [totalPoints],
+  );
+
+  const visibleDaily = useMemo(
+    () => daily.slice(clampedStart, clampedEnd + 1),
+    [daily, clampedStart, clampedEnd],
+  );
+
+  const visibleGithub = useMemo(
+    () => githubChronological.slice(clampedStart, clampedEnd + 1),
+    [githubChronological, clampedStart, clampedEnd],
+  );
+
+  const activeDataCount = chartMode === "github" ? visibleGithub.length : visibleDaily.length;
+
   // All distinct version names observed in visibleDaily, ordered newest -> oldest
   const allObservedVersions = useMemo(() => {
     const set = new Set<string>();
@@ -107,48 +144,134 @@ export default function StatsContent({ initialStats }: { initialStats: PublicSta
     return Array.from(set).sort((a, b) => b.localeCompare(a, undefined, { numeric: true }));
   }, [visibleDaily]);
 
-  const activeDataCount = chartMode === "github" ? githubChronological.length : visibleDaily.length;
+  const clientXToIndex = useCallback(
+    (clientX: number): number => {
+      const svg = svgRef.current;
+      if (!svg || activeDataCount <= 1) return 0;
+      const rect = svg.getBoundingClientRect();
+      const scaleX = rect.width / 920;
+      const padLeft = 48 * scaleX;
+      const padRight = 20 * scaleX;
+      const plotW = Math.max(1, rect.width - padLeft - padRight);
+      const relX = Math.max(0, Math.min(plotW, clientX - rect.left - padLeft));
+      return Math.round((relX / plotW) * (activeDataCount - 1));
+    },
+    [activeDataCount],
+  );
 
-  function clientXToIndex(clientX: number): number {
-    const svg = svgRef.current;
-    if (!svg || activeDataCount <= 1) return 0;
-    const rect = svg.getBoundingClientRect();
-    const padLeft = 48;
-    const padRight = 20;
-    const plotW = Math.max(1, rect.width - padLeft - padRight);
-    const relX = Math.max(0, Math.min(plotW, clientX - rect.left - padLeft));
-    return Math.round((relX / plotW) * (activeDataCount - 1));
-  }
+  // Attach a non-passive wheel listener to the SVG so wheel-zoom NEVER scrolls the page!
+  useEffect(() => {
+    const el = svgRef.current;
+    if (!el) return;
 
-  function handleWheelZoom(e: React.WheelEvent<SVGSVGElement>) {
-    if (chartMode === "github" || totalDays <= 5) return;
-    e.preventDefault();
-    const currentSpan = rangeEnd - rangeStart + 1;
-    const delta = e.deltaY < 0 ? -Math.max(2, Math.round(currentSpan * 0.18)) : Math.max(2, Math.round(currentSpan * 0.18));
-    const newSpan = Math.max(5, Math.min(totalDays, currentSpan + delta));
-    const centerRatio = hoverIndex !== null && visibleDaily.length > 1 ? hoverIndex / (visibleDaily.length - 1) : 0.5;
-    const centerGlobal = rangeStart + Math.round((rangeEnd - rangeStart) * centerRatio);
-    let nextStart = Math.round(centerGlobal - newSpan * centerRatio);
-    let nextEnd = nextStart + newSpan - 1;
-    if (nextStart < 0) {
-      nextEnd -= nextStart;
-      nextStart = 0;
+    function onNativeWheel(e: WheelEvent) {
+      if (totalPoints <= 4) return;
+      e.preventDefault();
+      e.stopPropagation();
+
+      const currentSpan = clampedEnd - clampedStart + 1;
+
+      // Horizontal scroll or Shift+wheel pans the zoomed window left/right
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey) {
+        if (currentSpan >= totalPoints) return;
+        const rawDelta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+        const step = Math.max(1, Math.round(currentSpan * 0.1)) * (rawDelta > 0 ? 1 : -1);
+        let nextStart = clampedStart + step;
+        let nextEnd = clampedEnd + step;
+        if (nextStart < 0) {
+          nextEnd -= nextStart;
+          nextStart = 0;
+        }
+        if (nextEnd >= totalPoints) {
+          nextStart -= nextEnd - (totalPoints - 1);
+          nextEnd = totalPoints - 1;
+        }
+        setRangeStart(Math.max(0, nextStart));
+        setRangeEnd(Math.min(totalPoints - 1, nextEnd));
+        return;
+      }
+
+      // Vertical wheel zooms in/out anchored around the cursor X position
+      const idx = clientXToIndex(e.clientX);
+      const centerRatio = activeDataCount > 1 ? idx / (activeDataCount - 1) : 0.5;
+      const step = Math.max(2, Math.round(currentSpan * 0.18));
+      const delta = e.deltaY < 0 ? -step : step;
+      const newSpan = Math.max(4, Math.min(totalPoints, currentSpan + delta));
+      const anchorGlobal = clampedStart + Math.round((clampedEnd - clampedStart) * centerRatio);
+
+      let nextStart = Math.round(anchorGlobal - newSpan * centerRatio);
+      let nextEnd = nextStart + newSpan - 1;
+      if (nextStart < 0) {
+        nextEnd -= nextStart;
+        nextStart = 0;
+      }
+      if (nextEnd >= totalPoints) {
+        nextStart -= nextEnd - (totalPoints - 1);
+        nextEnd = totalPoints - 1;
+      }
+      setRangeStart(Math.max(0, nextStart));
+      setRangeEnd(Math.min(totalPoints - 1, nextEnd));
     }
-    if (nextEnd >= totalDays) {
-      nextStart -= nextEnd - (totalDays - 1);
-      nextEnd = totalDays - 1;
+
+    el.addEventListener("wheel", onNativeWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onNativeWheel);
+  }, [activeDataCount, clampedEnd, clampedStart, clientXToIndex, totalPoints]);
+
+  // Unified minimap drag handling (left handle, right handle, or middle window pan)
+  useEffect(() => {
+    function onWinMove(e: MouseEvent) {
+      const drag = minimapDragRef.current;
+      const bar = minimapRef.current;
+      if (!drag || !bar || totalPoints <= 4) return;
+      const rect = bar.getBoundingClientRect();
+      const deltaPx = e.clientX - drag.startX;
+      const deltaItems = Math.round((deltaPx / Math.max(1, rect.width)) * (totalPoints - 1));
+
+      if (drag.mode === "left") {
+        const nextStart = Math.max(0, Math.min(drag.initialEnd - 3, drag.initialStart + deltaItems));
+        setRangeStart(nextStart);
+      } else if (drag.mode === "right") {
+        const nextEnd = Math.min(
+          totalPoints - 1,
+          Math.max(drag.initialStart + 3, drag.initialEnd + deltaItems),
+        );
+        setRangeEnd(nextEnd);
+      } else {
+        const span = drag.initialEnd - drag.initialStart;
+        let nextStart = drag.initialStart + deltaItems;
+        let nextEnd = nextStart + span;
+        if (nextStart < 0) {
+          nextStart = 0;
+          nextEnd = span;
+        }
+        if (nextEnd >= totalPoints) {
+          nextEnd = totalPoints - 1;
+          nextStart = Math.max(0, nextEnd - span);
+        }
+        setRangeStart(nextStart);
+        setRangeEnd(nextEnd);
+      }
     }
-    setRangeStart(Math.max(0, nextStart));
-    setRangeEnd(Math.min(totalDays - 1, nextEnd));
-  }
+
+    function onWinUp() {
+      minimapDragRef.current = null;
+    }
+
+    window.addEventListener("mousemove", onWinMove);
+    window.addEventListener("mouseup", onWinUp);
+    return () => {
+      window.removeEventListener("mousemove", onWinMove);
+      window.removeEventListener("mouseup", onWinUp);
+    };
+  }, [totalPoints]);
 
   function finishBrushSelection() {
-    if (dragStartIdx !== null && dragCurrentIdx !== null && chartMode !== "github") {
+    if (dragStartIdx !== null && dragCurrentIdx !== null) {
       const a = Math.min(dragStartIdx, dragCurrentIdx);
       const b = Math.max(dragStartIdx, dragCurrentIdx);
       if (b - a >= 2) {
-        const nextStart = rangeStart + a;
-        const nextEnd = rangeStart + b;
+        const nextStart = clampedStart + a;
+        const nextEnd = clampedStart + b;
         setRangeStart(nextStart);
         setRangeEnd(nextEnd);
         setHoverIndex(null);
@@ -188,7 +311,7 @@ export default function StatsContent({ initialStats }: { initialStats: PublicSta
 
   const yMax = useMemo(() => {
     if (chartMode === "github") {
-      return Math.max(10, ...githubChronological.map((r) => r.cumulativeDownloads));
+      return Math.max(10, ...visibleGithub.map((r) => r.cumulativeDownloads));
     }
     if (chartMode === "events") {
       return Math.max(
@@ -203,7 +326,7 @@ export default function StatsContent({ initialStats }: { initialStats: PublicSta
       );
     }
     return Math.max(5, ...visibleDaily.map((d) => d.activeDevices));
-  }, [chartMode, visibleDaily, githubChronological]);
+  }, [chartMode, visibleDaily, visibleGithub]);
 
   const xAt = (i: number, count: number) =>
     PAD_L + (count <= 1 ? PLOT_W / 2 : (i / (count - 1)) * PLOT_W);
@@ -212,7 +335,10 @@ export default function StatsContent({ initialStats }: { initialStats: PublicSta
   const hoveredDay =
     chartMode !== "github" && hoverIndex !== null ? visibleDaily[hoverIndex] ?? null : null;
   const hoveredRelease =
-    chartMode === "github" && hoverIndex !== null ? githubChronological[hoverIndex] ?? null : null;
+    chartMode === "github" && hoverIndex !== null ? visibleGithub[hoverIndex] ?? null : null;
+
+  const leftPct = totalPoints > 1 ? (clampedStart / (totalPoints - 1)) * 100 : 0;
+  const rightPct = totalPoints > 1 ? (clampedEnd / (totalPoints - 1)) * 100 : 100;
 
   return (
     <div className="mx-auto max-w-[76rem] px-5 py-12 sm:px-8 sm:py-16">
@@ -351,8 +477,8 @@ export default function StatsContent({ initialStats }: { initialStats: PublicSta
           <div>
             <p className="eyebrow">
               {hu
-                ? "Interaktív Idősor (Húzd az egeret vagy görgess a nagyításhoz)"
-                : "Interactive Time Series (Drag to brush-zoom or scroll wheel)"}
+                ? "Interaktív Idősor (Görgő = nagyítás · Shift+görgő = eltolás · Húzás = kijelölés · Dupla klikk = alaphelyzet)"
+                : "Interactive Time Series (Wheel = zoom · Shift+wheel = pan · Drag = brush zoom · Double-click = reset)"}
             </p>
             <div className="mt-1.5 flex flex-wrap items-baseline gap-3">
               <h2 className="text-lg font-semibold tracking-tight text-ink">
@@ -365,10 +491,15 @@ export default function StatsContent({ initialStats }: { initialStats: PublicSta
                 {chartMode === "github" &&
                   (hu ? "GitHub Releases kumulált letöltések" : "GitHub Releases Cumulative Downloads")}
               </h2>
-              {chartMode !== "github" && (
+              {chartMode !== "github" ? (
                 <span className="tnum font-mono text-xs text-muted">
                   {visibleDaily[0]?.date} → {visibleDaily[visibleDaily.length - 1]?.date} ({visibleDaily.length}{" "}
                   {hu ? "nap" : "days"}, {periodDelta >= 0 ? `+${periodDelta}` : periodDelta})
+                </span>
+              ) : (
+                <span className="tnum font-mono text-xs text-muted">
+                  {visibleGithub[0]?.tag} → {visibleGithub[visibleGithub.length - 1]?.tag} ({visibleGithub.length}{" "}
+                  {hu ? "kiadás" : "releases"})
                 </span>
               )}
             </div>
@@ -376,6 +507,16 @@ export default function StatsContent({ initialStats }: { initialStats: PublicSta
 
           {/* Mode & Zoom Preset Controls */}
           <div className="flex flex-wrap items-center gap-2">
+            {isZoomed && (
+              <button
+                type="button"
+                onClick={() => applyPreset("all")}
+                className="rounded-sm border border-accent bg-surface px-2.5 py-1.5 font-mono text-xs font-medium text-accent transition-colors hover:bg-accent hover:text-bg"
+              >
+                {hu ? "⟲ Nagyítás alaphelyzetbe" : "⟲ Reset zoom"}
+              </button>
+            )}
+
             <div className="flex flex-wrap overflow-hidden rounded-sm border border-line">
               {(
                 [
@@ -388,10 +529,7 @@ export default function StatsContent({ initialStats }: { initialStats: PublicSta
                 <button
                   key={m.id}
                   type="button"
-                  onClick={() => {
-                    setChartMode(m.id);
-                    setHoverIndex(null);
-                  }}
+                  onClick={() => switchChartMode(m.id)}
                   className={`px-2.5 py-1.5 font-mono text-xs transition-colors ${
                     chartMode === m.id ? "bg-ink text-bg font-medium" : "text-muted hover:text-ink"
                   }`}
@@ -401,35 +539,43 @@ export default function StatsContent({ initialStats }: { initialStats: PublicSta
               ))}
             </div>
 
-            {chartMode !== "github" && (
-              <div className="flex overflow-hidden rounded-sm border border-line">
-                {(
-                  [
-                    { label: "14N", en: "14D", days: 14 as const },
-                    { label: "30N", en: "30D", days: 30 as const },
-                    { label: "60N", en: "60D", days: 60 as const },
-                    { label: "Mind", en: "All", days: "all" as const },
-                  ]
-                ).map((p) => {
+            <div className="flex overflow-hidden rounded-sm border border-line">
+              {(
+                [
+                  { label: "14", en: "14", count: 14 as const },
+                  { label: "30", en: "30", count: 30 as const },
+                  { label: "60", en: "60", count: 60 as const },
+                  { label: "Mind", en: "All", count: "all" as const },
+                ]
+              )
+                .filter((p) => p.count === "all" || p.count < totalPoints)
+                .map((p) => {
                   const active =
-                    p.days === "all"
-                      ? rangeStart === 0 && rangeEnd === totalDays - 1
-                      : rangeEnd === totalDays - 1 && rangeEnd - rangeStart + 1 === p.days;
+                    p.count === "all"
+                      ? !isZoomed
+                      : clampedEnd === totalPoints - 1 && clampedEnd - clampedStart + 1 === p.count;
                   return (
                     <button
                       key={p.label}
                       type="button"
-                      onClick={() => applyPreset(p.days)}
+                      onClick={() => applyPreset(p.count)}
                       className={`px-2.5 py-1.5 font-mono text-xs transition-colors ${
                         active ? "bg-accent text-bg font-medium" : "text-muted hover:text-ink"
                       }`}
                     >
-                      {hu ? p.label : p.en}
+                      {p.count === "all"
+                        ? hu
+                          ? p.label
+                          : p.en
+                        : chartMode === "github"
+                          ? `${p.label}v`
+                          : hu
+                            ? `${p.label}N`
+                            : `${p.label}D`}
                     </button>
                   );
                 })}
-              </div>
-            )}
+            </div>
           </div>
         </div>
 
@@ -480,20 +626,21 @@ export default function StatsContent({ initialStats }: { initialStats: PublicSta
           ) : (
             <span className="text-muted">
               {hu
-                ? "Mozgasd az egeret vagy az ujjad a grafikon fölé a napi részletekért, vagy jelölj ki egy szakaszt a nagyításhoz."
-                : "Hover or touch the chart to inspect daily metrics, or drag across a range to zoom in."}
+                ? "Mozgasd az egeret a grafikon fölé a napi részletekért, görgess a nagyításhoz (oldalgörgetés nélkül), vagy húzz keretet egy időszakra."
+                : "Hover the chart for daily details, scroll the mouse wheel to zoom (without scrolling the page), or drag a box to zoom into a period."}
             </span>
           )}
         </div>
 
         {/* SVG Chart Canvas */}
-        <div className="relative mt-4 select-none overflow-hidden">
+        <div className="relative mt-4 select-none overflow-hidden touch-pan-y">
           <svg
             ref={svgRef}
             viewBox={`0 0 ${W} ${H}`}
             className="h-[260px] w-full cursor-crosshair sm:h-[320px]"
-            onWheel={handleWheelZoom}
+            onDoubleClick={() => applyPreset("all")}
             onMouseDown={(e) => {
+              if (e.button !== 0) return;
               const idx = clientXToIndex(e.clientX);
               setDragStartIdx(idx);
               setDragCurrentIdx(idx);
@@ -509,6 +656,11 @@ export default function StatsContent({ initialStats }: { initialStats: PublicSta
             onMouseLeave={() => {
               setHoverIndex(null);
               if (dragStartIdx !== null) finishBrushSelection();
+            }}
+            onTouchMove={(e) => {
+              if (e.touches.length === 1) {
+                setHoverIndex(clientXToIndex(e.touches[0].clientX));
+              }
             }}
           >
             <defs>
@@ -544,23 +696,25 @@ export default function StatsContent({ initialStats }: { initialStats: PublicSta
               );
             })}
 
-            {/* Brush selection overlay */}
-            {dragStartIdx !== null && dragCurrentIdx !== null && chartMode !== "github" && (
-              <rect
-                x={Math.min(
-                  xAt(dragStartIdx, activeDataCount),
-                  xAt(dragCurrentIdx, activeDataCount),
-                )}
-                y={PAD_T}
-                width={Math.abs(
-                  xAt(dragCurrentIdx, activeDataCount) - xAt(dragStartIdx, activeDataCount),
-                )}
-                height={PLOT_H}
-                fill="var(--color-accent)"
-                fillOpacity={0.15}
-                stroke="var(--color-accent)"
-              />
-            )}
+            {/* Brush selection overlay (only when dragged >= 2 steps) */}
+            {dragStartIdx !== null &&
+              dragCurrentIdx !== null &&
+              Math.abs(dragCurrentIdx - dragStartIdx) >= 2 && (
+                <rect
+                  x={Math.min(
+                    xAt(dragStartIdx, activeDataCount),
+                    xAt(dragCurrentIdx, activeDataCount),
+                  )}
+                  y={PAD_T}
+                  width={Math.abs(
+                    xAt(dragCurrentIdx, activeDataCount) - xAt(dragStartIdx, activeDataCount),
+                  )}
+                  height={PLOT_H}
+                  fill="var(--color-accent)"
+                  fillOpacity={0.15}
+                  stroke="var(--color-accent)"
+                />
+              )}
 
             {/* Mode 1: Active Devices Area + Line */}
             {chartMode === "active" && visibleDaily.length > 0 && (
@@ -676,32 +830,32 @@ export default function StatsContent({ initialStats }: { initialStats: PublicSta
               })}
 
             {/* Mode 4: Cumulative GitHub Downloads */}
-            {chartMode === "github" && githubChronological.length > 0 && (
+            {chartMode === "github" && visibleGithub.length > 0 && (
               <>
                 <path
-                  d={`M ${xAt(0, githubChronological.length)} ${PAD_T + PLOT_H} ${githubChronological
+                  d={`M ${xAt(0, visibleGithub.length)} ${PAD_T + PLOT_H} ${visibleGithub
                     .map(
                       (r, i) =>
-                        `L ${xAt(i, githubChronological.length)} ${yAt(r.cumulativeDownloads)}`,
+                        `L ${xAt(i, visibleGithub.length)} ${yAt(r.cumulativeDownloads)}`,
                     )
-                    .join(" ")} L ${xAt(githubChronological.length - 1, githubChronological.length)} ${PAD_T + PLOT_H} Z`}
+                    .join(" ")} L ${xAt(visibleGithub.length - 1, visibleGithub.length)} ${PAD_T + PLOT_H} Z`}
                   fill="url(#nhnkAreaGrad)"
                 />
                 <path
-                  d={githubChronological
+                  d={visibleGithub
                     .map(
                       (r, i) =>
-                        `${i === 0 ? "M" : "L"} ${xAt(i, githubChronological.length)} ${yAt(r.cumulativeDownloads)}`,
+                        `${i === 0 ? "M" : "L"} ${xAt(i, visibleGithub.length)} ${yAt(r.cumulativeDownloads)}`,
                     )
                     .join(" ")}
                   fill="none"
                   stroke="var(--color-accent)"
                   strokeWidth={2.5}
                 />
-                {githubChronological.map((r, i) => (
+                {visibleGithub.map((r, i) => (
                   <circle
                     key={r.tag}
-                    cx={xAt(i, githubChronological.length)}
+                    cx={xAt(i, visibleGithub.length)}
                     cy={yAt(r.cumulativeDownloads)}
                     r={hoverIndex === i ? 5.5 : 3}
                     fill="var(--color-accent)"
@@ -740,13 +894,13 @@ export default function StatsContent({ initialStats }: { initialStats: PublicSta
                     </text>
                   );
                 })
-              : githubChronological.map((r, i) => {
-                  const step = Math.max(1, Math.ceil(githubChronological.length / 7));
-                  if (i % step !== 0 && i !== githubChronological.length - 1) return null;
+              : visibleGithub.map((r, i) => {
+                  const step = Math.max(1, Math.ceil(visibleGithub.length / 7));
+                  if (i % step !== 0 && i !== visibleGithub.length - 1) return null;
                   return (
                     <text
                       key={r.tag}
-                      x={xAt(i, githubChronological.length)}
+                      x={xAt(i, visibleGithub.length)}
                       y={H - 10}
                       textAnchor="middle"
                       className="fill-muted font-mono text-[10px]"
@@ -758,48 +912,107 @@ export default function StatsContent({ initialStats }: { initialStats: PublicSta
           </svg>
         </div>
 
-        {/* Dual Range Zoom Slider + Legend */}
-        {chartMode !== "github" && (
-          <div className="mt-4 flex flex-col gap-3 border-t border-line pt-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex flex-1 flex-wrap items-center gap-3">
-              <span className="font-mono text-xs text-muted">
-                {hu ? "Időablak finomhangolás:" : "Zoom window:"}
-              </span>
-              <input
-                type="range"
-                min={0}
-                max={Math.max(0, rangeEnd - 2)}
-                value={rangeStart}
-                aria-label={hu ? "Kezdőnap" : "Start date"}
-                onChange={(e) => setRangeStart(Math.min(Number(e.target.value), rangeEnd - 2))}
-                className="h-1.5 flex-1 accent-[var(--color-accent)]"
+        {/* Interactive Minimap / Brush Window Scrubber + Legend */}
+        <div className="mt-4 flex flex-col gap-3 border-t border-line pt-4">
+          <div className="flex items-center gap-3">
+            <span className="shrink-0 font-mono text-xs text-muted">
+              {hu ? "Idősáv:" : "Timeline:"}
+            </span>
+            <div
+              ref={minimapRef}
+              className="relative h-7 flex-1 select-none overflow-hidden rounded-sm border border-line bg-surface-2"
+            >
+              {/* Unselected left dim */}
+              <div
+                className="pointer-events-none absolute inset-y-0 left-0 bg-bg/65"
+                style={{ width: `${leftPct}%` }}
               />
-              <input
-                type="range"
-                min={Math.min(totalDays - 1, rangeStart + 2)}
-                max={Math.max(0, totalDays - 1)}
-                value={rangeEnd}
-                aria-label={hu ? "Zárónap" : "End date"}
-                onChange={(e) => setRangeEnd(Math.max(Number(e.target.value), rangeStart + 2))}
-                className="h-1.5 flex-1 accent-[var(--color-accent)]"
+              {/* Unselected right dim */}
+              <div
+                className="pointer-events-none absolute inset-y-0 right-0 bg-bg/65"
+                style={{ width: `${Math.max(0, 100 - rightPct)}%` }}
               />
-            </div>
-
-            {chartMode === "versions" && (
-              <div className="flex flex-wrap items-center gap-2">
-                {allObservedVersions.slice(0, 8).map((ver, idx) => (
-                  <span key={ver} className="flex items-center gap-1.5 font-mono text-[0.6875rem] text-muted">
-                    <span
-                      className="inline-block h-2.5 w-2.5 rounded-[2px]"
-                      style={{ backgroundColor: VERSION_PALETTE[idx % VERSION_PALETTE.length] }}
-                    />
-                    v{ver}
-                  </span>
-                ))}
+              {/* Active draggable window */}
+              <div
+                onMouseDown={(e) => {
+                  e.stopPropagation();
+                  minimapDragRef.current = {
+                    mode: "pan",
+                    startX: e.clientX,
+                    initialStart: clampedStart,
+                    initialEnd: clampedEnd,
+                  };
+                }}
+                title={hu ? "Húzd az időablak eltolásához" : "Drag to pan window"}
+                className="absolute inset-y-0 cursor-grab border-x-2 border-accent bg-accent/15 active:cursor-grabbing"
+                style={{
+                  left: `${leftPct}%`,
+                  width: `${Math.max(3, rightPct - leftPct)}%`,
+                }}
+              >
+                {/* Left resize grip */}
+                <div
+                  onMouseDown={(e) => {
+                    e.stopPropagation();
+                    minimapDragRef.current = {
+                      mode: "left",
+                      startX: e.clientX,
+                      initialStart: clampedStart,
+                      initialEnd: clampedEnd,
+                    };
+                  }}
+                  title={hu ? "Kezdőpont húzása" : "Drag start"}
+                  className="absolute inset-y-0 -left-1.5 w-3 cursor-ew-resize bg-accent/80 hover:bg-accent"
+                />
+                {/* Right resize grip */}
+                <div
+                  onMouseDown={(e) => {
+                    e.stopPropagation();
+                    minimapDragRef.current = {
+                      mode: "right",
+                      startX: e.clientX,
+                      initialStart: clampedStart,
+                      initialEnd: clampedEnd,
+                    };
+                  }}
+                  title={hu ? "Végpont húzása" : "Drag end"}
+                  className="absolute inset-y-0 -right-1.5 w-3 cursor-ew-resize bg-accent/80 hover:bg-accent"
+                />
               </div>
-            )}
+            </div>
           </div>
-        )}
+
+          {chartMode === "versions" && (
+            <div className="flex flex-wrap items-center gap-2.5 pt-1">
+              {allObservedVersions.slice(0, 8).map((ver, idx) => (
+                <span key={ver} className="flex items-center gap-1.5 font-mono text-[0.6875rem] text-muted">
+                  <span
+                    className="inline-block h-2.5 w-2.5 rounded-[2px]"
+                    style={{ backgroundColor: VERSION_PALETTE[idx % VERSION_PALETTE.length] }}
+                  />
+                  v{ver}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {chartMode === "events" && (
+            <div className="flex flex-wrap items-center gap-4 pt-1 font-mono text-[0.6875rem] text-muted">
+              <span className="flex items-center gap-1.5">
+                <span className="inline-block h-2.5 w-2.5 rounded-[2px]" style={{ backgroundColor: "#0f677b" }} />
+                {hu ? "Új telepítés (Install)" : "Install events"}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="inline-block h-2.5 w-2.5 rounded-[2px]" style={{ backgroundColor: "#2b9eb3" }} />
+                {hu ? "Frissítés (Update)" : "Update events"}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="inline-block h-2.5 w-2.5 rounded-[2px]" style={{ backgroundColor: "var(--color-danger)" }} />
+                {hu ? "Eltávolítás (Uninstall)" : "Uninstall events"}
+              </span>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* 3-Column Breakdown: Version Adoption % | Android OS Versions | OEM Brands & Models */}
