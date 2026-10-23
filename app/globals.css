@@ -187,6 +187,57 @@ p {
   text-decoration-thickness: 1px;
 }
 
+@keyframes nhnkWordRise {
+  0% {
+    opacity: 0;
+    transform: translateY(22px) scale(0.985);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes nhnkBlockRise {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nhnk-word-reveal {
+  display: inline-block;
+  opacity: 0;
+  animation: nhnkWordRise 680ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.nhnk-block-reveal {
+  opacity: 0;
+  animation: nhnkBlockRise 720ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.nhnk-glass-pill {
+  background: color-mix(in srgb, var(--color-surface) 74%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, var(--color-line));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.nhnk-hero-scrim {
+  background: radial-gradient(
+    90% 85% at 32% 48%,
+    color-mix(in srgb, var(--color-bg) 88%, transparent) 0%,
+    color-mix(in srgb, var(--color-bg) 72%, transparent) 48%,
+    color-mix(in srgb, var(--color-bg) 35%, transparent) 100%
+  );
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

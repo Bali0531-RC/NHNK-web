@@ -2,10 +2,38 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FluidHeroCanvas } from "@/components/FluidHeroCanvas";
 import { RichText, useLanguage } from "@/components/LanguageProvider";
 import { TryPhone } from "@/components/TryPhone";
 import { routes } from "@/lib/i18n";
 import { site } from "@/lib/site";
+
+function StaggerWords({
+  text,
+  baseDelayMs,
+  stepMs,
+}: {
+  text: string;
+  baseDelayMs: number;
+  stepMs: number;
+}) {
+  const words = text.split(" ");
+  return (
+    <>
+      {words.map((word, idx) => (
+        <span key={`${word}-${idx}`}>
+          <span
+            className="nhnk-word-reveal"
+            style={{ animationDelay: `${baseDelayMs + idx * stepMs}ms` }}
+          >
+            {word}
+          </span>
+          {idx < words.length - 1 ? " " : ""}
+        </span>
+      ))}
+    </>
+  );
+}
 
 export default function HomePage() {
   const { t, lang } = useLanguage();
@@ -43,23 +71,47 @@ export default function HomePage() {
         the right-hand column: the product is the strongest thing on the page, so it
         goes above the fold rather than into a section of its own further down.
       */}
-      <section className="border-b border-line">
-        <div className="mx-auto grid max-w-[76rem] gap-14 px-5 py-16 sm:px-8 lg:grid-cols-[1.08fr_minmax(0,0.92fr)] lg:items-center lg:gap-16 lg:py-24">
+      <section className="relative overflow-hidden border-b border-line">
+        <FluidHeroCanvas />
+        <div aria-hidden="true" className="nhnk-hero-scrim pointer-events-none absolute inset-0 z-[1]" />
+
+        <div className="relative z-10 mx-auto grid max-w-[76rem] gap-14 px-5 py-16 sm:px-8 lg:grid-cols-[1.08fr_minmax(0,0.92fr)] lg:items-center lg:gap-16 lg:py-24">
           <div>
+            <div
+              className="nhnk-block-reveal mb-5 inline-flex items-center gap-2.5 rounded-full px-3.5 py-1.5 font-mono text-xs text-ink nhnk-glass-pill"
+              style={{ animationDelay: "120ms" }}
+            >
+              <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
+              <span>
+                {lang === "hu"
+                  ? "v2.0.10 · Google Play & GitHub · 100% Crash-Free"
+                  : "v2.0.10 · Google Play & GitHub · 100% Crash-Free"}
+              </span>
+              <Link
+                href={routes.stats}
+                className="font-semibold text-accent underline decoration-accent/50 underline-offset-4 hover:decoration-accent"
+              >
+                {lang === "hu" ? "Statisztika →" : "Live Stats →"}
+              </Link>
+            </div>
+
             <h1 className="max-w-[16ch] text-[2rem] font-semibold leading-[1.08] tracking-[-0.025em] sm:text-[2.5rem] lg:text-[3rem]">
-              {t.hero.title}
+              <StaggerWords text={t.hero.title} baseDelayMs={220} stepMs={65} />
             </h1>
 
             <p className="mt-6 max-w-[48ch] text-[1.0625rem] leading-[1.65] text-muted">
-              {t.hero.lede}
+              <StaggerWords text={t.hero.lede} baseDelayMs={520} stepMs={18} />
             </p>
 
-            <div className="mt-9 flex flex-wrap items-center gap-x-3 gap-y-3">
+            <div
+              className="nhnk-block-reveal mt-9 flex flex-wrap items-center gap-x-3 gap-y-3"
+              style={{ animationDelay: "860ms" }}
+            >
               <a
                 href={site.releases}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-bg transition-[transform,opacity] duration-200 hover:opacity-90 active:translate-y-px"
+                className="rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-bg shadow-[0_8px_24px_-8px_rgba(15,103,123,0.55)] transition-[transform,opacity,box-shadow] duration-200 hover:-translate-y-0.5 hover:opacity-95 active:translate-y-px"
               >
                 {t.hero.ctaDownload}
               </a>
@@ -69,14 +121,14 @@ export default function HomePage() {
                   href={site.playStoreUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-md border border-line-2 px-5 py-2.5 text-sm font-semibold text-ink transition-[transform,border-color] duration-200 hover:border-accent active:translate-y-px"
+                  className="rounded-md border border-line-2 px-5 py-2.5 text-sm font-semibold text-ink nhnk-glass-pill transition-[transform,border-color] duration-200 hover:-translate-y-0.5 hover:border-accent active:translate-y-px"
                 >
                   {t.hero.ctaPlay}
                 </a>
               ) : (
                 <Link
                   href={routes.beta}
-                  className="rounded-md border border-line-2 px-5 py-2.5 text-sm font-semibold text-ink transition-[transform,border-color] duration-200 hover:border-accent active:translate-y-px"
+                  className="rounded-md border border-line-2 px-5 py-2.5 text-sm font-semibold text-ink nhnk-glass-pill transition-[transform,border-color] duration-200 hover:-translate-y-0.5 hover:border-accent active:translate-y-px"
                 >
                   {t.hero.ctaPlaySoon}
                 </Link>
@@ -93,7 +145,10 @@ export default function HomePage() {
             </div>
 
             {/* Plain facts, set in mono. Replaces the pill badge that used to sit above the title. */}
-            <dl className="mt-10 flex flex-wrap gap-x-8 gap-y-4 border-t border-line pt-6">
+            <dl
+              className="nhnk-block-reveal mt-10 flex flex-wrap gap-x-8 gap-y-4 border-t border-line pt-6"
+              style={{ animationDelay: "1020ms" }}
+            >
               {t.hero.specs.map((spec) => (
                 <div key={spec.k}>
                   <dt className="eyebrow">{spec.k}</dt>
@@ -102,10 +157,19 @@ export default function HomePage() {
               ))}
             </dl>
 
-            <p className="mt-6 text-xs leading-relaxed text-muted">{t.hero.unofficial}</p>
+            <p
+              className="nhnk-block-reveal mt-6 text-xs leading-relaxed text-muted"
+              style={{ animationDelay: "1140ms" }}
+            >
+              {t.hero.unofficial}
+            </p>
           </div>
 
-          <div id="kiprobalas" className="flex scroll-mt-24 justify-center lg:justify-end">
+          <div
+            id="kiprobalas"
+            className="nhnk-block-reveal flex scroll-mt-24 justify-center lg:justify-end"
+            style={{ animationDelay: "380ms" }}
+          >
             <div className="w-full max-w-[288px]">
               <TryPhone />
             </div>
