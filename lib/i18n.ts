@@ -211,7 +211,7 @@ export const dict: Record<Lang, Dict> = {
       contact: "Kapcsolat",
       builtBy: "Készítette",
       trademark:
-        "Független, nem hivatalos alkalmazás. Nem áll kapcsolatban a Campus Codeworks Zrt.-vel (korábban SDA Informatika Zrt.) vagy bármely felsőoktatási intézménnyel. A „Neptun” név és védjegy a jogosultja tulajdona.",
+        "Független, nem hivatalos alkalmazás. Nem áll kapcsolatban a Campus Codeworks Zrt.-vel (korábban SDA Informatika Zrt.) vagy bármely felsőoktatási intézménnyel. A „Neptun” név és védjegy a jogosultja tulajdona. A Google Play és a Google Play-logó a Google LLC védjegye.",
     },
     donate: {
       title: "Támogatás",
@@ -390,7 +390,7 @@ export const dict: Record<Lang, Dict> = {
       contact: "Contact",
       builtBy: "Built by",
       trademark:
-        "An independent, unofficial application. Not affiliated with Campus Codeworks Zrt. (formerly SDA Informatika Zrt.) or any higher education institution. The “Neptun” name and trademark are the property of their respective owner.",
+        "An independent, unofficial application. Not affiliated with Campus Codeworks Zrt. (formerly SDA Informatika Zrt.) or any higher education institution. The “Neptun” name and trademark are the property of their respective owner. Google Play and the Google Play logo are trademarks of Google LLC.",
     },
     donate: {
       title: "Support the project",

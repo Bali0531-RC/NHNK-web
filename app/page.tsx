@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FluidHeroCanvas } from "@/components/FluidHeroCanvas";
+import { GooglePlayBadge } from "@/components/GooglePlayBadge";
 import { RichText, useLanguage } from "@/components/LanguageProvider";
 import { TryPhone } from "@/components/TryPhone";
 import { routes } from "@/lib/i18n";
@@ -107,24 +108,8 @@ export default function HomePage() {
               className="nhnk-block-reveal mt-9 flex flex-wrap items-center gap-x-3 gap-y-3"
               style={{ animationDelay: "860ms" }}
             >
-              <a
-                href={site.releases}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-bg shadow-[0_8px_24px_-8px_rgba(15,103,123,0.55)] transition-[transform,opacity,box-shadow] duration-200 hover:-translate-y-0.5 hover:opacity-95 active:translate-y-px"
-              >
-                {t.hero.ctaDownload}
-              </a>
-
               {site.playStoreUrl ? (
-                <a
-                  href={site.playStoreUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-md border border-line-2 px-5 py-2.5 text-sm font-semibold text-ink nhnk-glass-pill transition-[transform,border-color] duration-200 hover:-translate-y-0.5 hover:border-accent active:translate-y-px"
-                >
-                  {t.hero.ctaPlay}
-                </a>
+                <GooglePlayBadge />
               ) : (
                 <Link
                   href={routes.beta}
@@ -133,6 +118,15 @@ export default function HomePage() {
                   {t.hero.ctaPlaySoon}
                 </Link>
               )}
+
+              <a
+                href={site.releases}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-bg shadow-[0_8px_24px_-8px_rgba(15,103,123,0.55)] transition-[transform,opacity,box-shadow] duration-200 hover:-translate-y-0.5 hover:opacity-95 active:translate-y-px"
+              >
+                {t.hero.ctaDownload}
+              </a>
 
               <a
                 href={site.repo}
@@ -349,14 +343,9 @@ export default function HomePage() {
               )}
 
               {site.playStoreUrl ? (
-                <a
-                  href={site.playStoreUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-6 rounded-md border border-line-2 px-5 py-2.5 text-center text-sm font-semibold text-ink transition-[transform,border-color] duration-200 hover:border-accent active:translate-y-px"
-                >
-                  {t.hero.ctaPlay}
-                </a>
+                <div className="mt-6">
+                  <GooglePlayBadge className="w-full sm:w-auto" />
+                </div>
               ) : (
                 <Link
                   href={routes.beta}
