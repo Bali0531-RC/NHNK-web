@@ -7,7 +7,10 @@ export const site = {
   issues: "https://github.com/Bali0531-RC/NHNK/issues/new/choose",
   license: "https://github.com/Bali0531-RC/NHNK/blob/main/LICENSE",
   obtainium: "https://github.com/ImranR98/Obtainium",
-  contactEmail: "nhnk@bali0531.hu",
+  contactEmail: "contact@nhnk.hu",
+  helpEmail: "help@nhnk.hu",
+  legalEmail: "legal@nhnk.hu",
+  adminEmail: "admin@nhnk.hu",
   author: "Turi Balázs",
   authorHandle: "Bali0531",
   /** Live since the app left closed testing. Setting this swaps every "soon" state

@@ -139,8 +139,13 @@ export default function TermsPage() {
               magánszemély)
             </li>
             <li>
-              <strong>E-mail:</strong>{" "}
-              <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
+              <strong>E-mail (jogi megkeresések):</strong>{" "}
+              <a href={`mailto:${site.legalEmail}`}>{site.legalEmail}</a>
+            </li>
+            <li>
+              <strong>E-mail (általános kapcsolat és segítség):</strong>{" "}
+              <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>,{" "}
+              <a href={`mailto:${site.helpEmail}`}>{site.helpEmail}</a>
             </li>
             <li>
               <strong>Tárhelyszolgáltató neve:</strong> ByteFly Kft. (Vipy Dedicated Server)
@@ -277,8 +282,13 @@ export default function TermsPage() {
               individual)
             </li>
             <li>
-              <strong>Email:</strong>{" "}
-              <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
+              <strong>Email (legal inquiries):</strong>{" "}
+              <a href={`mailto:${site.legalEmail}`}>{site.legalEmail}</a>
+            </li>
+            <li>
+              <strong>Email (general contact and support):</strong>{" "}
+              <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>,{" "}
+              <a href={`mailto:${site.helpEmail}`}>{site.helpEmail}</a>
             </li>
             <li>
               <strong>Hosting provider name:</strong> ByteFly Kft. (Vipy Dedicated Server)

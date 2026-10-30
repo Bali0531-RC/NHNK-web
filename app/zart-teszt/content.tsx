@@ -159,10 +159,10 @@ export default function BetaContent() {
       <p className="mt-6 max-w-[62ch] text-xs leading-relaxed text-muted">
         {t.beta.privacyNote}{" "}
         <a
-          href={`mailto:${site.contactEmail}`}
+          href={`mailto:${site.helpEmail}`}
           className="text-accent underline underline-offset-2"
         >
-          {site.contactEmail}
+          {site.helpEmail}
         </a>
       </p>
 

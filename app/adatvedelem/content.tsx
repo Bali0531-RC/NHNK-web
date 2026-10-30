@@ -22,8 +22,9 @@ export default function PrivacyPage() {
           <h2>1. Az adatkezelő</h2>
           <p>
             Az alkalmazást <strong>{site.author} ({site.authorHandle})</strong> magánszemélyként
-            fejleszti és adja ki. Kapcsolat:{" "}
-            <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>.
+            fejleszti és adja ki. Adatvédelmi és jogi kapcsolat:{" "}
+            <a href={`mailto:${site.legalEmail}`}>{site.legalEmail}</a> (általános megkeresés:{" "}
+            <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>).
           </p>
           <p>
             Az NHNK <strong>független, nem hivatalos</strong> alkalmazás. Nem áll kapcsolatban a
@@ -157,7 +158,9 @@ export default function PrivacyPage() {
             alkalmazásból, vagy el nem távolítod azt a készülékedről.
           </p>
           <p>
-            Ha hibabejelentés vagy kérdés miatt e-mailt írsz a megadott kapcsolati címre, az
+            Ha hibabejelentés vagy kérdés miatt e-mailt írsz a{" "}
+            <a href={`mailto:${site.helpEmail}`}>{site.helpEmail}</a> vagy{" "}
+            <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a> címre, az
             e-mail-címedet és az üzenet tartalmát kizárólag a válaszadáshoz és a probléma
             megoldásához használjuk fel, harmadik félnek nem adjuk át, és a megkeresés lezárása
             után (vagy kérésedre bármikor azonnal) töröljük.
@@ -190,8 +193,13 @@ export default function PrivacyPage() {
               magánszemély)
             </li>
             <li>
-              <strong>E-mail:</strong>{" "}
-              <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
+              <strong>E-mail (adatvédelmi és jogi ügyek):</strong>{" "}
+              <a href={`mailto:${site.legalEmail}`}>{site.legalEmail}</a>
+            </li>
+            <li>
+              <strong>E-mail (általános kapcsolat és segítség):</strong>{" "}
+              <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>,{" "}
+              <a href={`mailto:${site.helpEmail}`}>{site.helpEmail}</a>
             </li>
             <li>
               <strong>Tárhelyszolgáltató neve:</strong> ByteFly Kft. (Vipy Dedicated Server)
@@ -214,8 +222,9 @@ export default function PrivacyPage() {
           <h2>1. Who is responsible</h2>
           <p>
             The application is developed and published by <strong>{site.author} ({site.authorHandle})</strong>{" "}
-            as a private individual. Contact:{" "}
-            <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>.
+            as a private individual. Privacy and legal contact:{" "}
+            <a href={`mailto:${site.legalEmail}`}>{site.legalEmail}</a> (general contact:{" "}
+            <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>).
           </p>
           <p>
             NHNK is an <strong>independent, unofficial</strong> application. It is not affiliated
@@ -342,7 +351,8 @@ export default function PrivacyPage() {
             device.
           </p>
           <p>
-            If you email <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a> for
+            If you email <a href={`mailto:${site.helpEmail}`}>{site.helpEmail}</a> or{" "}
+            <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a> for
             support, your email address and message content are used strictly to troubleshoot and
             reply to your inquiry, are never shared with third parties, and are deleted once the
             issue is resolved (or immediately upon your request).
@@ -375,8 +385,13 @@ export default function PrivacyPage() {
               individual)
             </li>
             <li>
-              <strong>Email:</strong>{" "}
-              <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
+              <strong>Email (privacy and legal):</strong>{" "}
+              <a href={`mailto:${site.legalEmail}`}>{site.legalEmail}</a>
+            </li>
+            <li>
+              <strong>Email (general contact and support):</strong>{" "}
+              <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>,{" "}
+              <a href={`mailto:${site.helpEmail}`}>{site.helpEmail}</a>
             </li>
             <li>
               <strong>Hosting provider name:</strong> ByteFly Kft. (Vipy Dedicated Server)

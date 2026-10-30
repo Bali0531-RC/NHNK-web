@@ -28,8 +28,20 @@ export default function ImpressumPage() {
               <strong>Jogállás:</strong> Magánszemély (nyílt forráskódú, nem kereskedelmi projekt)
             </li>
             <li>
-              <strong>Elektronikus levelezési cím:</strong>{" "}
+              <strong>Általános kapcsolat:</strong>{" "}
               <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
+            </li>
+            <li>
+              <strong>Felhasználói segítségnyújtás és támogatás:</strong>{" "}
+              <a href={`mailto:${site.helpEmail}`}>{site.helpEmail}</a>
+            </li>
+            <li>
+              <strong>Jogi és adatvédelmi megkeresések:</strong>{" "}
+              <a href={`mailto:${site.legalEmail}`}>{site.legalEmail}</a>
+            </li>
+            <li>
+              <strong>Üzemeltetés és biztonság:</strong>{" "}
+              <a href={`mailto:${site.adminEmail}`}>{site.adminEmail}</a>
             </li>
             <li>
               <strong>Weboldal:</strong>{" "}
@@ -90,8 +102,20 @@ export default function ImpressumPage() {
               <strong>Status:</strong> Private individual (open-source, non-commercial project)
             </li>
             <li>
-              <strong>Email:</strong>{" "}
+              <strong>General contact:</strong>{" "}
               <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
+            </li>
+            <li>
+              <strong>User support and help:</strong>{" "}
+              <a href={`mailto:${site.helpEmail}`}>{site.helpEmail}</a>
+            </li>
+            <li>
+              <strong>Legal and privacy inquiries:</strong>{" "}
+              <a href={`mailto:${site.legalEmail}`}>{site.legalEmail}</a>
+            </li>
+            <li>
+              <strong>Administration and security:</strong>{" "}
+              <a href={`mailto:${site.adminEmail}`}>{site.adminEmail}</a>
             </li>
             <li>
               <strong>Website:</strong>{" "}
