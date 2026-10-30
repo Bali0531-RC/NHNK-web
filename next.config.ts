@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   // Emits /adatvedelem/index.html style paths, so existing links keep working.
   trailingSlash: true,
   images: { unoptimized: true },
+  allowedDevOrigins: ["127.0.0.1", "localhost"],
   // Pinned: an unrelated lockfile higher up the tree otherwise wins root inference.
   turbopack: { root: __dirname },
 };

@@ -5,7 +5,7 @@ Az **[NHNK — Nem Hivatalos Neptun Kliens](https://github.com/Bali0531-RC/NHNK)
 [![Licenc](https://img.shields.io/github/license/Bali0531-RC/NHNK-web?style=for-the-badge&color=blue)](LICENSE)
 [![Alkalmazás](https://img.shields.io/github/v/release/Bali0531-RC/NHNK?style=for-the-badge&color=green&label=NHNK%20app)](https://github.com/Bali0531-RC/NHNK/releases/latest)
 
-Élesben: **https://nhnk.bali0531.hu**
+Élesben: **https://nhnk.hu**
 
 > [!NOTE]
 > Ez a repó **csak a weboldalt** tartalmazza. Maga az Android-alkalmazás forráskódja a
@@ -113,11 +113,11 @@ A token legyen hosszú és véletlenszerű, például `openssl rand -hex 32`.
 ```bash
 # CSV, táblázatkezelőhöz
 curl -H "Authorization: Bearer $NHNK_ADMIN_TOKEN" \
-  https://nhnk.bali0531.hu/api/tester/export/ -o testers.csv
+  https://nhnk.hu/api/tester/export/ -o testers.csv
 
 # Csak a címek, soronként egy — ezt várja a Play Console
 curl -H "Authorization: Bearer $NHNK_ADMIN_TOKEN" \
-  "https://nhnk.bali0531.hu/api/tester/export/?format=plain"
+  "https://nhnk.hu/api/tester/export/?format=plain"
 ```
 
 A záró perjel nem elhagyható: a `trailingSlash: true` miatt enélkül 308-as átirányítás jön.

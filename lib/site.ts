@@ -1,7 +1,7 @@
 export const site = {
   name: "NHNK",
   fullName: "Nem Hivatalos Neptun Kliens",
-  url: "https://nhnk.bali0531.hu",
+  url: "https://nhnk.hu",
   repo: "https://github.com/Bali0531-RC/NHNK",
   releases: "https://github.com/Bali0531-RC/NHNK/releases/latest",
   issues: "https://github.com/Bali0531-RC/NHNK/issues/new/choose",
