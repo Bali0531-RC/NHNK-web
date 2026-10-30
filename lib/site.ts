@@ -36,7 +36,7 @@ export const site = {
     neptunMobile: "https://github.com/zoligamer/Neptun-Mobile-fork",
   },
   /** Kept in one place so legal pages and the About screen can quote the same date. */
-  legalLastUpdated: "2026-08-01",
+  legalLastUpdated: "2026-10-30",
 } as const;
 
 export type DonationMethod = {

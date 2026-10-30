@@ -4,7 +4,7 @@ import { site } from "@/lib/site";
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const paths = ["/", "/statisztika/", "/zart-teszt/", "/adatvedelem/", "/felhasznalasi-feltetelek/", "/tamogatas/"];
+  const paths = ["/", "/statisztika/", "/zart-teszt/", "/adatvedelem/", "/felhasznalasi-feltetelek/", "/impresszum/", "/tamogatas/"];
   return paths.map((path) => ({
     url: `${site.url}${path}`,
     lastModified: site.legalLastUpdated,

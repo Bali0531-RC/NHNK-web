@@ -20,6 +20,7 @@ export function Footer() {
   const legal = [
     { label: t.nav.privacy, href: routes.privacy },
     { label: t.nav.terms, href: routes.terms },
+    { label: t.nav.impressum, href: routes.impressum },
   ];
 
   return (

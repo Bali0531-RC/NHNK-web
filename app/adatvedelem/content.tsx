@@ -30,6 +30,14 @@ export default function PrivacyPage() {
             Campus Codeworks Zrt.-vel (korábban SDA Informatika Zrt.), a Neptun rendszer
             fejlesztőjével, sem bármely felsőoktatási intézménnyel.
           </p>
+          <p>
+            Az alkalmazás nyílt forráskódú (MIT licenc alatt), teljes forráskódja nyilvánosan
+            elérhető és auditálható a{" "}
+            <a href={site.repo} target="_blank" rel="noopener noreferrer">
+              GitHubon
+            </a>
+            , így bárki ellenőrizheti, hogy az alkalmazás valóban nem gyűjt vagy továbbít adatokat.
+          </p>
 
           <h2>2. Milyen adatokat kezel az alkalmazás?</h2>
           <p>
@@ -42,6 +50,15 @@ export default function PrivacyPage() {
             <li>A Neptunból lekért adatok: órarend, jegyek, üzenetek, befizetések, időszakok, tárgyak</li>
             <li>Alkalmazásbeállítások: nyelv, téma, betűméret, értesítési beállítások</li>
           </ul>
+          <p>
+            <strong>Helyi adatbiztonság:</strong> A jelszavadat, a munkamenet-tokeneket és az
+            opcionális kétlépcsős azonosítási (2FA) titkos kulcsot az alkalmazás titkosítva, a
+            készülék operációs rendszerének natív biztonságos tárolójában (Androidon az Android
+            Keystore, iOS-en a Keychain által védett tárolóban) őrzi. A kevésbé érzékeny,
+            gyorsítótárazott tanulmányi adatok és beállítások az alkalmazás elszigetelt (sandboxolt)
+            helyi tárhelyén maradnak, és az alkalmazás indítása opcionálisan biometrikus vagy
+            PIN-kódos védelemmel is lezárható.
+          </p>
 
           <h2>3. Hová kerülnek ezek az adatok?</h2>
           <p>
@@ -62,6 +79,16 @@ export default function PrivacyPage() {
             <li>Nincs felhasználói fiók az NHNK oldalán</li>
             <li>Nem adunk el és nem osztunk meg semmilyen adatot</li>
           </ul>
+          <p>
+            <strong>Manuális diagnosztikai export:</strong> Az alkalmazás opcionális fejlesztői
+            nézete lehetővé teszi egy helyi diagnosztikai jelentés mentését vagy vágólapra
+            másolását hibakeresés céljából. Ez a jelentés kizárólag technikai adatokat (indítási és
+            hálózati válaszidőket, memóriahasználatot, valamint szűrt végpontútvonalakat és
+            hibajelzéseket) tartalmaz — belépési adatokat, kérés-törzseket, lekérdezési
+            paramétereket vagy személyes tanulmányi adatokat nem. A jelentés soha nem kerül
+            automatikusan továbbításra; csak akkor hagyja el a készülékedet, ha te magad
+            manuálisan elküldöd vagy megosztod.
+          </p>
 
           <h2>5. Külső szolgáltatások</h2>
           <h3>5.1 Az intézményed Neptun-kiszolgálója</h3>
@@ -122,10 +149,18 @@ export default function PrivacyPage() {
             </li>
           </ul>
 
-          <h2>8. Adatmegőrzés</h2>
+          <h2>8. Adatmegőrzés és adattörlés</h2>
           <p>
-            Mivel semmit nem tárolunk a saját oldalunkon, megőrzési idő sincs. A készüléken tárolt
-            adatok addig maradnak meg, amíg ki nem jelentkezel vagy nem törlöd az alkalmazást.
+            Mivel semmit nem tárolunk a saját oldalunkon, központi adatmegőrzési idő sincs. A
+            készüléken tárolt minden adat (beleértve a biztonságos tárolóban lévő belépési
+            adatokat és a gyorsítótárat is) addig marad meg, amíg ki nem jelentkezel az
+            alkalmazásból, vagy el nem távolítod azt a készülékedről.
+          </p>
+          <p>
+            Ha hibabejelentés vagy kérdés miatt e-mailt írsz a megadott kapcsolati címre, az
+            e-mail-címedet és az üzenet tartalmát kizárólag a válaszadáshoz és a probléma
+            megoldásához használjuk fel, harmadik félnek nem adjuk át, és a megkeresés lezárása
+            után (vagy kérésedre bármikor azonnal) töröljük.
           </p>
 
           <h2>9. Gyermekek</h2>
@@ -134,12 +169,12 @@ export default function PrivacyPage() {
             Tudatosan nem gyűjtünk adatot gyermekektől, ahogy senki mástól sem.
           </p>
 
-          <h2>10. A te jogaid (GDPR)</h2>
+          <h2>10. A te jogaid és az adatok törlése (GDPR)</h2>
           <p>
             Mivel az NHNK nem tárol személyes adatot szervereken, a hozzáférési, helyesbítési és
-            törlési jogod gyakorlatilag a saját készülékeden érvényesül: az adatok törléséhez elég
-            kijelentkezned vagy eltávolítanod az alkalmazást. A Neptunban tárolt adataiddal
-            kapcsolatos jogaidat az intézményednél tudod érvényesíteni.
+            törlési jogod gyakorlatilag a saját készülékeden érvényesül: az adatok teljes
+            törléséhez elég kijelentkezned vagy eltávolítanod az alkalmazást. A Neptunban tárolt
+            adataiddal kapcsolatos jogaidat az intézményednél tudod érvényesíteni.
           </p>
 
           <h2>11. A tájékoztató módosítása</h2>
@@ -148,11 +183,31 @@ export default function PrivacyPage() {
             dátummal. Lényeges változás esetén a kiadási jegyzetekben is jelezzük.
           </p>
 
-          <h2>12. Kapcsolat</h2>
-          <p>
-            Kérdés vagy adatvédelmi észrevétel esetén:{" "}
-            <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
-          </p>
+          <h2>12. Kapcsolat és impresszum</h2>
+          <ul>
+            <li>
+              <strong>Üzemeltető és fejlesztő:</strong> {site.author} ({site.authorHandle},
+              magánszemély)
+            </li>
+            <li>
+              <strong>E-mail:</strong>{" "}
+              <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
+            </li>
+            <li>
+              <strong>Tárhelyszolgáltató neve:</strong> ByteFly Kft. (Vipy Dedicated Server)
+            </li>
+            <li>
+              <strong>Tárhelyszolgáltató székhelye:</strong> 9022 Győr, Batthyány tér 6. 1. em. 6.
+              ajtó
+            </li>
+            <li>
+              <strong>Tárhelyszolgáltató elérhetősége:</strong>{" "}
+              <a href="mailto:info@vipy.hu">info@vipy.hu</a>,{" "}
+              <a href="https://vipy.hu" target="_blank" rel="noopener noreferrer">
+                https://vipy.hu
+              </a>
+            </li>
+          </ul>
         </>
       ) : (
         <>
@@ -167,6 +222,14 @@ export default function PrivacyPage() {
             with Campus Codeworks Zrt. (formerly SDA Informatika Zrt.), the developer of the Neptun
             system, or with any higher education institution.
           </p>
+          <p>
+            The application is open source (released under the MIT licence), and its complete
+            source code is publicly available for auditing on{" "}
+            <a href={site.repo} target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
+            , allowing anyone to verify that no data is collected or transmitted to us.
+          </p>
 
           <h2>2. What data the app handles</h2>
           <p>The following is stored on your device, and only there:</p>
@@ -176,6 +239,14 @@ export default function PrivacyPage() {
             <li>Data fetched from Neptun: timetable, grades, messages, payments, periods, subjects</li>
             <li>App settings: language, theme, font size, notification preferences</li>
           </ul>
+          <p>
+            <strong>Local data security:</strong> Your password, session tokens and optional
+            two-factor authentication (2FA) secret are encrypted at rest using your device&rsquo;s
+            native secure storage (backed by the Android Keystore on Android and the Keychain on
+            iOS). Cached academic data and preferences are kept inside the application&rsquo;s
+            sandboxed local storage, and app launch can optionally be protected with biometric or
+            device PIN authentication.
+          </p>
 
           <h2>3. Where that data goes</h2>
           <p>
@@ -196,6 +267,14 @@ export default function PrivacyPage() {
             <li>No user accounts on the NHNK side</li>
             <li>We neither sell nor share any data</li>
           </ul>
+          <p>
+            <strong>Manual diagnostic exports:</strong> An optional developer diagnostics screen
+            lets you save or copy a local diagnostic report for troubleshooting. That report
+            contains technical timings, memory usage, redacted request paths and error traces only
+            — never passwords, tokens, request bodies, query strings or personal academic data. It
+            is never transmitted automatically and only leaves your device if you manually share or
+            send it yourself.
+          </p>
 
           <h2>5. Third-party services</h2>
           <h3>5.1 Your institution&rsquo;s Neptun server</h3>
@@ -255,10 +334,18 @@ export default function PrivacyPage() {
             </li>
           </ul>
 
-          <h2>8. Retention</h2>
+          <h2>8. Data retention and data deletion</h2>
           <p>
-            Since we store nothing on our side, there is no retention period. Data on the device
-            remains until you log out or uninstall the app.
+            Since we store nothing on our side, there is no server-side retention period. All data
+            stored on your device (including encrypted credentials and cached data) remains only
+            until you log out or uninstall the app, either of which permanently deletes it from the
+            device.
+          </p>
+          <p>
+            If you email <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a> for
+            support, your email address and message content are used strictly to troubleshoot and
+            reply to your inquiry, are never shared with third parties, and are deleted once the
+            issue is resolved (or immediately upon your request).
           </p>
 
           <h2>9. Children</h2>
@@ -267,12 +354,12 @@ export default function PrivacyPage() {
             under 13. We knowingly collect no data from children, nor from anyone else.
           </p>
 
-          <h2>10. Your rights (GDPR)</h2>
+          <h2>10. Your rights and data deletion (GDPR)</h2>
           <p>
             Because NHNK holds no personal data on any server, your rights of access, rectification
-            and erasure are exercised on your own device: logging out or uninstalling removes the
-            data. Rights concerning the data held inside Neptun itself must be exercised with your
-            institution.
+            and erasure (data deletion) are exercised directly on your own device: logging out or
+            uninstalling the app immediately deletes all locally stored data. Rights concerning the
+            data held inside Neptun itself must be exercised with your institution.
           </p>
 
           <h2>11. Changes to this policy</h2>
@@ -281,11 +368,31 @@ export default function PrivacyPage() {
             Significant changes will also be noted in the release notes.
           </p>
 
-          <h2>12. Contact</h2>
-          <p>
-            For questions or privacy concerns:{" "}
-            <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
-          </p>
+          <h2>12. Contact and Impressum</h2>
+          <ul>
+            <li>
+              <strong>Operator and developer:</strong> {site.author} ({site.authorHandle}, private
+              individual)
+            </li>
+            <li>
+              <strong>Email:</strong>{" "}
+              <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
+            </li>
+            <li>
+              <strong>Hosting provider name:</strong> ByteFly Kft. (Vipy Dedicated Server)
+            </li>
+            <li>
+              <strong>Hosting provider registered seat:</strong> 9022 Győr, Batthyány tér 6. 1. em.
+              6. ajtó, Hungary
+            </li>
+            <li>
+              <strong>Hosting provider contact:</strong>{" "}
+              <a href="mailto:info@vipy.hu">info@vipy.hu</a>,{" "}
+              <a href="https://vipy.hu" target="_blank" rel="noopener noreferrer">
+                https://vipy.hu
+              </a>
+            </li>
+          </ul>
         </>
       )}
     </LegalShell>

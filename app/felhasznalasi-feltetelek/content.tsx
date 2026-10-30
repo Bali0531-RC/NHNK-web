@@ -13,8 +13,8 @@ export default function TermsPage() {
       title={hu ? "Felhasználási feltételek" : "Terms of Service"}
       intro={
         hu
-          ? "Az NHNK letöltésével és használatával elfogadod az alábbi feltételeket. Kérjük, olvasd el őket, különösen a felelősségkorlátozásról szóló részt."
-          : "By downloading and using NHNK you accept the terms below. Please read them, particularly the section on limitation of liability."
+          ? "Az NHNK letöltésével és használatával elfogadod az alábbi feltételeket, és kijelented, hogy rendelkezel a megállapodás megkötéséhez szükséges jog- és cselekvőképességgel. Kérjük, olvasd el őket, különösen a felelősségkorlátozásról szóló részt."
+          : "By downloading and using NHNK you accept the terms below and confirm that you have the legal capacity to enter into this agreement. Please read them, particularly the section on limitation of liability."
       }
     >
       {hu ? (
@@ -25,6 +25,10 @@ export default function TermsPage() {
             alkalmazás, amely a Neptun tanulmányi rendszer adatainak megjelenítésére szolgál. Az
             alkalmazás a saját Neptun-hozzáféréseddel, a te nevedben kommunikál az intézményed
             kiszolgálójával.
+          </p>
+          <p>
+            Ha az alkalmazást harmadik fél platformjáról (például a Google Play áruházból) töltöd
+            le, a platform használatára annak saját felhasználási feltételei is irányadók.
           </p>
 
           <h2>2. Nem hivatalos státusz és védjegyek</h2>
@@ -74,9 +78,9 @@ export default function TermsPage() {
           <h2>5. Garancia kizárása</h2>
           <p>
             Az alkalmazás „AHOGY VAN” állapotban érhető el, mindenféle kifejezett vagy hallgatólagos
-            garancia nélkül, ideértve a forgalomképességre, az adott célra való alkalmasságra és a
-            jogtisztaságra vonatkozó garanciákat is. Nem garantáljuk, hogy az alkalmazás hibamentes
-            vagy folyamatosan elérhető.
+            garancia vagy szavatosság nélkül. Nem garantáljuk, hogy az alkalmazás megfelel az
+            egyéni elvárásaidnak, hibamentesen működik, vagy folyamatosan, megszakítás nélkül
+            elérhető.
           </p>
 
           <h2>6. Felelősség korlátozása</h2>
@@ -86,6 +90,11 @@ export default function TermsPage() {
             kárért, amely az alkalmazás használatából vagy használhatatlanságából ered. Ide értve,
             de nem kizárólagosan: elmulasztott határidők, elmaradt vizsgajelentkezés, téves
             átlagszámítás vagy adatvesztés.
+          </p>
+          <p>
+            Vállalod, hogy mentesíted a fejlesztőt minden olyan követelés, kár vagy jogi eljárás
+            alól, amely az alkalmazás általad történő visszaélésszerű használatából vagy a jelen
+            feltételek megszegéséből ered.
           </p>
 
           <h2>7. Licenc</h2>
@@ -112,16 +121,42 @@ export default function TermsPage() {
             felfüggeszthető.
           </p>
 
-          <h2>9. Alkalmazandó jog</h2>
+          <h2>9. Alkalmazandó jog és részleges érvénytelenség</h2>
           <p>
             A jelen feltételekre Magyarország joga irányadó, a kollíziós szabályok alkalmazása
             nélkül.
           </p>
-
-          <h2>10. Kapcsolat</h2>
           <p>
-            <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
+            Ha a jelen feltételek bármely rendelkezését az illetékes bíróság érvénytelennek vagy
+            végrehajthatatlannak minősíti, az a többi rendelkezés érvényességét nem érinti, azok
+            változatlanul teljes hatállyal érvényben maradnak.
           </p>
+
+          <h2>10. Kapcsolat és impresszum</h2>
+          <ul>
+            <li>
+              <strong>Üzemeltető és fejlesztő:</strong> {site.author} ({site.authorHandle},
+              magánszemély)
+            </li>
+            <li>
+              <strong>E-mail:</strong>{" "}
+              <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
+            </li>
+            <li>
+              <strong>Tárhelyszolgáltató neve:</strong> ByteFly Kft. (Vipy Dedicated Server)
+            </li>
+            <li>
+              <strong>Tárhelyszolgáltató székhelye:</strong> 9022 Győr, Batthyány tér 6. 1. em. 6.
+              ajtó
+            </li>
+            <li>
+              <strong>Tárhelyszolgáltató elérhetősége:</strong>{" "}
+              <a href="mailto:info@vipy.hu">info@vipy.hu</a>,{" "}
+              <a href="https://vipy.hu" target="_blank" rel="noopener noreferrer">
+                https://vipy.hu
+              </a>
+            </li>
+          </ul>
         </>
       ) : (
         <>
@@ -131,6 +166,10 @@ export default function TermsPage() {
             Android application for viewing data from the Neptun student information system. It
             communicates with your institution&rsquo;s server on your behalf, using your own Neptun
             credentials.
+          </p>
+          <p>
+            If you downloaded the app from a third-party platform such as Google Play, your use of
+            that platform is also subject to its respective terms of service.
           </p>
 
           <h2>2. Unofficial status and trademarks</h2>
@@ -179,9 +218,8 @@ export default function TermsPage() {
           <h2>5. Disclaimer of warranty</h2>
           <p>
             The application is provided &ldquo;AS IS&rdquo;, without warranty of any kind, express or
-            implied, including but not limited to the warranties of merchantability, fitness for a
-            particular purpose and non-infringement. We do not warrant that the app is error-free or
-            continuously available.
+            implied. We do not guarantee that the app will meet your specific needs, operate
+            without interruption, or be error-free.
           </p>
 
           <h2>6. Limitation of liability</h2>
@@ -191,6 +229,10 @@ export default function TermsPage() {
             from the use of, or inability to use, the application. This includes but is not limited
             to missed deadlines, failed exam registration, incorrect average calculation or data
             loss.
+          </p>
+          <p>
+            You agree to indemnify and hold harmless the developer from any claims, damages, or
+            legal actions arising out of your misuse of the app or violation of these terms.
           </p>
 
           <h2>7. Licence</h2>
@@ -218,16 +260,41 @@ export default function TermsPage() {
             notice.
           </p>
 
-          <h2>9. Governing law</h2>
+          <h2>9. Governing law and severability</h2>
           <p>
             These terms are governed by the law of Hungary, without regard to its conflict of law
             provisions.
           </p>
-
-          <h2>10. Contact</h2>
           <p>
-            <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
+            If any provision of these terms is found to be invalid or unenforceable by a court of
+            competent jurisdiction, the remaining provisions will remain in full force and effect.
           </p>
+
+          <h2>10. Contact and Impressum</h2>
+          <ul>
+            <li>
+              <strong>Operator and developer:</strong> {site.author} ({site.authorHandle}, private
+              individual)
+            </li>
+            <li>
+              <strong>Email:</strong>{" "}
+              <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
+            </li>
+            <li>
+              <strong>Hosting provider name:</strong> ByteFly Kft. (Vipy Dedicated Server)
+            </li>
+            <li>
+              <strong>Hosting provider registered seat:</strong> 9022 Győr, Batthyány tér 6. 1. em.
+              6. ajtó, Hungary
+            </li>
+            <li>
+              <strong>Hosting provider contact:</strong>{" "}
+              <a href="mailto:info@vipy.hu">info@vipy.hu</a>,{" "}
+              <a href="https://vipy.hu" target="_blank" rel="noopener noreferrer">
+                https://vipy.hu
+              </a>
+            </li>
+          </ul>
         </>
       )}
     </LegalShell>
