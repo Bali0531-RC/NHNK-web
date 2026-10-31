@@ -108,6 +108,8 @@ const VC_MAP: Record<string, string> = {
   "43": "2.0.7",
   "44": "2.0.8",
   "45": "2.0.9",
+  "46": "2.0.10",
+  "47": "2.0.11",
 };
 
 const ANDROID_API_LABELS: Record<string, string> = {
