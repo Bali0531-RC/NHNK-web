@@ -135,7 +135,11 @@ export default function TermsPage() {
           <h2>10. Kapcsolat és impresszum</h2>
           <ul>
             <li>
-              <strong>Üzemeltető és fejlesztő:</strong> {site.author} ({site.authorHandle},
+              <strong>Android &amp; Web fejlesztő és üzemeltető:</strong> {site.author} ({site.authorHandle},
+              magánszemély)
+            </li>
+            <li>
+              <strong>iOS fejlesztő és Apple App Store kiadó:</strong> {site.iosAuthor} ({site.iosAuthorHandle},
               magánszemély)
             </li>
             <li>
@@ -278,8 +282,12 @@ export default function TermsPage() {
           <h2>10. Contact and Impressum</h2>
           <ul>
             <li>
-              <strong>Operator and developer:</strong> {site.author} ({site.authorHandle}, private
+              <strong>Android &amp; Web developer and operator:</strong> {site.author} ({site.authorHandle}, private
               individual)
+            </li>
+            <li>
+              <strong>iOS developer and Apple App Store publisher:</strong> {site.iosAuthor} ({site.iosAuthorHandle},
+              private individual)
             </li>
             <li>
               <strong>Email (legal inquiries):</strong>{" "}

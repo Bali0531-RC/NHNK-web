@@ -232,9 +232,9 @@ p {
 .nhnk-hero-scrim {
   background: radial-gradient(
     90% 85% at 32% 48%,
-    color-mix(in srgb, var(--color-bg) 88%, transparent) 0%,
-    color-mix(in srgb, var(--color-bg) 72%, transparent) 48%,
-    color-mix(in srgb, var(--color-bg) 35%, transparent) 100%
+    color-mix(in srgb, var(--color-bg) 72%, transparent) 0%,
+    color-mix(in srgb, var(--color-bg) 42%, transparent) 55%,
+    color-mix(in srgb, var(--color-bg) 15%, transparent) 100%
   );
 }
 
@@ -243,11 +243,11 @@ p {
     scroll-behavior: auto;
   }
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  .nhnk-word-reveal,
+  .nhnk-block-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
   }
 }

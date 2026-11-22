@@ -34,6 +34,11 @@ type Dict = {
     playTitle: string;
     playBody: string;
     playBodyLive: string;
+    appStoreTitle: string;
+    appStoreBody: string;
+    appStoreNote: string;
+    androidMaintainer: string;
+    iosMaintainer: string;
     abiHint: string;
     obtainiumHint: string;
     playDayProgress: string;
@@ -99,11 +104,11 @@ export const dict: Record<Lang, Dict> = {
       beta: "Zárt teszt",
     },
     hero: {
-      title: "Nem hivatalos Neptun-kliens Androidra",
+      title: "Nem hivatalos Neptun-kliens Androidra és iOS-re",
       lede:
-        "Órarend, jegyek, üzenetek, befizetések. Az alkalmazás közvetlenül az intézményed Neptun-kiszolgálójával beszél, köztes szerver nélkül, és amit letölt, az a telefonon marad.",
+        "Órarend, jegyek, üzenetek, befizetések és statisztikák. Az alkalmazás közvetlenül az intézményed Neptun-kiszolgálójával beszél, köztes szerver nélkül, és amit letölt, az a telefonon marad.",
       specs: [
-        { k: "Platform", v: "Android" },
+        { k: "Platform", v: "Android & iOS" },
         { k: "Licenc", v: "MIT" },
         { k: "Adatgyűjtés", v: "Nincs" },
         { k: "Ár", v: "Ingyenes" },
@@ -177,17 +182,24 @@ export const dict: Record<Lang, Dict> = {
     },
     download: {
       title: "Letöltés",
-      subtitle: "Két út vezet ide, válaszd a hozzád közelebbit.",
+      subtitle: "Elérhető Androidra (Google Play és GitHub APK) és iOS-re (Apple App Store).",
       githubTitle: "GitHub Releases",
       githubBody:
-        "A teljes verzió, beépített frissítéskezelővel. Az app maga szól, ha új kiadás jelent meg, így nem kell figyelned a repót.",
+        "A teljes Android verzió, beépített frissítéskezelővel. Az app maga szól, ha új kiadás jelent meg, így nem kell figyelned a repót.",
       playTitle: "Google Play",
       playBody:
         "Jelenleg zárt tesztelés alatt. A Play akkor engedi a nyilvános megjelenést, ha {required} tesztelő {days} napon át folyamatosan használja az appot. A számláló csak a {required}. tesztelőtől indul.",
       playBodyLive:
-        "Az NHNK már ingyenesen letölthető a Google Play Áruházból, tesztelői jelentkezés nélkül. A frissítéseket a Play Áruház kezeli.",
-      abiHint: "A legtöbb mai telefonhoz az arm64-v8a csomag kell.",
-      obtainiumHint: "Automatikus frissítéshez add hozzá a repót az Obtainiumhoz.",
+        "Az Androidos NHNK ingyenesen letölthető a Google Play Áruházból. A frissítéseket automatikusan a Play Áruház kezeli.",
+      appStoreTitle: "Apple App Store",
+      appStoreBody:
+        "Dedikált, natív iOS alkalmazás (Expo / React Native, SF Symbols, iOS Keychain). Kizárólag a hivatalos Apple App Store-ból érhető el.",
+      appStoreNote:
+        "Megjelenés: 2026. november 30. (v1.0.0) — már előrendelhető.",
+      androidMaintainer: "Fejlesztő & kiadó: Turi Balázs (Bali0531)",
+      iosMaintainer: "Fejlesztő & kiadó: Béres Marcell (mp_bmx)",
+      abiHint: "A legtöbb mai Android telefonhoz az arm64-v8a csomag kell.",
+      obtainiumHint: "Automatikus frissítéshez:",
       playDayProgress: "{day}. / {days}. nap",
       playCountdown: "A {days} napos szakasz vége: {date}",
       playReview: "Felülvizsgálat alatt",
@@ -202,16 +214,16 @@ export const dict: Record<Lang, Dict> = {
       cta: "Adatvédelmi tájékoztató",
     },
     footer: {
-      tagline: "Nem hivatalos Neptun-kliens Androidra.",
+      tagline: "Nem hivatalos Neptun-kliens Androidra és iOS-re.",
       project: "Projekt",
       legal: "Jogi",
       sourceCode: "Forráskód",
       reportBug: "Hibabejelentés",
       license: "Licenc (MIT)",
       contact: "Kapcsolat",
-      builtBy: "Készítette",
+      builtBy: "Fejlesztők:",
       trademark:
-        "Független, nem hivatalos alkalmazás. Nem áll kapcsolatban a Campus Codeworks Zrt.-vel (korábban SDA Informatika Zrt.) vagy bármely felsőoktatási intézménnyel. A „Neptun” név és védjegy a jogosultja tulajdona. A Google Play és a Google Play-logó a Google LLC védjegye.",
+        "Független, nem hivatalos alkalmazás. Nem áll kapcsolatban a Campus Codeworks Zrt.-vel (korábban SDA Informatika Zrt.) vagy bármely felsőoktatási intézménnyel. A „Neptun” név és védjegy a jogosultja tulajdona. A Google Play és a Google Play-logó a Google LLC védjegye. Az Apple és az App Store az Apple Inc. védjegye.",
     },
     donate: {
       title: "Támogatás",
@@ -278,11 +290,11 @@ export const dict: Record<Lang, Dict> = {
       beta: "Closed test",
     },
     hero: {
-      title: "An unofficial Neptun client for Android",
+      title: "An unofficial Neptun client for Android and iOS",
       lede:
-        "Timetable, grades, messages, payments. The app talks straight to your institution's Neptun server with nothing in between, and whatever it fetches stays on the phone.",
+        "Timetable, grades, messages, payments, and statistics. The app talks straight to your institution's Neptun server with nothing in between, and whatever it fetches stays on your phone.",
       specs: [
-        { k: "Platform", v: "Android" },
+        { k: "Platform", v: "Android & iOS" },
         { k: "Licence", v: "MIT" },
         { k: "Tracking", v: "None" },
         { k: "Price", v: "Free" },
@@ -356,17 +368,24 @@ export const dict: Record<Lang, Dict> = {
     },
     download: {
       title: "Download",
-      subtitle: "Two routes in. Take whichever is closer to hand.",
+      subtitle: "Available for Android (Google Play & GitHub APK) and iOS (Apple App Store).",
       githubTitle: "GitHub Releases",
       githubBody:
-        "The full build, with the in-app updater. The app tells you when a new release lands, so you need not watch the repository.",
+        "The full Android build with the in-app updater. The app tells you when a new release lands, so you need not watch the repository.",
       playTitle: "Google Play",
       playBody:
         "Currently in closed testing. Play only opens up public release once {required} testers have used the app for {days} consecutive days. The countdown starts at the {required}th tester.",
       playBodyLive:
-        "NHNK is now available for free on Google Play, with no tester sign-up required. Updates are handled by Google Play.",
-      abiHint: "Most current phones need the arm64-v8a package.",
-      obtainiumHint: "For automatic updates, add the repository to Obtainium.",
+        "The Android build of NHNK is available for free on Google Play. Updates are handled automatically by Google Play.",
+      appStoreTitle: "Apple App Store",
+      appStoreBody:
+        "Dedicated native iOS application (Expo / React Native, SF Symbols, iOS Keychain). Distributed exclusively through the official Apple App Store.",
+      appStoreNote:
+        "Releases Nov 30, 2026 (v1.0.0) — storefront live for pre-order.",
+      androidMaintainer: "Developer & publisher: Balázs Turi (Bali0531)",
+      iosMaintainer: "Developer & publisher: Marcell Béres (mp_bmx)",
+      abiHint: "Most current Android phones need the arm64-v8a package.",
+      obtainiumHint: "Automatic updates via",
       playDayProgress: "day {day} of {days}",
       playCountdown: "The {days}-day run ends {date}",
       playReview: "Under review",
@@ -381,16 +400,16 @@ export const dict: Record<Lang, Dict> = {
       cta: "Read the privacy policy",
     },
     footer: {
-      tagline: "An unofficial Neptun client for Android.",
+      tagline: "An unofficial Neptun client for Android and iOS.",
       project: "Project",
       legal: "Legal",
       sourceCode: "Source code",
       reportBug: "Report a bug",
       license: "Licence (MIT)",
       contact: "Contact",
-      builtBy: "Built by",
+      builtBy: "Developers:",
       trademark:
-        "An independent, unofficial application. Not affiliated with Campus Codeworks Zrt. (formerly SDA Informatika Zrt.) or any higher education institution. The “Neptun” name and trademark are the property of their respective owner. Google Play and the Google Play logo are trademarks of Google LLC.",
+        "An independent, unofficial application. Not affiliated with Campus Codeworks Zrt. (formerly SDA Informatika Zrt.) or any higher education institution. The “Neptun” name and trademark are the property of their respective owner. Google Play and the Google Play logo are trademarks of Google LLC. Apple and App Store are trademarks of Apple Inc.",
     },
     donate: {
       title: "Support the project",

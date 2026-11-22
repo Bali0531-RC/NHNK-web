@@ -13,9 +13,16 @@ export const site = {
   adminEmail: "admin@nhnk.hu",
   author: "Turi Balázs",
   authorHandle: "Bali0531",
+  authorGithub: "https://github.com/Bali0531-RC",
+  iosAuthor: "Béres Marcell",
+  iosAuthorHandle: "mp_bmx",
+  iosPublisherUrl: "https://apps.apple.com/developer/id1822126360",
   /** Live since the app left closed testing. Setting this swaps every "soon" state
    * on the site for a real store link and hides the closed-test signup. */
   playStoreUrl: "https://play.google.com/store/apps/details?id=hu.bali0531.nhnk.app",
+  /** Official native iOS App Store listing (storefront live now; v1.0.0 release date: Nov 30, 2026). */
+  appStoreUrl: "https://apps.apple.com/us/app/nhnk-uni-schedule-grades/id6835257595",
+  iosReleaseDate: "2026-11-30T00:00:00+01:00",
   /** Not needed: bali0531.hu is verified in Search Console as a DNS domain property,
    * which covers this subdomain. Left empty on purpose, so no meta tag is emitted. */
   googleSiteVerification: "",
@@ -39,7 +46,7 @@ export const site = {
     neptunMobile: "https://github.com/zoligamer/Neptun-Mobile-fork",
   },
   /** Kept in one place so legal pages and the About screen can quote the same date. */
-  legalLastUpdated: "2026-10-30",
+  legalLastUpdated: "2026-11-22",
 } as const;
 
 export type DonationMethod = {

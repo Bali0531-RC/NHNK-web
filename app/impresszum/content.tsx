@@ -22,7 +22,13 @@ export default function ImpressumPage() {
           <h2>1. A szolgáltató (üzemeltető és fejlesztő)</h2>
           <ul>
             <li>
-              <strong>Név:</strong> {site.author} ({site.authorHandle})
+              <strong>Weboldal, Android és Web alkalmazás fejlesztő / kiadó:</strong> {site.author} ({site.authorHandle})
+            </li>
+            <li>
+              <strong>iOS alkalmazás fejlesztő és Apple App Store kiadó:</strong>{" "}
+              <a href={site.iosPublisherUrl} target="_blank" rel="noopener noreferrer">
+                {site.iosAuthor} ({site.iosAuthorHandle})
+              </a>
             </li>
             <li>
               <strong>Jogállás:</strong> Magánszemély (nyílt forráskódú, nem kereskedelmi projekt)
@@ -96,7 +102,13 @@ export default function ImpressumPage() {
           <h2>1. Operator and Developer</h2>
           <ul>
             <li>
-              <strong>Name:</strong> {site.author} ({site.authorHandle})
+              <strong>Website, Android &amp; Web lead developer / publisher:</strong> {site.author} ({site.authorHandle})
+            </li>
+            <li>
+              <strong>iOS developer &amp; Apple App Store publisher:</strong>{" "}
+              <a href={site.iosPublisherUrl} target="_blank" rel="noopener noreferrer">
+                {site.iosAuthor} ({site.iosAuthorHandle})
+              </a>
             </li>
             <li>
               <strong>Status:</strong> Private individual (open-source, non-commercial project)

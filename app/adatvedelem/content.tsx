@@ -19,10 +19,11 @@ export default function PrivacyPage() {
     >
       {hu ? (
         <>
-          <h2>1. Az adatkezelő</h2>
+          <h2>1. Az adatkezelő és a fejlesztők</h2>
           <p>
-            Az alkalmazást <strong>{site.author} ({site.authorHandle})</strong> magánszemélyként
-            fejleszti és adja ki. Adatvédelmi és jogi kapcsolat:{" "}
+            Az NHNK Androidos és webes változatát <strong>{site.author} ({site.authorHandle})</strong>,
+            az iOS (Apple App Store) változatot pedig <strong>{site.iosAuthor} ({site.iosAuthorHandle})</strong>{" "}
+            magánszemélyként fejleszti és adja ki. Adatvédelmi és jogi kapcsolat:{" "}
             <a href={`mailto:${site.legalEmail}`}>{site.legalEmail}</a> (általános megkeresés:{" "}
             <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>).
           </p>
@@ -104,11 +105,12 @@ export default function PrivacyPage() {
             nem tartalmaznak azonosításra alkalmas adatot, de a GitHub (mint minden webkiszolgáló)
             láthatja a kérés IP-címét. Erre a GitHub adatvédelmi tájékoztatója vonatkozik.
           </p>
-          <h3>5.3 Google Play</h3>
+          <h3>5.3 Google Play és Apple App Store</h3>
           <p>
-            Ha az alkalmazást a Google Play áruházból telepítetted, a telepítésre és a frissítésekre a
-            Google saját adatkezelése vonatkozik. Erre nincs ráhatásunk, és nem kapunk hozzáférést a
-            Play által gyűjtött adatokhoz.
+            Ha az alkalmazást a Google Play áruházból vagy az Apple App Store-ból telepítetted, a
+            telepítésre és a frissítésekre a Google, illetve az Apple saját adatkezelése vonatkozik.
+            Erre nincs ráhatásunk, és személyes szinten nem kapunk hozzáférést az áruházak által
+            gyűjtött egyéni adatokhoz.
           </p>
           <h3>5.4 A weboldalon futó demó</h3>
           <p>
@@ -189,7 +191,11 @@ export default function PrivacyPage() {
           <h2>12. Kapcsolat és impresszum</h2>
           <ul>
             <li>
-              <strong>Üzemeltető és fejlesztő:</strong> {site.author} ({site.authorHandle},
+              <strong>Android &amp; Web fejlesztő és üzemeltető:</strong> {site.author} ({site.authorHandle},
+              magánszemély)
+            </li>
+            <li>
+              <strong>iOS fejlesztő és Apple App Store kiadó:</strong> {site.iosAuthor} ({site.iosAuthorHandle},
               magánszemély)
             </li>
             <li>
@@ -221,8 +227,11 @@ export default function PrivacyPage() {
         <>
           <h2>1. Who is responsible</h2>
           <p>
-            The application is developed and published by <strong>{site.author} ({site.authorHandle})</strong>{" "}
-            as a private individual. Privacy and legal contact:{" "}
+            The Android and web versions of NHNK are developed and published by{" "}
+            <strong>{site.author} ({site.authorHandle})</strong>, and the iOS (Apple App Store)
+            version is developed and published by{" "}
+            <strong>{site.iosAuthor} ({site.iosAuthorHandle})</strong>, each acting as a private
+            individual. Privacy and legal contact:{" "}
             <a href={`mailto:${site.legalEmail}`}>{site.legalEmail}</a> (general contact:{" "}
             <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>).
           </p>
@@ -381,8 +390,12 @@ export default function PrivacyPage() {
           <h2>12. Contact and Impressum</h2>
           <ul>
             <li>
-              <strong>Operator and developer:</strong> {site.author} ({site.authorHandle}, private
+              <strong>Android &amp; Web developer and operator:</strong> {site.author} ({site.authorHandle}, private
               individual)
+            </li>
+            <li>
+              <strong>iOS developer and Apple App Store publisher:</strong> {site.iosAuthor} ({site.iosAuthorHandle},
+              private individual)
             </li>
             <li>
               <strong>Email (privacy and legal):</strong>{" "}

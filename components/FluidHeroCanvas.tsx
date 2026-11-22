@@ -28,23 +28,111 @@ type DoubleFBO = {
   swap: () => void;
 };
 
+type BlobOrb = {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  radius: number;
+  hue: number;
+};
+
+function startCanvas2DFallback(canvas: HTMLCanvasElement): () => void {
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return () => {};
+
+  let raf = 0;
+  let destroyed = false;
+  let width = (canvas.width = window.innerWidth || 1280);
+  let height = (canvas.height = window.innerHeight || 800);
+
+  const orbs: BlobOrb[] = Array.from({ length: 7 }, (_, i) => ({
+    x: Math.random() * width,
+    y: Math.random() * height,
+    vx: (Math.random() - 0.5) * 2.2,
+    vy: (Math.random() - 0.5) * 2.2,
+    radius: Math.max(width, height) * (0.18 + (i % 3) * 0.06),
+    hue: 182 + i * 14,
+  }));
+
+  let mouseX = width * 0.5;
+  let mouseY = height * 0.45;
+  let angle = 0;
+
+  function onResize() {
+    width = canvas.width = window.innerWidth || 1280;
+    height = canvas.height = window.innerHeight || 800;
+  }
+
+  function onMove(e: MouseEvent) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  }
+
+  window.addEventListener("resize", onResize);
+  window.addEventListener("mousemove", onMove, { passive: true });
+
+  function draw() {
+    if (destroyed || !ctx) return;
+    ctx.clearRect(0, 0, width, height);
+    ctx.globalCompositeOperation = "lighter";
+
+    angle += 0.018;
+    const autoX = width * 0.5 + Math.cos(angle) * Math.min(width, height) * 0.28;
+    const autoY = height * 0.45 + Math.sin(angle * 0.8) * Math.min(width, height) * 0.24;
+
+    orbs[0].x += (mouseX - orbs[0].x) * 0.08;
+    orbs[0].y += (mouseY - orbs[0].y) * 0.08;
+    orbs[1].x += (autoX - orbs[1].x) * 0.05;
+    orbs[1].y += (autoY - orbs[1].y) * 0.05;
+
+    for (let i = 0; i < orbs.length; i++) {
+      const o = orbs[i];
+      if (i >= 2) {
+        o.x += o.vx;
+        o.y += o.vy;
+        if (o.x < -100 || o.x > width + 100) o.vx *= -1;
+        if (o.y < -100 || o.y > height + 100) o.vy *= -1;
+      }
+      const grad = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.radius);
+      grad.addColorStop(0, `hsla(${o.hue}, 92%, 56%, 0.28)`);
+      grad.addColorStop(0.5, `hsla(${o.hue + 18}, 88%, 48%, 0.12)`);
+      grad.addColorStop(1, `hsla(${o.hue + 30}, 85%, 42%, 0)`);
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(o.x, o.y, o.radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    raf = requestAnimationFrame(draw);
+  }
+
+  draw();
+
+  return () => {
+    destroyed = true;
+    if (raf) cancelAnimationFrame(raf);
+    window.removeEventListener("resize", onResize);
+    window.removeEventListener("mousemove", onMove);
+  };
+}
+
 function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
-  canvas.width = canvas.clientWidth || 1024;
-  canvas.height = canvas.clientHeight || 768;
+  canvas.width = canvas.clientWidth || window.innerWidth || 1280;
+  canvas.height = canvas.clientHeight || window.innerHeight || 800;
 
   const config = {
-    SIM_RESOLUTION: 160,
+    SIM_RESOLUTION: 192,
     DYE_RESOLUTION: 512,
-    DENSITY_DISSIPATION: 0.962,
-    VELOCITY_DISSIPATION: 0.965,
+    DENSITY_DISSIPATION: 0.965,
+    VELOCITY_DISSIPATION: 0.968,
     PRESSURE_DISSIPATION: 0.8,
-    PRESSURE_ITERATIONS: 18,
-    CURL: 38,
-    SPLAT_RADIUS: 0.22,
+    PRESSURE_ITERATIONS: 20,
+    CURL: 42,
+    SPLAT_RADIUS: 0.26,
     SHADING: true,
     COLORFUL: true,
     PAUSED: false,
-    TRANSPARENT: true,
   };
 
   function createPointer(): PointerItem {
@@ -56,7 +144,7 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
       dy: 0,
       down: false,
       moved: false,
-      color: { r: 0, g: 0.65, b: 0.85 },
+      color: { r: 0, g: 0.75, b: 0.95 },
     };
   }
 
@@ -64,9 +152,15 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
   const splatStack: number[] = [];
 
   const ctxResult = getWebGLContext(canvas);
-  if (!ctxResult.gl || !ctxResult.ext.formatRGBA || !ctxResult.ext.formatRG || !ctxResult.ext.formatR) {
-    return () => {};
+  if (
+    !ctxResult.gl ||
+    !ctxResult.ext.formatRGBA ||
+    !ctxResult.ext.formatRG ||
+    !ctxResult.ext.formatR
+  ) {
+    return startCanvas2DFallback(canvas);
   }
+
   const gl = ctxResult.gl;
   const ext = ctxResult.ext as {
     formatRGBA: { internalFormat: number; format: number };
@@ -83,6 +177,7 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
   function getWebGLContext(c: HTMLCanvasElement) {
     const params: WebGLContextAttributes = {
       alpha: true,
+      premultipliedAlpha: false,
       depth: false,
       stencil: false,
       antialias: false,
@@ -126,15 +221,23 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
         ? halfFloat.HALF_FLOAT_OES
         : glCtx.UNSIGNED_BYTE;
 
-    const formatRGBA = isWebGL2
+    let formatRGBA = isWebGL2
       ? getSupportedFormat(glCtx, glCtx.RGBA16F, glCtx.RGBA, halfFloatTexType)
       : getSupportedFormat(glCtx, glCtx.RGBA, glCtx.RGBA, halfFloatTexType);
-    const formatRG = isWebGL2
+    let formatRG = isWebGL2
       ? getSupportedFormat(glCtx, glCtx.RG16F, glCtx.RG, halfFloatTexType)
       : getSupportedFormat(glCtx, glCtx.RGBA, glCtx.RGBA, halfFloatTexType);
-    const formatR = isWebGL2
+    let formatR = isWebGL2
       ? getSupportedFormat(glCtx, glCtx.R16F, glCtx.RED, halfFloatTexType)
       : getSupportedFormat(glCtx, glCtx.RGBA, glCtx.RGBA, halfFloatTexType);
+
+    let finalTexType = halfFloatTexType;
+    if (!formatRGBA || !formatRG || !formatR) {
+      finalTexType = glCtx.UNSIGNED_BYTE;
+      formatRGBA = getSupportedFormat(glCtx, glCtx.RGBA, glCtx.RGBA, finalTexType);
+      formatRG = formatRGBA;
+      formatR = formatRGBA;
+    }
 
     return {
       gl: glCtx,
@@ -142,7 +245,7 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
         formatRGBA,
         formatRG,
         formatR,
-        halfFloatTexType,
+        halfFloatTexType: finalTexType,
         supportLinearFiltering,
       },
     };
@@ -264,7 +367,7 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
       uniform sampler2D uTexture;
       void main () {
           vec3 C = texture2D(uTexture, vUv).rgb;
-          float a = max(C.r, max(C.g, C.b));
+          float a = clamp(max(C.r, max(C.g, C.b)) * 1.35, 0.0, 0.92);
           gl_FragColor = vec4(C, a);
       }
     `,
@@ -294,7 +397,7 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
           vec3 l = vec3(0.0, 0.0, 1.0);
           float diffuse = clamp(dot(n, l) + 0.7, 0.7, 1.0);
           C.rgb *= diffuse;
-          float a = max(C.r, max(C.g, C.b));
+          float a = clamp(max(C.r, max(C.g, C.b)) * 1.35, 0.0, 0.92);
           gl_FragColor = vec4(C, a);
       }
     `,
@@ -557,10 +660,7 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
     gl.texImage2D(gl.TEXTURE_2D, 0, internalFormat, w, h, 0, format, type, null);
 
     const fbo = gl.createFramebuffer();
-    gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
-    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
-    gl.viewport(0, 0, w, h);
-    gl.clear(gl.COLOR_BUFFER_BIT);
+    gBindAndClear(fbo, texture, w, h);
 
     return {
       texture,
@@ -573,6 +673,13 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
         return id;
       },
     };
+  }
+
+  function gBindAndClear(fbo: WebGLFramebuffer | null, texture: WebGLTexture | null, w: number, h: number) {
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
+    gl.viewport(0, 0, w, h);
+    gl.clear(gl.COLOR_BUFFER_BIT);
   }
 
   function createDoubleFBO(
@@ -725,12 +832,11 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
   }
 
   function generateColor() {
-    // NHNK palette band: teal -> cyan -> electric azure -> soft indigo (0.48 .. 0.64)
-    const h = 0.48 + Math.random() * 0.16;
-    const c = HSVtoRGB(h, 0.85, 0.95);
-    c.r *= 0.68;
-    c.g *= 0.68;
-    c.b *= 0.68;
+    const h = 0.48 + Math.random() * 0.38;
+    const c = HSVtoRGB(h, 0.95, 1.0);
+    c.r *= 0.95;
+    c.g *= 0.95;
+    c.b *= 0.95;
     return c;
   }
 
@@ -755,21 +861,21 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
   function multipleSplats(amount: number) {
     for (let i = 0; i < amount; i++) {
       const color = generateColor();
-      color.r *= 6.5;
-      color.g *= 6.5;
-      color.b *= 6.5;
+      color.r *= 8.5;
+      color.g *= 8.5;
+      color.b *= 8.5;
       const x = canvas.width * Math.random();
       const y = canvas.height * Math.random();
-      const dx = 850 * (Math.random() - 0.5);
-      const dy = 850 * (Math.random() - 0.5);
+      const dx = 1000 * (Math.random() - 0.5);
+      const dy = 1000 * (Math.random() - 0.5);
       splat(x, y, dx, dy, color);
     }
   }
 
   initFramebuffers();
-  multipleSplats(22);
-  for (let i = 0; i < 6; i++) {
-    splatStack.push(6 + Math.floor(Math.random() * 8));
+  multipleSplats(30);
+  for (let i = 0; i < 8; i++) {
+    splatStack.push(8 + Math.floor(Math.random() * 10));
   }
 
   let lastColorChangeTime = Date.now();
@@ -780,28 +886,28 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
   let virtualColor: { r: number; g: number; b: number } | null = null;
   let lastVColorTime = 0;
   const engineStart = Date.now();
-  const ORBIT_RADIUS = 280;
-  const ORBIT_SPEED = 0.022;
-  const ORBIT_START_DELAY = 650;
+  const ORBIT_RADIUS = 320;
+  const ORBIT_SPEED = 0.025;
+  const ORBIT_START_DELAY = 600;
 
   let rafHandle = 0;
   let destroyed = false;
 
   function resizeCanvas() {
-    if (canvas.width !== canvas.clientWidth || canvas.height !== canvas.clientHeight) {
-      if (canvas.clientWidth > 0 && canvas.clientHeight > 0) {
-        canvas.width = canvas.clientWidth;
-        canvas.height = canvas.clientHeight;
-        initFramebuffers();
-      }
+    const w = canvas.clientWidth || window.innerWidth;
+    const h = canvas.clientHeight || window.innerHeight;
+    if (w > 0 && h > 0 && (canvas.width !== w || canvas.height !== h)) {
+      canvas.width = w;
+      canvas.height = h;
+      initFramebuffers();
     }
   }
 
   function driveVirtualPointer() {
     if (Date.now() - engineStart < ORBIT_START_DELAY) return;
-    const cx = canvas.width * 0.42;
-    const cy = canvas.height * 0.5;
-    const base = Math.min(ORBIT_RADIUS, canvas.width * 0.34, canvas.height * 0.36);
+    const cx = canvas.width * 0.5;
+    const cy = canvas.height * 0.45;
+    const base = Math.min(ORBIT_RADIUS, canvas.width * 0.36, canvas.height * 0.36);
     const r = base * (0.72 + 0.28 * Math.sin(orbitAngle * 0.37));
     orbitAngle += ORBIT_SPEED;
     const x = cx + Math.cos(orbitAngle) * r;
@@ -812,15 +918,15 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
       vPrevY = y;
       return;
     }
-    if (!virtualColor || Date.now() - lastVColorTime > 140) {
+    if (!virtualColor || Date.now() - lastVColorTime > 120) {
       virtualColor = generateColor();
-      virtualColor.r *= 2.4;
-      virtualColor.g *= 2.4;
-      virtualColor.b *= 2.4;
+      virtualColor.r *= 3.5;
+      virtualColor.g *= 3.5;
+      virtualColor.b *= 3.5;
       lastVColorTime = Date.now();
     }
-    const dx = (x - vPrevX) * 8.0;
-    const dy = (y - vPrevY) * 8.0;
+    const dx = (x - vPrevX) * 9.0;
+    const dy = (y - vPrevY) * 9.0;
     vPrevX = x;
     vPrevY = y;
     splat(x, y, dx, dy, virtualColor);
@@ -840,7 +946,7 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
       }
     }
 
-    if (lastColorChangeTime + 120 < Date.now()) {
+    if (lastColorChangeTime + 100 < Date.now()) {
       lastColorChangeTime = Date.now();
       for (let i = 0; i < pointers.length; i++) {
         pointers[i].color = generateColor();
@@ -918,7 +1024,7 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
   }
 
   function render() {
-    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     gl.enable(gl.BLEND);
 
     const width = gl.drawingBufferWidth;
@@ -951,11 +1057,6 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
 
   update();
 
-  function pointerPos(clientX: number, clientY: number) {
-    const rect = canvas.getBoundingClientRect();
-    return { x: clientX - rect.left, y: clientY - rect.top, inside: clientY >= rect.top && clientY <= rect.bottom };
-  }
-
   const teardown: (() => void)[] = [];
   function on<K extends keyof WindowEventMap>(
     target: Window,
@@ -968,8 +1069,8 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
   }
 
   on(window, "mousemove", (e: MouseEvent) => {
-    const { x, y, inside } = pointerPos(e.clientX, e.clientY);
-    if (!inside) return;
+    const x = e.clientX;
+    const y = e.clientY;
     const p = pointers[0];
     if (!p.everMoved) {
       p.everMoved = true;
@@ -980,12 +1081,32 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
     }
     p.down = true;
     p.moved = true;
-    p.dx = (x - p.x) * 5.0;
-    p.dy = (y - p.y) * 5.0;
+    p.dx = (x - p.x) * 6.0;
+    p.dy = (y - p.y) * 6.0;
     p.x = x;
     p.y = y;
-    p.color = generateColor();
+    const c = generateColor();
+    c.r *= 2.5;
+    c.g *= 2.5;
+    c.b *= 2.5;
+    p.color = c;
   });
+
+  on(
+    window,
+    "scroll",
+    () => {
+      // Gently stir the fluid when scrolling down the page
+      const color = generateColor();
+      color.r *= 4.0;
+      color.g *= 4.0;
+      color.b *= 4.0;
+      const x = canvas.width * (0.2 + Math.random() * 0.6);
+      const y = canvas.height * (0.2 + Math.random() * 0.6);
+      splat(x, y, (Math.random() - 0.5) * 500, (Math.random() - 0.5) * 500, color);
+    },
+    { passive: true },
+  );
 
   on(
     window,
@@ -995,8 +1116,8 @@ function startFluidSimulation(canvas: HTMLCanvasElement): () => void {
       for (let i = 0; i < touches.length; i++) {
         if (i >= pointers.length) pointers.push(createPointer());
         const p = pointers[i];
-        const { x, y, inside } = pointerPos(touches[i].clientX, touches[i].clientY);
-        if (!inside) continue;
+        const x = touches[i].clientX;
+        const y = touches[i].clientY;
         p.down = true;
         p.moved = p.everMoved === true;
         p.everMoved = true;
@@ -1021,7 +1142,6 @@ export function FluidHeroCanvas() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const destroy = startFluidSimulation(canvas);
@@ -1032,7 +1152,7 @@ export function FluidHeroCanvas() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-55 transition-opacity duration-700 dark:opacity-75"
+      className="pointer-events-none fixed inset-0 z-0 h-screen w-screen opacity-65 dark:opacity-80"
     />
   );
 }

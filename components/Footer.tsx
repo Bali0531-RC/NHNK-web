@@ -92,7 +92,7 @@ export function Footer() {
 
         <div className="mt-12 border-t border-line pt-6">
           <p className="font-mono text-xs text-muted">
-            {site.fullName}. {t.footer.builtBy} {site.author} ({site.authorHandle}). MIT.
+            {site.fullName}. {t.footer.builtBy} Android &amp; Web: {site.author} ({site.authorHandle}) · iOS: {site.iosAuthor} ({site.iosAuthorHandle}). MIT.
           </p>
           <p className="mt-2.5 max-w-[80ch] text-xs leading-relaxed text-muted">
             {t.footer.trademark}
